@@ -1,7 +1,3 @@
 function onAdded() {}
 function onCreate(state:String) {}
-
-function onUpdate(state:String, elapsed:Float)
-{
-	trace(state + ' called onUpdate(' + elapsed + ')');
-}
+function onUpdate(state:String, elapsed:Float) {}
