@@ -36,11 +36,11 @@ class ScriptManager
 		@:privateAccess {
 			if (!script.interp.variables.exists(method))
 			{
-				final errMsg = 'missing method($method) for script(${script.config.name})';
+				final errMsg = 'missing method(' + method + ') for script(' + script.config.name + ')';
 
-				if (!SCRIPTS_ERRS.exists('missing_method($method)_${script.config.name}'))
+				if (!SCRIPTS_ERRS.exists('missing_method(' + method + ')_' + script.config.name))
 				{
-					SCRIPTS_ERRS.set('missing_method($method)_${script.config.name}', errMsg);
+					SCRIPTS_ERRS.set('missing_method(' + method + ')_' + script.config.name, errMsg);
 					trace(errMsg);
 				}
 
@@ -57,11 +57,11 @@ class ScriptManager
 			}
 			catch (e)
 			{
-				final errMsg = 'error calling method($method) for script(${script.config.name}): ' + e.message;
+				final errMsg = 'error calling method(' + method + ') for script(' + script.config.name + '): ' + e.message;
 
-				if (!SCRIPTS_ERRS.exists('method($method)_error_${script.config.name}'))
+				if (!SCRIPTS_ERRS.exists('method(' + method + ')_error_' + script.config.name))
 				{
-					SCRIPTS_ERRS.set('method($method)_error_${script.config.name}', errMsg);
+					SCRIPTS_ERRS.set('method(' + method + ')_error_' + script.config.name, errMsg);
 					trace(errMsg);
 				}
 			}
@@ -89,7 +89,7 @@ class ScriptManager
 		var noExt:Int = 0;
 		for (ext in SCRIPT_EXTS)
 		{
-			if (!StringTools.endsWith(path, '.$ext'))
+			if (!StringTools.endsWith(path, '.' + ext))
 				noExt++;
 		}
 		if (noExt >= SCRIPT_EXTS.length)
@@ -102,8 +102,8 @@ class ScriptManager
 		catch (e)
 		{
 			newScript = null;
-			trace('Error loading script($path): ${e.message}');
-			Application.current.window.alert('Error loading script($path): ${e.message}\n\n${e.details}', 'Error loading script5');
+			trace('Error loading script(' + path + '): ' + e.message);
+			Application.current.window.alert('Error loading script(' + path + '): ' + e.message + '\n\n' + e.details, 'Error loading script');
 		}
 
 		if (newScript != null)
@@ -138,28 +138,28 @@ class ScriptManager
 		#if sys
 		var sys = [];
 		var path = '';
-		if (FileSystem.exists('game/$script_folder/'))
-			for (file in FileSystem.readDirectory('game/$script_folder/'))
+		if (FileSystem.exists('game/' + script_folder + '/'))
+			for (file in FileSystem.readDirectory('game/' + script_folder + '/'))
 			{
-				path = Paths.getGamePath('$script_folder/$file');
+				path = Paths.getGamePath(script_folder + '/' + file);
 				if (!sys.contains(path))
 				{
-					if (FileSystem.isDirectory('$path'))
-						getAllScriptPaths('$path');
+					if (FileSystem.isDirectory(path))
+						getAllScriptPaths(path);
 					else
-						sys.push('$path');
+						sys.push(path);
 				}
 			}
-		if (FileSystem.exists(Paths.getGamePath('$script_folder/')))
-			for (file in FileSystem.readDirectory(Paths.getGamePath('$script_folder/')))
+		if (FileSystem.exists(Paths.getGamePath(script_folder + '/')))
+			for (file in FileSystem.readDirectory(Paths.getGamePath(script_folder + '/')))
 			{
-				path = Paths.getGamePath('$script_folder/$file');
+				path = Paths.getGamePath(script_folder + '/' + file);
 				if (!sys.contains(path))
 				{
-					if (FileSystem.isDirectory('$path'))
-						getAllScriptPaths('$path');
+					if (FileSystem.isDirectory(path))
+						getAllScriptPaths(path);
 					else
-						sys.push('$path');
+						sys.push(path);
 				}
 			}
 		return sys;
