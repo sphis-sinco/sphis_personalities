@@ -2,6 +2,7 @@ package game.scripts;
 
 import crowplexus.iris.Iris;
 import crowplexus.iris.IrisConfig;
+import game.desktop.DesktopMain;
 import lime.app.Application;
 #if sys
 import sys.FileSystem;
@@ -21,7 +22,8 @@ class ScriptManager
 
 	public static function call(method:String, ?args:Array<Dynamic>)
 	{
-		if (SCRIPTS.length < 1) return;
+		if (SCRIPTS.length < 1)
+			return;
 
 		for (script in SCRIPTS)
 		{
@@ -118,6 +120,11 @@ class ScriptManager
 	public static function initalizeScriptVariables(script:Iris)
 	{
 		script.set('ScriptManager', ScriptManager, false);
+
+		script.set('DesktopMain', DesktopMain, false);
+		script.set('InitState', InitState, false);
+
+		script.set('Paths', Paths, false);
 	}
 
 	public static function loadScriptsByPaths(paths:Array<String>)
