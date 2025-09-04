@@ -8,7 +8,7 @@ class Paths
 		return retpath;
 	}
 
-	public static function getImagePath(path:String, ?game:Bool)
+	public static function getImagePath(path:String, ?game:Bool = true)
 	{
 		return (game ? getGamePath(path + '.png') : path + '.png');
 	}
