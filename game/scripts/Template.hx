@@ -3,5 +3,5 @@ function onCreate(state:String) {}
 
 function onUpdate(state:String, elapsed:Float)
 {
-	trace('$state called onUpdate($elapsed)');
+	trace(state + ' called onUpdate(' + elapsed + ')');
 }

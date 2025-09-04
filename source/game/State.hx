@@ -20,13 +20,13 @@ class State extends FlxState
         override function create() {
                 super.create();
 
-                ScriptManager.call('onCreate', state);
+		ScriptManager.call('onCreate', [state]);
         }
 
         override function update(elapsed:Float) {
                 super.update(elapsed);
 
-                ScriptManager.call('onUpdate', state, elapsed);
+		ScriptManager.call('onUpdate', [state, elapsed]);
         }
         
 }

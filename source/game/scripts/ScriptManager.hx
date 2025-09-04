@@ -3,10 +3,11 @@ package game.scripts;
 import crowplexus.iris.Iris;
 import crowplexus.iris.IrisConfig;
 import lime.app.Application;
-import lime.utils.Assets;
 #if sys
 import sys.FileSystem;
 import sys.io.File;
+#else
+import lime.utils.Assets;
 #end
 
 class ScriptManager
@@ -18,7 +19,7 @@ class ScriptManager
 	public static var SCRIPTS:Array<Iris> = [];
 	public static var SCRIPTS_ERRS:Map<String, Dynamic> = [];
 
-	public static function call(method:String, ...args:Dynamic)
+	public static function call(method:String, ?args:Array<Dynamic>)
 	{
 		if (SCRIPTS.length < 1) return;
 
@@ -28,7 +29,7 @@ class ScriptManager
 		}
 	}
 
-	public static function callSingular(script:Iris, method:String, ...args:Dynamic)
+	public static function callSingular(script:Iris, method:String, ?args:Array<Dynamic>)
 	{
 		@:privateAccess {
 			if (!script.interp.variables.exists(method))
@@ -130,8 +131,6 @@ class ScriptManager
 		#if sys
 		var sys = [];
 		var path = '';
-		trace(Paths.getGamePath('$script_folder/'));
-		trace(FileSystem.exists(Paths.getGamePath('$script_folder/')));
 		if (FileSystem.exists('game/$script_folder/'))
 			for (file in FileSystem.readDirectory('game/$script_folder/'))
 			{

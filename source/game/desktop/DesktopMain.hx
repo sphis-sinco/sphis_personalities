@@ -1,7 +1,5 @@
 package game.desktop;
 
-import flixel.FlxState;
-
 class DesktopMain extends State
 {
 	override public function new()
