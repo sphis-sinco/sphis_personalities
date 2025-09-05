@@ -17,7 +17,7 @@ function onUpdate(event:UpdateEvent)
 {
 	if (desktopMain != null && event.state == 'desktop-main')
 	{
-		desktopMain.haxen.alpha = 0.9;
+		desktopMain.haxen.alpha = 0.75;
 		if (Mouse.overlaps(desktopMain.haxen))
 		{
 			desktopMain.haxen.alpha = 1;
