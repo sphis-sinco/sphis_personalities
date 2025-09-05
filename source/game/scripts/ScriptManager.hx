@@ -10,7 +10,6 @@ import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
 import lime.app.Application;
 #if sys
-import sys.FileSystem;
 import sys.io.File;
 #else
 import lime.utils.Assets;
@@ -82,7 +81,7 @@ class ScriptManager
 		}
 		SCRIPTS = [];
 
-		loadScriptsByPaths(getAllScriptPaths(SCRIPT_FOLDER));
+		loadScriptsByPaths(getAllScriptPaths());
 	}
 
 	public static function loadScriptByPath(path:String)
@@ -147,15 +146,10 @@ class ScriptManager
 			loadScriptByPath(path);
 	}
 
-	public static function getAllScriptPaths(script_folder:String):Array<String>
+	public static function getAllScriptPaths():Array<String>
 	{
 		#if sys
-		var typePaths:Array<String> = [
-			Paths.getGamePath(SCRIPT_FOLDER + '/'),
-			'game/' + SCRIPT_FOLDER + '/',
-			Paths.getGamePath(''),
-			'game/'
-		];
+		var typePaths:Array<String> = [Paths.getGamePath(''), 'game/'];
 
 		return Paths.getTypeArray('script', SCRIPT_FOLDER, SCRIPT_EXTS, typePaths);
 		#else
