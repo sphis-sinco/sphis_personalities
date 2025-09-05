@@ -23,6 +23,7 @@ class ScriptManager
 
 	public static var SCRIPTS:Array<Iris> = [];
 	public static var SCRIPTS_ERRS:Map<String, Dynamic> = [];
+	public static var GIANT_SCRIPT_FILE:String = '';
 
 	public static function call(method:String, ?args:Array<Dynamic>)
 	{
@@ -81,7 +82,41 @@ class ScriptManager
 		}
 		SCRIPTS = [];
 
+		GIANT_SCRIPT_FILE = 'package game.scripts;';
 		loadScriptsByPaths(getAllScriptPaths());
+
+		var temp_giant_script_file = '';
+		var add:Array<String> = [];
+		var imports:Array<String> = [];
+
+		for (script in SCRIPTS)
+		{
+			@:privateAccess {
+				add = script.scriptCode.split('\n');
+			}
+
+			for (thing in add)
+			{
+				var addThing = StringTools.replace(thing, '\t', '');
+
+				if (!StringTools.contains(addThing, 'import'))
+					temp_giant_script_file += addThing;
+
+				if (StringTools.startsWith(addThing, 'import') && !imports.contains(addThing))
+					imports.push(addThing);
+			}
+		}
+
+		for (importThing in imports)
+			GIANT_SCRIPT_FILE += importThing;
+
+		GIANT_SCRIPT_FILE += temp_giant_script_file;
+
+		#if sys
+		Sys.println(GIANT_SCRIPT_FILE);
+		#else
+		trace(GIANT_SCRIPT_FILE);
+		#end
 	}
 
 	public static function loadScriptByPath(path:String)
