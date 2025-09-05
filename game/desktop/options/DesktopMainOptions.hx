@@ -31,10 +31,6 @@ function onUpdate(event:UpdateEvent)
 			desktopMain.option_options.alpha = 0.25;
 			Mouse.setMouseState(MouseStates.CANT_SELECT);
 		}
-		else
-		{
-			Mouse.setMouseState(MouseStates.IDLE);
-		}
 
 		if (FlxG.mouse.pressed && Mouse.state == MouseStates.CAN_SELECT)
 		{

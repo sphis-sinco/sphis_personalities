@@ -18,13 +18,20 @@ function onUpdate(event:UpdateEvent)
 {
 	if (desktopMain != null && event.state == 'desktop-main')
 	{
-		if (FlxG.mouse.overlaps(desktopMain.haxen) && FlxG.mouse.justReleased)
+		if (FlxG.mouse.overlaps(desktopMain.haxen))
 		{
-			desktopMain.haxen_changeState('boop');
-			new FlxTimer().start(1, function(tmr)
+			Mouse.setMouseState(MouseStates.CAN_SELECT);
+
+			if (FlxG.mouse.pressed)
+				Mouse.setMouseState(MouseStates.SELECTED);
+			if (FlxG.mouse.justReleased)
 			{
-				desktopMain.haxen_idle();
-			});
+				desktopMain.haxen_changeState('boop');
+				new FlxTimer().start(1, function(tmr)
+				{
+					desktopMain.haxen_idle();
+				});
+			}
 		}
 	}
 }
