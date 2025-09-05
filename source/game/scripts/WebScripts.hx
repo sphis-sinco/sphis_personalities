@@ -10,14 +10,14 @@ import game.scripts.events.UpdateEvent;
 
 var desktopMain:DesktopMain = null;
 
-function onCreate(event:CreateEvent)
+public static function onCreate(event:CreateEvent)
 {
 	desktopMain = null;
 	if (event.state == 'desktop-main')
 		desktopMain = DesktopMain.instance;
 }
 
-function onUpdate(event:UpdateEvent)
+public static function onUpdate(event:UpdateEvent)
 {
 	if (desktopMain != null && event.state == 'desktop-main')
 	{
@@ -37,6 +37,10 @@ function onUpdate(event:UpdateEvent)
 			}
 		}
 	}
+}
+
+public static function onUpdate(event:UpdateEvent)
+{
 	if (desktopMain != null && event.state == 'desktop-main')
 	{
 		desktopMain.option_play.alpha = 0.5;
@@ -50,6 +54,10 @@ function onUpdate(event:UpdateEvent)
 			desktopMain.option_options.alpha = 0.25;
 		}
 	}
+}
+
+public static function onUpdate(event:UpdateEvent)
+{
 	Mouse.setMouseState(MouseStates.IDLE);
 	if (event.state == 'desktop-main')
 	{

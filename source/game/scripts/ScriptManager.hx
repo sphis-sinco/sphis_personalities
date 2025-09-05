@@ -82,7 +82,7 @@ class ScriptManager
 		}
 		SCRIPTS = [];
 
-		GIANT_SCRIPT_FILE = 'package game.scripts;';
+		GIANT_SCRIPT_FILE = 'package game.scripts; class WebScripts {';
 		loadScriptsByPaths(getAllScriptPaths());
 
 		var temp_giant_script_file = '';
@@ -127,6 +127,7 @@ class ScriptManager
 		}
 
 		GIANT_SCRIPT_FILE += temp_giant_script_file;
+		GIANT_SCRIPT_FILE += '}';
 
 		trace('Giant script file (for web shit): ');
 		#if sys
