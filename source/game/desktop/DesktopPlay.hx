@@ -49,7 +49,7 @@ class DesktopPlay extends State
 
 			levelGrp.update(elapsed);
 
-			levelsTextGrp.members[levelGrp.ID].x = levelGrp.levelIcon.x - levelsTextGrp.members[levelGrp.ID].width / 2;
+			levelsTextGrp.members[levelGrp.ID].x = levelGrp.levelIcon.x;
 			levelsTextGrp.members[levelGrp.ID].y = levelGrp.levelIcon.y - levelsTextGrp.members[levelGrp.ID].height;
 		}
 	}
@@ -83,8 +83,6 @@ class DesktopPlay extends State
 			var textField = new FlxText();
 			textField.text = levelMetas[i].displayName;
 			textField.size = 32;
-			textField.alignment = 'center';
-			textField.fieldWidth = levelGrp.levelIcon.width;
 			levelsTextGrp.add(textField);
 
 			i++;
