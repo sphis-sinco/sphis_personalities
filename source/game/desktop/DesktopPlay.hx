@@ -1,6 +1,7 @@
 package game.desktop;
 
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.text.FlxText;
 import game.desktop.play.LevelData;
 import game.desktop.play.LevelSpriteGroup;
 import haxe.Json;
@@ -23,6 +24,7 @@ class DesktopPlay extends State
 	public var levels:Array<String> = [];
 	public var levelMetas:Array<LevelData> = [];
 	public var levelsGrp:FlxTypedGroup<LevelSpriteGroup>;
+	public var levelsTextGrp:FlxTypedGroup<FlxText>;
 
 	override function create()
 	{
@@ -44,6 +46,9 @@ class DesktopPlay extends State
 			levelGrp.levelIcon.x += (levelGrp.levelIcon.width * 1.25) * levelGrp.ID;
 
 			levelGrp.update(elapsed);
+
+			levelsTextGrp.members[levelGrp.ID].x = levelGrp.levelIcon.x;
+			levelsTextGrp.members[levelGrp.ID].y = levelGrp.levelIcon.y + levelsTextGrp.members[levelGrp.ID].height;
 		}
 	}
 
@@ -72,6 +77,12 @@ class DesktopPlay extends State
 
 			levelMetas.push(Json.parse(Paths.getText(Paths.getGamePath('levels/data/' + level + '.json'))));
 			levelGrp.locked = !levelMetas[i].unlocked;
+
+			var textField = new FlxText();
+			textField.text = levelMetas[i].displayName;
+			textField.size = 32;
+			textField.alignment = 'center';
+			levelsTextGrp.add(textField);
 
 			i++;
 		}
