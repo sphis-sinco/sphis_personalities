@@ -1,20 +1,22 @@
 import flixel.FlxG;
 import flixel.util.FlxTimer;
 import game.desktop.DesktopMain;
+import game.scripts.events.CreateEvent;
+import game.scripts.events.UpdateEvent;
 
 var desktopMain:DesktopMain = null;
 
-function onCreate(state:String)
+function onCreate(event:CreateEvent)
 {
 	desktopMain = null;
 
-	if (state == 'desktop-main')
+	if (event.state == 'desktop-main')
 		desktopMain = DesktopMain.instance;
 }
 
-function onUpdate(state:String, elapsed:Float)
+function onUpdate(event:UpdateEvent)
 {
-	if (desktopMain != null)
+	if (desktopMain != null && event.state == 'desktop-main')
 	{
 		if (FlxG.mouse.overlaps(desktopMain.haxen) && FlxG.mouse.justReleased)
 		{
