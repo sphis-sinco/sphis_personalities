@@ -4,7 +4,7 @@ import crowplexus.iris.Iris;
 import crowplexus.iris.IrisConfig;
 import game.desktop.DesktopMain;
 import game.desktop.DesktopPlay;
-import game.desktop.play.LevelSprite;
+import game.desktop.play.LevelSpriteGroup;
 import game.scripts.events.AddedEvent;
 import game.scripts.events.BaseEvent;
 import game.scripts.events.BaseStateEvent;
@@ -218,7 +218,7 @@ class ScriptManager
 		script.set('CreateEvent', CreateEvent, false);
 		script.set('UpdateEvent', UpdateEvent, false);
 
-		script.set('LevelSprite', LevelSprite, false);
+		script.set('LevelSpriteGroup', LevelSpriteGroup, false);
 
 		scriptImports(script);
 	}

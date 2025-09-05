@@ -1,8 +1,7 @@
 package game.desktop;
 
-import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
-import game.desktop.play.LevelSprite;
+import game.desktop.play.LevelSpriteGroup;
 
 class DesktopPlay extends State
 {
@@ -21,12 +20,14 @@ class DesktopPlay extends State
 
 	public var levels:Array<String> = [];
 
-	public var levelsGrp:FlxTypedGroup<LevelSprite>;
+	public var levelsGrp:FlxTypedGroup<LevelSpriteGroup>;
 
 	override function create()
 	{
-		levelsGrp = new FlxTypedGroup<LevelSprite>();
+		levelsGrp = new FlxTypedGroup<LevelSpriteGroup>();
 		add(levelsGrp);
+
+		Mouse.setMouseState(MouseStates.BLANK);
 
 		super.create();
 	}
@@ -48,12 +49,16 @@ class DesktopPlay extends State
 
 		for (level in levels)
 		{
-			var levelSprite = new LevelSprite(level);
-			levelSprite.ID = i;
-			levelsGrp.add(levelSprite);
+			var levelGrp = new LevelSpriteGroup();
+			levelGrp.ID = i;
+			levelsGrp.add(levelGrp);
 
-			levelSprite.screenCenter();
-			levelSprite.x += (levelSprite.width * 1.25) * i;
+			levelGrp.levelID = level;
+
+			levelGrp.lock.scale.set(.5, .5);
+			levelGrp.loadLevelAsset();
+			levelGrp.lock.screenCenter();
+			levelGrp.lock.x += (levelGrp.lock.width * 1.25) * i;
 
 			i++;
 		}
