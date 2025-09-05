@@ -9,7 +9,7 @@ class LevelSpriteGroup extends FlxTypedGroup<FlxSprite>
 	public static var sprPath:String;
 
 	public var levelID:String = 'unknown';
-	public var locked(default, set):Bool = false;
+	public var locked(default, set):Bool;
 
 	function set_locked(value:Bool):Bool
 	{
@@ -42,6 +42,8 @@ class LevelSpriteGroup extends FlxTypedGroup<FlxSprite>
 		add(box);
 		add(levelIcon);
 		add(lock);
+
+		locked = false;
 	}
 
 	public function loadLevelAsset()

@@ -4,6 +4,7 @@ using StringTools;
 
 #if sys
 import sys.FileSystem;
+import sys.io.File;
 #else
 import lime.utils.Assets;
 #end
@@ -90,6 +91,15 @@ class Paths
 		return FileSystem.exists(id);
 		#else
 		return Assets.exists(id);
+		#end
+	}
+
+	public static function getText(id:String):String
+	{
+		#if sys
+		return File.getContent(id);
+		#else
+		return Assets.getText(id);
 		#end
 	}
 }

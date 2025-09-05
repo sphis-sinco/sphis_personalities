@@ -1,7 +1,9 @@
 package game.desktop;
 
 import flixel.group.FlxGroup.FlxTypedGroup;
+import game.desktop.play.LevelData;
 import game.desktop.play.LevelSpriteGroup;
+import haxe.Json;
 
 class DesktopPlay extends State
 {
@@ -19,7 +21,7 @@ class DesktopPlay extends State
 	}
 
 	public var levels:Array<String> = [];
-
+	public var levelMetas:Array<LevelData> = [];
 	public var levelsGrp:FlxTypedGroup<LevelSpriteGroup>;
 
 	override function create()
@@ -53,6 +55,8 @@ class DesktopPlay extends State
 			levelsGrp.members.remove(level);
 		}
 
+		levelMetas = [];
+
 		var i = 0;
 
 		for (level in levels)
@@ -65,6 +69,10 @@ class DesktopPlay extends State
 			levelGrp.levelID = level;
 
 			levelGrp.loadLevelAsset();
+
+			levelMetas.push(Json.parse(Paths.getText(Paths.getGamePath('levels/data/' + level + '.json'))));
+			levelGrp.locked = !levelMetas[i].unlocked;
+
 			i++;
 		}
 	}

@@ -11,11 +11,6 @@ import game.scripts.events.BaseStateEvent;
 import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
 import lime.app.Application;
-#if sys
-import sys.io.File;
-#else
-import lime.utils.Assets;
-#end
 
 class ScriptManager
 {
@@ -177,7 +172,7 @@ class ScriptManager
 
 		try
 		{
-			newScript = new Iris(#if sys File.getContent(path) #else Assets.getText(path) #end, new IrisConfig(path, true, true, []));
+			newScript = new Iris(Paths.getText(path), new IrisConfig(path, true, true, []));
 		}
 		catch (e)
 		{
