@@ -1,10 +1,12 @@
 package game;
 
+using StringTools;
+
 #if sys
 import sys.FileSystem;
+#else
+import lime.utils.Assets;
 #end
-
-using StringTools;
 
 class Paths
 {
@@ -80,5 +82,14 @@ class Paths
 		}
 		#end
 		return arr;
+	}
+
+	public static function pathExists(id:String):Bool
+	{
+		#if sys
+		return FileSystem.exists(id);
+		#else
+		return Assets.exists(id);
+		#end
 	}
 }
