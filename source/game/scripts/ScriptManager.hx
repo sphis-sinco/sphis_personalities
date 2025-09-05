@@ -91,24 +91,38 @@ class ScriptManager
 
 		for (script in SCRIPTS)
 		{
-			@:privateAccess {
-				add = script.scriptCode.split('\n');
-			}
-
-			for (thing in add)
+			if (!StringTools.contains(script.name, 'TemplateScript'))
 			{
-				var addThing = StringTools.replace(thing, '\t', '');
+				@:privateAccess {
+					add = script.scriptCode.split('\n');
+				}
 
-				if (!StringTools.contains(addThing, 'import'))
-					temp_giant_script_file += addThing;
+				for (thing in add)
+				{
+					var addThing = StringTools.replace(thing, '\t', '');
 
-				if (StringTools.startsWith(addThing, 'import') && !imports.contains(addThing))
-					imports.push(addThing);
+					if (!StringTools.contains(addThing, 'import'))
+						temp_giant_script_file += addThing;
+
+					if (StringTools.startsWith(addThing, 'import') && !imports.contains(addThing))
+						imports.push(addThing);
+				}
 			}
 		}
 
+		var imported = [];
 		for (importThing in imports)
-			GIANT_SCRIPT_FILE += importThing;
+		{
+			var importClass = importThing.split('.')[importThing.split('.').length - 1];
+			trace(importClass);
+
+			if (!StringTools.contains(GIANT_SCRIPT_FILE, importThing))
+				if (!imported.contains(importClass))
+				{
+					imported.push(importClass);
+					GIANT_SCRIPT_FILE += importThing;
+				}
+		}
 
 		GIANT_SCRIPT_FILE += temp_giant_script_file;
 

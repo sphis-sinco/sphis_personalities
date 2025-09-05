@@ -2,12 +2,9 @@ package game.scripts;
 
 import flixel.FlxG;
 import flixel.util.FlxTimer;
-import game.desktop.DesktopMain;
-import game.scripts.events.CreateEvent;
-import game.scripts.events.UpdateEvent;
 import game.Mouse;
 import game.MouseStates;
-import game.scripts.events.AddedEvent;
+import game.desktop.DesktopMain;
 import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
 
@@ -40,19 +37,6 @@ function onUpdate(event:UpdateEvent)
 			}
 		}
 	}
-}
-
-var desktopMain:DesktopMain = null;
-
-function onCreate(event:CreateEvent)
-{
-	desktopMain = null;
-	if (event.state == 'desktop-main')
-		desktopMain = DesktopMain.instance;
-}
-
-function onUpdate(event:UpdateEvent)
-{
 	if (desktopMain != null && event.state == 'desktop-main')
 	{
 		desktopMain.option_play.alpha = 0.5;
@@ -66,10 +50,6 @@ function onUpdate(event:UpdateEvent)
 			desktopMain.option_options.alpha = 0.25;
 		}
 	}
-}
-
-function onUpdate(event:UpdateEvent)
-{
 	Mouse.setMouseState(MouseStates.IDLE);
 	if (event.state == 'desktop-main')
 	{
@@ -85,7 +65,3 @@ function onUpdate(event:UpdateEvent)
 		Mouse.setMouseState(MouseStates.SELECTED);
 	}
 }
-
-function onAdded(event:AddedEvent) {}
-function onCreate(event:CreateEvent) {}
-function onUpdate(event:UpdateEvent) {}
