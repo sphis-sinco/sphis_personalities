@@ -24,17 +24,10 @@ function onUpdate(event:UpdateEvent)
 		if (FlxG.mouse.overlaps(desktopMain.option_play))
 		{
 			desktopMain.option_play.alpha = 1;
-			Mouse.setMouseState(MouseStates.CAN_SELECT);
 		}
 		else if (FlxG.mouse.overlaps(desktopMain.option_options))
 		{
 			desktopMain.option_options.alpha = 0.25;
-			Mouse.setMouseState(MouseStates.CANT_SELECT);
-		}
-
-		if (FlxG.mouse.pressed && Mouse.state == MouseStates.CAN_SELECT)
-		{
-			Mouse.setMouseState(MouseStates.SELECTED);
 		}
 	}
 }

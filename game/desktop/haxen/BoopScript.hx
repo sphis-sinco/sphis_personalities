@@ -18,9 +18,10 @@ function onUpdate(event:UpdateEvent)
 {
 	if (desktopMain != null && event.state == 'desktop-main')
 	{
+		desktopMain.haxen.alpha = 0.75;
 		if (FlxG.mouse.overlaps(desktopMain.haxen))
 		{
-			Mouse.setMouseState(MouseStates.CAN_SELECT);
+			desktopMain.haxen.alpha = 1;
 
 			if (FlxG.mouse.pressed)
 				Mouse.setMouseState(MouseStates.SELECTED);
