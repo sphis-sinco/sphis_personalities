@@ -150,11 +150,13 @@ class ScriptManager
 		GIANT_SCRIPT_FILE += temp_giant_script_file;
 		GIANT_SCRIPT_FILE += '}';
 
+		#if !dontGenerateWebScript
 		trace('Giant script file (for web shit): ');
 		#if sys
 		Sys.println(GIANT_SCRIPT_FILE);
 		#else
 		trace(GIANT_SCRIPT_FILE);
+		#end
 		#end
 	}
 
