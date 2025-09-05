@@ -30,6 +30,8 @@ class DesktopPlay extends State
 	{
 		levelsGrp = new FlxTypedGroup<LevelSpriteGroup>();
 		add(levelsGrp);
+		levelsTextGrp = new FlxTypedGroup<FlxText>();
+		add(levelsTextGrp);
 
 		Mouse.setMouseState(MouseStates.BLANK);
 
@@ -48,7 +50,7 @@ class DesktopPlay extends State
 			levelGrp.update(elapsed);
 
 			levelsTextGrp.members[levelGrp.ID].x = levelGrp.levelIcon.x;
-			levelsTextGrp.members[levelGrp.ID].y = levelGrp.levelIcon.y + levelsTextGrp.members[levelGrp.ID].height;
+			levelsTextGrp.members[levelGrp.ID].y = levelGrp.levelIcon.height + levelGrp.levelIcon.y + levelsTextGrp.members[levelGrp.ID].height;
 		}
 	}
 
@@ -82,6 +84,7 @@ class DesktopPlay extends State
 			textField.text = levelMetas[i].displayName;
 			textField.size = 32;
 			textField.alignment = 'center';
+			textField.fieldWidth = levelGrp.levelIcon.width;
 			levelsTextGrp.add(textField);
 
 			i++;
