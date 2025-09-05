@@ -19,6 +19,8 @@ class LevelSpriteGroup extends FlxTypedGroup<FlxSprite>
 		return value;
 	}
 
+	public var scale:Float;
+
 	public var box:FlxSprite;
 	public var lock:FlxSprite;
 	public var levelIcon:FlxSprite;
@@ -52,9 +54,6 @@ class LevelSpriteGroup extends FlxTypedGroup<FlxSprite>
 		}
 
 		levelIcon.loadGraphic(sprPath);
-		levelIcon.updateHitbox();
-		box.updateHitbox();
-		lock.updateHitbox();
 	}
 
 	override function update(elapsed:Float)
@@ -64,7 +63,12 @@ class LevelSpriteGroup extends FlxTypedGroup<FlxSprite>
 		box.setPosition(levelIcon.x, levelIcon.y);
 		lock.setPosition(box.x, box.y);
 
-		box.scale.set(levelIcon.scale.x, levelIcon.scale.y);
-		lock.scale.set(levelIcon.scale.x, levelIcon.scale.y);
+		levelIcon.scale.set(scale, scale);
+		box.scale.set(scale, scale);
+		lock.scale.set(scale, scale);
+
+		levelIcon.updateHitbox();
+		box.updateHitbox();
+		lock.updateHitbox();
 	}
 }

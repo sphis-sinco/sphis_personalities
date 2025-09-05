@@ -35,6 +35,11 @@ class DesktopPlay extends State
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
+
+		for (levelGrp in levelsGrp.members)
+		{
+			levelGrp.update(elapsed);
+		}
 	}
 
 	public function reloadLevels()
@@ -55,8 +60,11 @@ class DesktopPlay extends State
 
 			levelGrp.levelID = level;
 
-			levelGrp.lock.scale.set(.5, .5);
 			levelGrp.loadLevelAsset();
+			levelGrp.scale = .5;
+
+			levelGrp.update(0);
+
 			levelGrp.lock.screenCenter();
 			levelGrp.lock.x += (levelGrp.lock.width * 1.25) * i;
 
