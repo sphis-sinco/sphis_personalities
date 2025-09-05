@@ -35,5 +35,10 @@ function onUpdate(event:UpdateEvent)
 		{
 			Mouse.setMouseState(MouseStates.IDLE);
 		}
+
+		if (FlxG.mouse.pressed && Mouse.state == MouseStates.CAN_SELECT)
+		{
+			Mouse.setMouseState(MouseStates.SELECTED);
+		}
 	}
 }
