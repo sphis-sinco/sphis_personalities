@@ -2,6 +2,7 @@ package game.desktop;
 
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import game.desktop.play.LevelSprite;
 
 class DesktopPlay extends State
 {
@@ -20,11 +21,11 @@ class DesktopPlay extends State
 
 	public var levels:Array<String> = [];
 
-	public var levelsGrp:FlxTypedGroup<FlxSprite>;
+	public var levelsGrp:FlxTypedGroup<LevelSprite>;
 
 	override function create()
 	{
-		levelsGrp = new FlxTypedGroup<FlxSprite>();
+		levelsGrp = new FlxTypedGroup<LevelSprite>();
 		add(levelsGrp);
 
 		super.create();
@@ -35,5 +36,23 @@ class DesktopPlay extends State
 		super.update(elapsed);
 	}
 
-	public function reloadLevels() {}
+	public function reloadLevels()
+	{
+		for (level in levelsGrp.members)
+		{
+			level.destroy();
+			levelsGrp.members.remove(level);
+		}
+
+		var i = 0;
+
+		for (level in levels)
+		{
+			var levelSprite = new LevelSprite(level);
+			levelSprite.ID = i;
+			levelsGrp.add(levelSprite);
+
+			i++;
+		}
+	}
 }
