@@ -206,7 +206,7 @@ class ScriptManager
 		{
 			initalizeScriptVariables(newScript);
 
-			trace('Loaded script($path)');
+			trace('Loaded script(' + path + ')');
 
 			SCRIPTS.push(newScript);
 			// callSingular(newScript, 'onAdded');
@@ -234,9 +234,9 @@ class ScriptManager
 	public static function getAllScriptPaths(script_folder:String):Array<String>
 	{
 		#if sys
-		var typePaths:Array<String> = [Paths.getGamePath('scripts/'), 'game/scripts/', 'game/'];
+		var typePaths:Array<String> = [Paths.getGamePath(SCRIPT_FOLDER + '/'), 'game/' + SCRIPT_FOLDER + '/', 'game/'];
 
-		return Paths.getTypeArray('script', 'scripts', SCRIPT_EXTS, typePaths);
+		return Paths.getTypeArray('script', SCRIPT_FOLDER, SCRIPT_EXTS, typePaths);
 		#else
 		return [];
 		#end
