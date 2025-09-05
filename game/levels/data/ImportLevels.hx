@@ -1,6 +1,5 @@
 import game.desktop.DesktopPlay;
 import game.scripts.events.CreateEvent;
-import game.scripts.events.UpdateEvent;
 
 var desktopPlay:DesktopPlay;
 
@@ -16,5 +15,3 @@ function onCreate(event:CreateEvent)
 		desktopPlay.reloadLevels();
 	}
 }
-
-function onUpdate(event:UpdateEvent) {}
