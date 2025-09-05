@@ -14,6 +14,9 @@ class LevelSprite extends FlxSprite
 		super();
 
 		levelID = id;
+		scale.set(.5, .5);
+
+		loadLevelAsset();
 	}
 
 	public function loadLevelAsset()
@@ -26,5 +29,6 @@ class LevelSprite extends FlxSprite
 		}
 
 		loadGraphic(sprPath);
+		updateHitbox();
 	}
 }

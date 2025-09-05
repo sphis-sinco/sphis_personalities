@@ -50,7 +50,6 @@ class DesktopPlay extends State
 		{
 			var levelSprite = new LevelSprite(level);
 			levelSprite.ID = i;
-			levelSprite.loadLevelAsset();
 			levelsGrp.add(levelSprite);
 
 			i++;
