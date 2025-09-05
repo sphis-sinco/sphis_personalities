@@ -1,4 +1,3 @@
-import flixel.FlxG;
 import flixel.util.FlxTimer;
 import game.desktop.DesktopMain;
 import game.scripts.events.CreateEvent;
@@ -19,13 +18,13 @@ function onUpdate(event:UpdateEvent)
 	if (desktopMain != null && event.state == 'desktop-main')
 	{
 		desktopMain.haxen.alpha = 0.9;
-		if (FlxG.mouse.overlaps(desktopMain.haxen))
+		if (Mouse.overlaps(desktopMain.haxen))
 		{
 			desktopMain.haxen.alpha = 1;
 
-			if (FlxG.mouse.pressed)
+			if (Mouse.pressed)
 				Mouse.setMouseState(MouseStates.SELECTED);
-			if (FlxG.mouse.justReleased)
+			if (Mouse.justReleased)
 			{
 				desktopMain.haxen_changeState('boop');
 				new FlxTimer().start(1, function(tmr)

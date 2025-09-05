@@ -1,5 +1,3 @@
-import flixel.FlxG;
-import flixel.util.FlxTimer;
 import game.desktop.DesktopMain;
 import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
@@ -21,11 +19,11 @@ function onUpdate(event:UpdateEvent)
 		desktopMain.option_play.alpha = 0.5;
 		desktopMain.option_options.alpha = 0.5;
 
-		if (FlxG.mouse.overlaps(desktopMain.option_play))
+		if (Mouse.overlaps(desktopMain.option_play))
 		{
 			desktopMain.option_play.alpha = 1;
 		}
-		else if (FlxG.mouse.overlaps(desktopMain.option_options))
+		else if (Mouse.overlaps(desktopMain.option_options))
 		{
 			desktopMain.option_options.alpha = 0.25;
 		}
