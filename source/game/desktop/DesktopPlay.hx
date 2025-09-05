@@ -15,7 +15,7 @@ class DesktopPlay extends State
 		instance = this;
 	}
 
-	public var levels:Array<String> = ['level1', 'level2'];
+	public var levels:Array<String> = [];
 
 	override function create()
 	{
@@ -25,5 +25,10 @@ class DesktopPlay extends State
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
+	}
+
+	public function reloadLevels()
+	{
+		throw new haxe.exceptions.NotImplementedException();
 	}
 }
