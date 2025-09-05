@@ -38,6 +38,8 @@
 	<!-- _______________________________ Libraries ______________________________ -->
 
 	<haxelib name="flixel" />
+	<haxelib name="lime" />
+	<haxelib name="openfl" />
 
 	<haxelib name="hscript-iris" />
 	<define name="hscriptPos" />
