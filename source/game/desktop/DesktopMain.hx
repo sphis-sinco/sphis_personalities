@@ -25,7 +25,10 @@ class DesktopMain extends State
 		haxen = new FlxSprite();
 		add(haxen);
 		haxen_changeState('idle-' + haxen_random_dir());
+		haxen.scale.set(0.5, 0.5);
+		haxen.updateHitbox();
 		haxen.screenCenter();
+		haxen.y = FlxG.height - haxen.height * 0.75;
 
 		super.create();
 	}
