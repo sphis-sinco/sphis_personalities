@@ -1,4 +1,5 @@
 import flixel.FlxG;
+import flixel.util.FlxTimer;
 import game.desktop.DesktopMain;
 
 var desktopMain:DesktopMain = null;
@@ -18,9 +19,9 @@ function onUpdate(state:String, elapsed:Float)
 		if (FlxG.mouse.overlaps(desktopMain.haxen) && FlxG.mouse.justReleased)
 		{
 			desktopMain.haxen_changeState('boop');
-			new FlxTimer().start(4() ->
+			new FlxTimer().start(1, function(tmr)
 			{
-				desktopMain.haxen_changeState('idle-' + .haxe_random_dir());
+				desktopMain.haxen_idle();
 			});
 		}
 	}

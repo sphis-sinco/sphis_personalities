@@ -30,6 +30,11 @@ class DesktopMain extends State
 		super.create();
 	}
 
+	public function haxen_idle()
+	{
+		haxen_changeState('idle-' + haxen_random_dir());
+	}
+
 	public function haxen_random_dir()
 	{
 		return ((FlxG.random.bool(50)) ? 'left' : 'right');
