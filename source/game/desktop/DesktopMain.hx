@@ -24,10 +24,15 @@ class DesktopMain extends State
 	{
 		haxen = new FlxSprite();
 		add(haxen);
-		haxen_changeState('idle-' + ((FlxG.random.bool(50)) ? 'left' : 'right'));
+		haxen_changeState('idle-' + haxen_random_dir());
 		haxen.screenCenter();
 
 		super.create();
+	}
+
+	public function haxen_random_dir()
+	{
+		return ((FlxG.random.bool(50)) ? 'left' : 'right');
 	}
 
 	public function haxen_changeState(newState:String)

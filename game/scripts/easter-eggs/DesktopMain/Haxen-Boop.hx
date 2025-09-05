@@ -18,6 +18,10 @@ function onUpdate(state:String, elapsed:Float)
 		if (FlxG.mouse.overlaps(desktopMain.haxen) && FlxG.mouse.justReleased)
 		{
 			desktopMain.haxen_changeState('boop');
+			new FlxTimer().start(4() ->
+			{
+				desktopMain.haxen_changeState('idle-' + .haxe_random_dir());
+			});
 		}
 	}
 }
