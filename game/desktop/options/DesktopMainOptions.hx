@@ -43,7 +43,7 @@ function onUpdate(event:UpdateEvent)
 					startDelay: 0.5,
 					onComplete: tween ->
 					{
-						FlxG.switchState(() -> new DesktopPlay());
+						FlxG.switchState(() -> new BlankState('desktop-play-fake'));
 					}
 				});
 

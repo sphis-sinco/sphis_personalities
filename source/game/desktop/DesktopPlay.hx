@@ -1,5 +1,8 @@
 package game.desktop;
 
+import flixel.FlxSprite;
+import flixel.group.FlxGroup.FlxTypedGroup;
+
 class DesktopPlay extends State
 {
 	public static var instance:DesktopPlay = null;
@@ -17,8 +20,13 @@ class DesktopPlay extends State
 
 	public var levels:Array<String> = [];
 
+	public var levelsGrp:FlxTypedGroup<FlxSprite>;
+
 	override function create()
 	{
+		levelsGrp = new FlxTypedGroup<FlxSprite>();
+		add(levelsGrp);
+
 		super.create();
 	}
 
@@ -27,8 +35,5 @@ class DesktopPlay extends State
 		super.update(elapsed);
 	}
 
-	public function reloadLevels()
-	{
-		throw new haxe.exceptions.NotImplementedException();
-	}
+	public function reloadLevels() {}
 }

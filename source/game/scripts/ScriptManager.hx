@@ -203,6 +203,7 @@ class ScriptManager
 		script.set('DesktopPlay', DesktopPlay, false);
 		script.set('DesktopMain', DesktopMain, false);
 		script.set('InitState', InitState, false);
+		script.set('BlankState', BlankState, false);
 
 		script.set('Paths', Paths, false);
 
