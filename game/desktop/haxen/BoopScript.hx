@@ -1,9 +1,15 @@
 import flixel.util.FlxTimer;
+import game.Paths;
 import game.desktop.DesktopMain;
 import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
 
 var desktopMain:DesktopMain = null;
+
+var haxenIdleStates = [
+	Paths.getImagePath('desktop/haxen/idle-left'),
+	Paths.getImagePath('desktop/haxen/idle-right')
+];
 
 function onCreate(event:CreateEvent)
 {
@@ -24,7 +30,7 @@ function onUpdate(event:UpdateEvent)
 
 			if (Mouse.pressed)
 				Mouse.setMouseState(MouseStates.SELECTED);
-			if (Mouse.justReleased && StringTools.contains(desktopMain.haxen.graphic.key, 'idle'))
+			if (Mouse.justReleased && haxenIdleStates.contains(desktopMain.haxen.graphic.key))
 			{
 				desktopMain.haxen_changeState('boop');
 				new FlxTimer().start(1, function(tmr)

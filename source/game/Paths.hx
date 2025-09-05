@@ -1,4 +1,4 @@
-package;
+package game;
 
 #if sys
 import sys.FileSystem;
