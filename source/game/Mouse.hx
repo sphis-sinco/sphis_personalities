@@ -5,17 +5,17 @@ import flixel.graphics.FlxGraphic;
 
 class Mouse
 {
-	public static var state(default, set):String = MouseStates.IDLE;
+	public static var state:String = MouseStates.IDLE;
 
-	static function set_state(value:String):String
+	public static function set_state(value:String)
 	{
-		return value;
-
+		state = value;
 		updateMouseGraphic();
 	}
 
 	public static function updateMouseGraphic()
 	{
+		trace('Updating Mouse Graphic to: ' + Paths.getImagePath('mouse/' + state));
 		var graphic = FlxGraphic.fromAssetKey(Paths.getImagePath('mouse/' + state));
 
 		if (graphic == null)
@@ -24,6 +24,6 @@ class Mouse
 			return;
 		}
 
-		FlxG.mouse.load(graphic, 1);
+		FlxG.mouse.load(graphic.key);
 	}
 }
