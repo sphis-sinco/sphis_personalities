@@ -82,7 +82,7 @@ class ScriptManager
 		}
 		SCRIPTS = [];
 
-		GIANT_SCRIPT_FILE = 'package game.scripts; class WebScripts {';
+		GIANT_SCRIPT_FILE = 'package game.scripts;';
 		loadScriptsByPaths(getAllScriptPaths());
 
 		var temp_giant_script_file = '';
@@ -103,6 +103,8 @@ class ScriptManager
 
 					if (StringTools.startsWith(addThing, 'function'))
 						addThing = StringTools.replace(addThing, 'function', 'public static function');
+					if (StringTools.startsWith(addThing, 'var'))
+						addThing = StringTools.replace(addThing, 'var', 'static var');
 
 					if (!StringTools.contains(addThing, 'import'))
 						temp_giant_script_file += addThing;
@@ -126,6 +128,7 @@ class ScriptManager
 				}
 		}
 
+		GIANT_SCRIPT_FILE += 'class WebScripts {';
 		GIANT_SCRIPT_FILE += temp_giant_script_file;
 		GIANT_SCRIPT_FILE += '}';
 
