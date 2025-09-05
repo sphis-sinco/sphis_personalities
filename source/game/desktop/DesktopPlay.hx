@@ -38,6 +38,9 @@ class DesktopPlay extends State
 
 		for (levelGrp in levelsGrp.members)
 		{
+			levelGrp.levelIcon.screenCenter();
+			levelGrp.levelIcon.x += (levelGrp.levelIcon.width * 1.25) * levelGrp.ID;
+
 			levelGrp.update(elapsed);
 		}
 	}
@@ -58,16 +61,10 @@ class DesktopPlay extends State
 			levelGrp.ID = i;
 			levelsGrp.add(levelGrp);
 
+			levelGrp.scale = .5;
 			levelGrp.levelID = level;
 
 			levelGrp.loadLevelAsset();
-			levelGrp.scale = .5;
-
-			levelGrp.update(0);
-
-			levelGrp.lock.screenCenter();
-			levelGrp.lock.x += (levelGrp.lock.width * 1.25) * i;
-
 			i++;
 		}
 	}

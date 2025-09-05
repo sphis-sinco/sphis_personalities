@@ -66,9 +66,4 @@ class DesktopMain extends State
 
 	public function haxen_changeState(newState:String)
 		haxen.loadGraphic(Paths.getImagePath('desktop/haxen/' + newState));
-
-	override public function update(elapsed:Float)
-	{
-		super.update(elapsed);
-	}
 }
