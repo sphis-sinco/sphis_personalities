@@ -28,7 +28,7 @@ function onUpdate(event:UpdateEvent)
 		}
 		else if (FlxG.mouse.overlaps(desktopMain.option_options))
 		{
-			desktopMain.option_play.alpha = 0.25;
+			desktopMain.option_options.alpha = 0.25;
 			Mouse.setMouseState(MouseStates.CANT_SELECT);
 		}
 		else
