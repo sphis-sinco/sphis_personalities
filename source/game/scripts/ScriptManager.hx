@@ -101,6 +101,9 @@ class ScriptManager
 				{
 					var addThing = StringTools.replace(thing, '\t', '');
 
+					if (StringTools.startsWith(addThing, 'function'))
+						addThing = StringTools.replace(addThing, 'function', 'public static function');
+
 					if (!StringTools.contains(addThing, 'import'))
 						temp_giant_script_file += addThing;
 
