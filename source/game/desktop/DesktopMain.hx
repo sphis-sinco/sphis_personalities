@@ -31,9 +31,7 @@ class DesktopMain extends State
 	}
 
 	public function haxen_idle()
-	{
 		haxen_changeState('idle-' + haxen_random_dir());
-	}
 
 	public function haxen_random_dir()
 	{
@@ -41,9 +39,7 @@ class DesktopMain extends State
 	}
 
 	public function haxen_changeState(newState:String)
-	{
 		haxen.loadGraphic(Paths.getImagePath('desktop/haxen/' + newState));
-	}
 
 	override public function update(elapsed:Float)
 	{
