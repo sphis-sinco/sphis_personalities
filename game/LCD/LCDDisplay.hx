@@ -4,6 +4,7 @@ import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
 
 var scanlines:FlxSprite;
+var acceptedStates = ['desktop-main'];
 
 function onCreate(event:CreateEvent)
 {
@@ -14,7 +15,8 @@ function onCreate(event:CreateEvent)
 		scanlines.screenCenter();
 	}
 
-	FlxG.state.add(scanlines);
+	if (acceptedStates.contains(event.state))
+		FlxG.state.add(scanlines);
 }
 
 function onUpdate(event:UpdateEvent)
