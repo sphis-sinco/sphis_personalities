@@ -3,6 +3,7 @@ package game.scripts;
 import crowplexus.iris.Iris;
 import crowplexus.iris.IrisConfig;
 import game.desktop.DesktopMain;
+import game.desktop.DesktopPlay;
 import game.scripts.events.AddedEvent;
 import game.scripts.events.BaseEvent;
 import game.scripts.events.BaseStateEvent;
@@ -199,6 +200,7 @@ class ScriptManager
 	{
 		script.set('ScriptManager', ScriptManager, false);
 
+		script.set('DesktopPlay', DesktopPlay, false);
 		script.set('DesktopMain', DesktopMain, false);
 		script.set('InitState', InitState, false);
 
