@@ -150,7 +150,12 @@ class ScriptManager
 	public static function getAllScriptPaths(script_folder:String):Array<String>
 	{
 		#if sys
-		var typePaths:Array<String> = [Paths.getGamePath(SCRIPT_FOLDER + '/'), 'game/' + SCRIPT_FOLDER + '/', 'game/'];
+		var typePaths:Array<String> = [
+			Paths.getGamePath(SCRIPT_FOLDER + '/'),
+			'game/' + SCRIPT_FOLDER + '/',
+			Paths.getGamePath(''),
+			'game/'
+		];
 
 		return Paths.getTypeArray('script', SCRIPT_FOLDER, SCRIPT_EXTS, typePaths);
 		#else
