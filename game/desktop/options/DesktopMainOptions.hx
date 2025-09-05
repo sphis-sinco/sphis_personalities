@@ -58,6 +58,11 @@ function onUpdate(event:UpdateEvent)
 		else if (Mouse.overlaps(desktopMain.option_options))
 		{
 			desktopMain.option_options.alpha = 0.25;
+
+			if (Mouse.pressed && !moving)
+			{
+				desktopMain.option_options.alpha = 0.125;
+			}
 		}
 	}
 }
