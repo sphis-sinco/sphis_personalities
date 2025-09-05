@@ -52,6 +52,9 @@ class DesktopPlay extends State
 			levelSprite.ID = i;
 			levelsGrp.add(levelSprite);
 
+			levelSprite.screenCenter();
+			levelSprite.x += (levelSprite.width * 1.25) * i;
+
 			i++;
 		}
 	}
