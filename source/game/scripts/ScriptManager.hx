@@ -117,7 +117,6 @@ class ScriptManager
 		for (importThing in imports)
 		{
 			var importClass = importThing.split('.')[importThing.split('.').length - 1];
-			trace(importClass);
 
 			if (!StringTools.contains(GIANT_SCRIPT_FILE, importThing))
 				if (!imported.contains(importClass))
@@ -129,6 +128,7 @@ class ScriptManager
 
 		GIANT_SCRIPT_FILE += temp_giant_script_file;
 
+		trace('Giant script file (for web shit): ');
 		#if sys
 		Sys.println(GIANT_SCRIPT_FILE);
 		#else
