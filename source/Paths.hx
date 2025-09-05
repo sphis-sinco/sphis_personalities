@@ -73,7 +73,11 @@ class Paths
 			traceArr.push(split[split.length - 1]);
 		}
 
-		trace('Loaded ' + type + ' files: ' + traceArr);
+		trace('Loaded ' + traceArr.length + ' ' + type + ' files:');
+		for (file in arr)
+		{
+			trace(' * ' + file);
+		}
 		#end
 		return arr;
 	}
