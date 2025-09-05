@@ -24,7 +24,7 @@ function onUpdate(event:UpdateEvent)
 
 			if (Mouse.pressed)
 				Mouse.setMouseState(MouseStates.SELECTED);
-			if (Mouse.justReleased)
+			if (Mouse.justReleased && StringTools.contains(desktopMain.haxen.graphic.key, 'idle'))
 			{
 				desktopMain.haxen_changeState('boop');
 				new FlxTimer().start(1, function(tmr)
