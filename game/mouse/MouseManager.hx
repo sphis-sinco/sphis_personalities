@@ -1,6 +1,7 @@
 import flixel.FlxG;
 import game.Mouse;
 import game.MouseStates;
+import game.desktop.DesktopMain;
 import game.scripts.events.UpdateEvent;
 
 function onUpdate(event:UpdateEvent)
