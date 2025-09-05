@@ -19,7 +19,7 @@ class State extends FlxState
 		else
 			this.state = '${posInfos.fileName}${posInfos.className}';
 
-		Mouse.set_state(MouseStates.IDLE);
+		Mouse.setMouseState(MouseStates.IDLE);
 	}
 
 	override function create()

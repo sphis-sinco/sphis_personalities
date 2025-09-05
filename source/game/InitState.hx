@@ -10,7 +10,7 @@ class InitState extends FlxState
 	{
 		super.create();
 
-		Mouse.set_state(MouseStates.IDLE);
+		Mouse.setMouseState(MouseStates.IDLE);
 
 		ScriptManager.loadAllScripts();
 
