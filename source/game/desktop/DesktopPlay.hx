@@ -49,7 +49,8 @@ class DesktopPlay extends State
 
 			levelGrp.update(elapsed);
 
-			levelsTextGrp.members[levelGrp.ID].x = levelGrp.levelIcon.x;
+			levelsTextGrp.members[levelGrp.ID].screenCenter(X);
+			levelsTextGrp.members[levelGrp.ID].x += (levelGrp.levelIcon.width * 1.25) * levelGrp.ID;
 			levelsTextGrp.members[levelGrp.ID].y = levelGrp.levelIcon.y - levelsTextGrp.members[levelGrp.ID].height;
 		}
 	}
