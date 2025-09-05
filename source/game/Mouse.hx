@@ -2,6 +2,7 @@ package game;
 
 import flixel.FlxG;
 import flixel.graphics.FlxGraphic;
+import openfl.display.Bitmap;
 
 class Mouse
 {
@@ -15,8 +16,8 @@ class Mouse
 
 	public static function updateMouseGraphic()
 	{
-		trace('Updating Mouse Graphic to: ' + Paths.getImagePath('mouse/' + state));
 		var graphic = FlxGraphic.fromAssetKey(Paths.getImagePath('mouse/' + state));
+		trace('Updating Mouse Graphic to: ' + graphic.key);
 
 		if (graphic == null)
 		{

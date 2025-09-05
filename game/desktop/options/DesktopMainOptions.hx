@@ -19,10 +19,21 @@ function onUpdate(event:UpdateEvent)
 	if (desktopMain != null && event.state == 'desktop-main')
 	{
 		desktopMain.option_play.alpha = 0.5;
+		desktopMain.option_options.alpha = 0.5;
+
 		if (FlxG.mouse.overlaps(desktopMain.option_play))
 		{
 			desktopMain.option_play.alpha = 1;
+			Mouse.set_state(MouseStates.CAN_SELECT);
 		}
-		desktopMain.option_options.alpha = 0.5;
+		else if (FlxG.mouse.overlaps(desktopMain.option_options))
+		{
+			desktopMain.option_play.alpha = 0.25;
+			Mouse.set_state(MouseStates.CANT_SELECT);
+		}
+		else
+		{
+			Mouse.set_state(MouseStates.IDLE);
+		}
 	}
 }
