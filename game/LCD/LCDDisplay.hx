@@ -8,12 +8,9 @@ var acceptedStates = ['desktop-main'];
 
 function onCreate(event:CreateEvent)
 {
-	if (scanlines == null)
-	{
-		scanlines = new FlxSprite();
-		scanlines.loadGraphic(Paths.getImagePath('LCD/scanlines'));
-		scanlines.screenCenter();
-	}
+	scanlines = new FlxSprite();
+	scanlines.loadGraphic(Paths.getImagePath('LCD/scanlines'));
+	scanlines.screenCenter();
 
 	if (acceptedStates.contains(event.state))
 		FlxG.state.add(scanlines);
@@ -23,6 +20,6 @@ function onUpdate(event:UpdateEvent)
 {
 	if (scanlines != null)
 	{
-		scanlines.alpha = FlxG.random.float(0, 1);
+		scanlines.alpha = FlxG.random.float(0.05, 0.1);
 	}
 }
