@@ -128,6 +128,9 @@ class ScriptManager
 
 		script.set('Paths', Paths, false);
 
+		script.set('Mouse', Mouse, false);
+		script.set('MouseStates', MouseStates, false);
+
 		script.set('BaseEvent', BaseEvent, false);
 		script.set('BaseStateEvent', BaseStateEvent, false);
 

@@ -6,13 +6,14 @@ import game.scripts.ScriptManager;
 
 class InitState extends FlxState
 {
+	override function create()
+	{
+		super.create();
 
-        override function create() {
-                super.create();
+		Mouse.updateMouseGraphic();
 
 		ScriptManager.loadAllScripts();
 
-                FlxG.switchState(() -> new game.desktop.DesktopMain());
-        }
-        
+		FlxG.switchState(() -> new game.desktop.DesktopMain());
+	}
 }
