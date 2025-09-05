@@ -20,6 +20,9 @@ class DesktopMain extends State
 
 	public var haxen:FlxSprite;
 
+	public var option_play:FlxSprite;
+	public var option_options:FlxSprite;
+
 	override public function create()
 	{
 		haxen = new FlxSprite();
@@ -29,6 +32,26 @@ class DesktopMain extends State
 		haxen.updateHitbox();
 		haxen.screenCenter();
 		haxen.y = FlxG.height - haxen.height * 0.75;
+
+		option_play = new FlxSprite();
+		add(option_play);
+		option_play.loadGraphic(Paths.getImagePath('desktop/options/play'));
+		option_play.scale.set(0.5, 0.5);
+		option_play.updateHitbox();
+
+		option_play.screenCenter();
+		option_play.x = 32;
+		option_play.y -= 64;
+
+		option_options = new FlxSprite();
+		add(option_options);
+		option_options.loadGraphic(Paths.getImagePath('desktop/options/options'));
+		option_options.scale.set(0.5, 0.5);
+		option_options.updateHitbox();
+
+		option_options.screenCenter();
+		option_options.x = FlxG.width - (option_options.width + 32);
+		option_options.y -= 64;
 
 		super.create();
 	}
