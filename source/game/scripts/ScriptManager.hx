@@ -104,13 +104,18 @@ class ScriptManager
 					if (StringTools.startsWith(addThing, 'function'))
 						addThing = StringTools.replace(addThing, 'function', 'public static function');
 					if (StringTools.startsWith(addThing, 'var'))
+					{
 						addThing = StringTools.replace(addThing, 'var', 'static var');
 
-					if (!StringTools.contains(addThing, 'import'))
-						temp_giant_script_file += addThing;
+						if (StringTools.contains(temp_giant_script_file, addThing))
+							addThing = '';
+					}
 
 					if (StringTools.startsWith(addThing, 'import') && !imports.contains(addThing))
 						imports.push(addThing);
+
+					if (!StringTools.contains(addThing, 'import'))
+						temp_giant_script_file += addThing;
 				}
 			}
 		}
