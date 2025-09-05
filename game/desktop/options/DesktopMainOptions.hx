@@ -3,6 +3,7 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 import game.desktop.DesktopMain;
+import game.desktop.DesktopPlay;
 import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
 
@@ -42,7 +43,7 @@ function onUpdate(event:UpdateEvent)
 					startDelay: 0.5,
 					onComplete: tween ->
 					{
-						FlxG.switchState(() -> new DesktopMain());
+						FlxG.switchState(() -> new DesktopPlay());
 					}
 				});
 
