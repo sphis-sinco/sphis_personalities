@@ -1,6 +1,7 @@
 import flixel.FlxG;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import flixel.util.FlxTimer;
 import game.desktop.DesktopMain;
 import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
@@ -30,6 +31,7 @@ function onUpdate(event:UpdateEvent)
 
 			if (Mouse.justReleased && !moving)
 			{
+				FlxTimer.globalManager.clear();
 				desktopMain.haxen_changeState('accept');
 				moving = true;
 				desktopMain.haxen.x -= (desktopMain.haxen.width / 10);
