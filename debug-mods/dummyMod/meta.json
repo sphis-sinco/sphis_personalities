@@ -1,0 +1,12 @@
+{
+        "name": "Dummy mod",
+        "version": "1",
+        "description": "Dummy mod to test shit",
+
+        "credits":[
+                {
+                        "name":"Sphis",
+                        "title":"Maker"
+                }
+        ]
+}
