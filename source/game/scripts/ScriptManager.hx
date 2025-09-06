@@ -354,13 +354,14 @@ class ScriptManager
 		}
 
 		var needToAdd:Array<String> = [];
+
+		var addition = '';
+		var newCount = 0;
+
 		getAllScriptPaths(function(arr, type)
 		{
 			for (script in deletedScripts)
 				arr.push(script);
-
-			var addition = '';
-			var newCount = 0;
 
 			for (file in arr)
 				if (!scriptsString.contains(file))
