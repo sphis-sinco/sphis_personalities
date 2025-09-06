@@ -53,7 +53,7 @@ class DesktopPlay extends State
 		for (levelGrp in levelsGrp.members)
 		{
 			levelGrp.levelIcon.screenCenter();
-			levelGrp.levelIcon.x += (levelGrp.levelIcon.width * 1.25) * levelGrp.ID;
+			levelGrp.levelIcon.x += ((levelGrp.levelIcon.width) * levelGrp.ID) * 1.5;
 
 			levelGrp.update(elapsed);
 
