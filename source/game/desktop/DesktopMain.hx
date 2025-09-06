@@ -2,6 +2,7 @@ package game.desktop;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.group.FlxGroup.FlxTypedGroup;
 
 class DesktopMain extends State
 {
@@ -22,6 +23,8 @@ class DesktopMain extends State
 
 	public var option_play:FlxSprite;
 	public var option_options:FlxSprite;
+
+	public var scanlineLayer:FlxTypedGroup<FlxSprite>;
 
 	override public function create()
 	{
@@ -52,6 +55,9 @@ class DesktopMain extends State
 		option_options.screenCenter();
 		option_options.x = FlxG.width - (option_options.width + 32);
 		option_options.y -= 64;
+
+		scanlineLayer = new FlxTypedGroup<FlxSprite>();
+		add(scanlineLayer);
 
 		super.create();
 	}

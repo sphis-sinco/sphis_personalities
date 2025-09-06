@@ -2,6 +2,7 @@ package game.desktop;
 
 import flixel.FlxG;
 import flixel.FlxObject;
+import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
 import game.desktop.play.LevelData;
@@ -32,6 +33,8 @@ class DesktopPlay extends State
 
 	public var camFollow:FlxObject;
 
+	public var scanlineLayer:FlxTypedGroup<FlxSprite>;
+
 	override function create()
 	{
 		levelsGrp = new FlxTypedGroup<LevelSpriteGroup>();
@@ -42,6 +45,9 @@ class DesktopPlay extends State
 		camFollow = new FlxObject(320, 240);
 		add(camFollow);
 		FlxG.camera.follow(camFollow, LOCKON, 0.1);
+
+		scanlineLayer = new FlxTypedGroup<FlxSprite>();
+		add(scanlineLayer);
 
 		super.create();
 	}
