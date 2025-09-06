@@ -13,12 +13,12 @@ var scanlineAngle = FlxG.random.float(0, 360);
 function onCreate(event:CreateEvent)
 {
 	scanlineLayerOne = new FlxSprite();
-	scanlineLayerOne.loadGraphic('mods/dummyMod/dumbshit/Sprite-0001');
+	scanlineLayerOne.loadGraphic(Paths.getImagePath('dumbshit/Sprite-0001'));
 	scanlineLayerOne.screenCenter();
 	scanlineLayerOne.scrollFactor.set(0, 0);
 
 	scanlineLayerTwo = new FlxSprite();
-	scanlineLayerTwo.loadGraphic('mods/dummyMod/dumbshit/Sprite-0001');
+	scanlineLayerTwo.loadGraphic(Paths.getImagePath('dumbshit/Sprite-0001'));
 	scanlineLayerTwo.screenCenter();
 	scanlineLayerTwo.scrollFactor.set(0, 0);
 

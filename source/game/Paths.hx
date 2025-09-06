@@ -19,13 +19,12 @@ class Paths
 
 		for (mod in ModManager.MODS_ENABLED)
 		{
-			final modPath = ModManager.MODS_FOLDER + '/' + mod + '/' + (StringTools.replace(path, 'game/', ''));
-
-			if (getText(modPath) != null)
-				retpath = modPath;
-
-			retpath = (StringTools.replace(retpath, 'game/' + ModManager.MODS_FOLDER + '/' + mod + '/', ModManager.MODS_FOLDER + '/' + mod + '/'));
+			if (pathExists('game/' + ModManager.MODS_FOLDER + '/' + mod + '/' + StringTools.replace(retpath, 'game/', '')))
+			{
+				retpath = 'game/' + ModManager.MODS_FOLDER + '/' + mod + '/' + StringTools.replace(retpath, 'game/', '');
+			}
 		}
+
 		return retpath;
 	}
 
@@ -35,7 +34,7 @@ class Paths
 	}
 
 	public static function getTypeArray(type:String, type_folder:String, ext:Array<String>, paths:Array<String>,
-			?foundFilesFunction:(Array<Dynamic>, String) -> Void = null, ?modFiles:Bool = true):Array<String>
+			?foundFilesFunction:(Array<Dynamic>, String) -> Void = null):Array<String>
 	{
 		var arr:Array<String> = [];
 		#if sys
@@ -57,8 +56,8 @@ class Paths
 					{
 						final path:String = ogdir + folder + endsplitter + file;
 
-						if (!arr.contains(((modFiles) ? getGamePath(path) : path)))
-							arr.push(((modFiles) ? getGamePath(path) : path));
+						if (!arr.contains(getGamePath(path)))
+							arr.push(getGamePath(path));
 					}
 
 				if (!file.contains('.'))
@@ -75,20 +74,23 @@ class Paths
 		}
 		var readDir:Dynamic = function(directory:String)
 		{
+			// trace(directory);
 			if (pathExists(directory))
 				for (folder in FileSystem.readDirectory(directory))
-					readFolder(folder, directory);
+					if ((directory == 'game/') && folder != 'mods')
+						readFolder(folder, directory);
 		}
 
 		for (path in typePaths)
 		{
 			readDir(path);
-			readDir(ModManager.MODS_FOLDER + '/' + path);
-			if (modFiles)
-			{
-				readDir(getGamePath(path));
-				readDir(getGamePath(ModManager.MODS_FOLDER + '/' + path));
-			}
+			for (mod in ModManager.MODS_ENABLED)
+				readDir('game/'
+					+ ModManager.MODS_FOLDER
+					+ '/'
+					+ mod
+					+ '/'
+					+ (StringTools.replace(StringTools.replace(path, ModManager.MODS_FOLDER + '/', ''), 'game/', '')));
 		}
 
 		if (foundFilesFunction != null)
@@ -107,6 +109,13 @@ class Paths
 		return arr;
 	}
 
+	public static function saveContent(path:String, content:String)
+	{
+		#if sys
+		File.saveContent(path, content);
+		#end
+	}
+
 	public static function pathExists(id:String):Bool
 	{
 		#if sys
@@ -118,24 +127,10 @@ class Paths
 
 	public static function getText(id:String):String
 	{
-		try
-		{
-			#if sys
-			return File.getContent(id);
-			#else
-			return Assets.getText(id);
-			#end
-		}
-		catch (_)
-		{
-			return null;
-		}
-	}
-
-	public static function saveContent(path:String, content:String)
-	{
 		#if sys
-		File.saveContent(path, content);
+		return File.getContent(id);
+		#else
+		return Assets.getText(id);
 		#end
 	}
 }

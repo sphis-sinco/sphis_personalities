@@ -24,18 +24,18 @@ class ModManager
 		MOD_METAS = [];
 
 		#if sys
-		if (!Paths.pathExists(MODS_FOLDER + '/'))
-			FileSystem.createDirectory(MODS_FOLDER);
+		if (!Paths.pathExists('game/' + MODS_FOLDER + '/'))
+			FileSystem.createDirectory('game/' + MODS_FOLDER);
 
-		for (entry in FileSystem.readDirectory(MODS_FOLDER + '/'))
+		for (entry in FileSystem.readDirectory('game/' + MODS_FOLDER + '/'))
 		{
-			if (entry != null && FileSystem.isDirectory(MODS_FOLDER + '/' + entry))
+			if (entry != null && FileSystem.isDirectory('game/' + MODS_FOLDER + '/' + entry))
 			{
 				var meta:ModMeta;
 				var disable:String = '';
 				try
 				{
-					meta = Json.parse(Paths.getText(MODS_FOLDER + '/' + entry + '/' + MOD_METADATA_FILE));
+					meta = Json.parse(Paths.getText('game/' + MODS_FOLDER + '/' + entry + '/' + MOD_METADATA_FILE));
 				}
 				catch (e)
 				{
@@ -47,7 +47,7 @@ class ModManager
 				{
 					try
 					{
-						disable = Paths.getText(MODS_FOLDER + '/' + entry + '/' + MOD_DISABLE_FILE);
+						disable = Paths.getText('game/' + MODS_FOLDER + '/' + entry + '/' + MOD_DISABLE_FILE);
 					}
 					catch (e)
 					{
