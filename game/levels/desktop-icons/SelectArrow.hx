@@ -49,9 +49,19 @@ function onUpdate(event:UpdateEvent)
 		rightArrow.scale.set(.25, .25);
 
 		if (Controls.getControlPressed('ui_left'))
-			leftArrow.scale.set(.35, .15);
+		{
+			if (DesktopPlay.instance.curSel > 0)
+				leftArrow.scale.set(.3, .15);
+			else
+				leftArrow.scale.set(.15, .3);
+		}
 		if (Controls.getControlPressed('ui_right'))
-			rightArrow.scale.set(.3, .15);
+		{
+			if (DesktopPlay.instance.curSel < DesktopPlay.instance.levels.length - 1)
+				rightArrow.scale.set(.3, .15);
+			else
+				rightArrow.scale.set(.15, .3);
+		}
 
 		rightArrow.screenCenter(0x11);
 		rightArrow.x = FlxG.width - rightArrow.width - 32;
