@@ -137,6 +137,8 @@ class ScriptManager
 	{
 		for (script in SCRIPTS)
 		{
+			Iris.instances.remove(script.name);
+
 			script.destroy();
 			SCRIPTS.remove(script);
 		}
