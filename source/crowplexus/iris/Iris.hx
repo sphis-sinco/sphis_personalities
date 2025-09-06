@@ -156,18 +156,16 @@ class Iris
 			}
 		}
 		#if sys
-		Sys.println((posPrefix + ": " + out).stripColor());
+		Sys.println((posPrefix + ": " + out));
 		#else
 		// Since non-sys targets lack printLn, a simple trace should work
-		trace((posPrefix + ": " + out).stripColor());
+		trace((posPrefix + ": " + out));
 		#end
 
 		switch (level)
 		{
 			case WARN, ERROR, FATAL:
-				Application.current.window.alert(out, posPrefix);
-			default:
-				// nothing
+				Application.current.window.alert(out.stripColor(), posPrefix.stripColor().replace('[', '').replace(']', ''));
 		}
 	}
 
