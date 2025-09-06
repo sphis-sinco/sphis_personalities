@@ -7,7 +7,7 @@ function onUpdate(event:UpdateEvent)
 {
 	Mouse.setMouseState(MouseStates.IDLE);
 
-	if (event.state == 'desktop-main')
+	if (event.state == 'desktop-main' && DesktopMain.instance.haxen.y == DesktopMain.instance.haxenStartingYPosition)
 	{
 		if (Mouse.overlaps(DesktopMain.instance.option_play))
 			Mouse.setMouseState(MouseStates.CAN_SELECT);

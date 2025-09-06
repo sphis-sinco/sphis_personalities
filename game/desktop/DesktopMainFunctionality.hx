@@ -15,7 +15,7 @@ function onCreate(event:CreateEvent)
 	if (event.state == 'desktop-main')
 	{
 		var startingYPositions = [
-			DesktopMain.instance.haxen.getPosition().y,
+			DesktopMain.instance.haxenStartingYPosition,
 			DesktopMain.instance.option_play.getPosition().y,
 			DesktopMain.instance.option_options.getPosition().y
 		];
@@ -28,7 +28,7 @@ function onCreate(event:CreateEvent)
 		DesktopMain.instance.option_play.alpha = 0;
 		DesktopMain.instance.option_options.alpha = 0;
 
-		FlxTween.tween(DesktopMain.instance.haxen, {alpha: 1, y: startingYPositions[0]}, 1, {
+		FlxTween.tween(DesktopMain.instance.haxen, {alpha: 0.75, y: startingYPositions[0]}, 1, {
 			ease: FlxEase.sineInOut,
 			startDelay: 0.5,
 			onComplete: _ ->
@@ -37,11 +37,11 @@ function onCreate(event:CreateEvent)
 			}
 		});
 
-		FlxTween.tween(DesktopMain.instance.option_play, {alpha: 1, y: startingYPositions[1]}, 1, {
+		FlxTween.tween(DesktopMain.instance.option_play, {alpha: 0.5, y: startingYPositions[1]}, 1, {
 			ease: FlxEase.sineInOut,
 			startDelay: 0.1,
 		});
-		FlxTween.tween(DesktopMain.instance.option_options, {alpha: 1, y: startingYPositions[2]}, 1, {
+		FlxTween.tween(DesktopMain.instance.option_options, {alpha: 0.5, y: startingYPositions[2]}, 1, {
 			ease: FlxEase.sineInOut
 		});
 	}

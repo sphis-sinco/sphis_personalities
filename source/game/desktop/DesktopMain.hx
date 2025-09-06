@@ -20,6 +20,7 @@ class DesktopMain extends State
 	}
 
 	public var haxen:FlxSprite;
+	public var haxenStartingYPosition = 0.0;
 
 	public var option_play:FlxSprite;
 	public var option_options:FlxSprite;
@@ -35,6 +36,7 @@ class DesktopMain extends State
 		haxen.updateHitbox();
 		haxen.screenCenter();
 		haxen.y = FlxG.height - haxen.height * 0.75;
+		haxenStartingYPosition = haxen.y;
 
 		option_play = new FlxSprite();
 		add(option_play);
