@@ -310,10 +310,10 @@ class ScriptManager
 			loadScriptByPath(path);
 	}
 
-	public static function getAllScriptPaths(?foundFilesFunction:(Array<Dynamic>, String) -> Void = null):Array<String>
+	public static function getAllScriptPaths(?foundFilesFunction:(Array<Dynamic>, String) -> Void = null, ?modFiles:Bool = true):Array<String>
 	{
 		#if sys
-		return Paths.getTypeArray('script', SCRIPT_FOLDER, SCRIPT_EXTS, SCRIPT_FOLDERS, foundFilesFunction);
+		return Paths.getTypeArray('script', SCRIPT_FOLDER, SCRIPT_EXTS, SCRIPT_FOLDERS, foundFilesFunction, modFiles);
 		#else
 		return [];
 		#end
@@ -360,6 +360,7 @@ class ScriptManager
 			}
 		}
 
+		var ogFiles:Array<String> = getAllScriptPaths(function(arr, type) {}, false);
 		var needToAdd:Array<String> = [];
 
 		var addition = '';
@@ -370,28 +371,38 @@ class ScriptManager
 			for (script in deletedScripts)
 				arr.push(script);
 
-			for (file in arr)
+			for (file in ogFiles)
 				if (!scriptsString.contains(file))
 				{
 					newCount++;
 					needToAdd.push(file);
 				}
 
-			var newText = ((newCount > 0) ? (' files (' + newCount + ' new)') : '');
-			trace('Found ' + arr.length + ' ' + type + newText + ':');
+			var newText = ((newCount > 0) ? (' (' + newCount + ' new)') : '');
+			trace('Found ' + arr.length + ' ' + type + ' file(s)' + newText + ':');
+
+			var i = 0;
 			for (file in arr)
 			{
+				final ogFile = ogFiles[i];
+
 				addition = Ansi.fg('(loaded)', WHITE);
-				if (!scriptsString.contains(file))
+				if (!scriptsString.contains(ogFile))
 				{
 					addition = Ansi.fg('(new)', RED);
-					scriptsString.push(file);
+					if (!scriptsString.contains(ogFile))
+						scriptsString.push(ogFile);
 				}
 
-				if (deletedScripts.contains(file))
+				if (deletedScripts.contains(ogFile) && deletedScripts.contains(file))
 					addition = Ansi.fg('(removed)', BLACK);
-				if (updatedScripts.contains(file))
+				if ((updatedScripts.contains(ogFile) || updatedScripts.contains(file))
+					|| (scriptsString.contains(ogFile) && !scriptsString.contains(file)))
+				{
+					if (!scriptsString.contains(file))
+						scriptsString.push(file);
 					addition = Ansi.fg('(updated)', CYAN);
+				}
 
 				if (StringTools.contains(file, 'mods/'))
 				{
@@ -399,6 +410,8 @@ class ScriptManager
 				}
 
 				trace(' * ' + file + ' ' + addition);
+
+				i++;
 			}
 
 			loadScriptsByPaths(needToAdd);

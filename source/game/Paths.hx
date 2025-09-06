@@ -35,7 +35,7 @@ class Paths
 	}
 
 	public static function getTypeArray(type:String, type_folder:String, ext:Array<String>, paths:Array<String>,
-			?foundFilesFunction:(Array<Dynamic>, String) -> Void = null):Array<String>
+			?foundFilesFunction:(Array<Dynamic>, String) -> Void = null, ?modFiles:Bool = true):Array<String>
 	{
 		var arr:Array<String> = [];
 		#if sys
@@ -57,8 +57,8 @@ class Paths
 					{
 						final path:String = ogdir + folder + endsplitter + file;
 
-						if (!arr.contains(getGamePath(path)))
-							arr.push(getGamePath(path));
+						if (!arr.contains(((modFiles) ? getGamePath(path) : path)))
+							arr.push(((modFiles) ? getGamePath(path) : path));
 					}
 
 				if (!file.contains('.'))
@@ -75,16 +75,20 @@ class Paths
 		}
 		var readDir:Dynamic = function(directory:String)
 		{
-			for (folder in FileSystem.readDirectory(directory))
-				readFolder(folder, directory);
+			if (pathExists(directory))
+				for (folder in FileSystem.readDirectory(directory))
+					readFolder(folder, directory);
 		}
 
 		for (path in typePaths)
 		{
 			readDir(path);
-			readDir(getGamePath(path));
-			readDir(ModManager.MODS_FOLDER + paths);
-			readDir(getGamePath(ModManager.MODS_FOLDER + paths));
+			readDir(ModManager.MODS_FOLDER + '/' + path);
+			if (modFiles)
+			{
+				readDir(getGamePath(path));
+				readDir(getGamePath(ModManager.MODS_FOLDER + '/' + path));
+			}
 		}
 
 		if (foundFilesFunction != null)
