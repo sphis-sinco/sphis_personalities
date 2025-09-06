@@ -5,8 +5,8 @@ import game.scripts.events.AddedEvent;
 import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
 
-var desktopMain:DesktopMain = null;
 var haxenIdleStates = [];
+var haxenStartingYPosition = 0.0;
 
 function onAdded(event:AddedEvent)
 {
@@ -16,29 +16,28 @@ function onAdded(event:AddedEvent)
 
 function onCreate(event:CreateEvent)
 {
-	desktopMain = null;
-
 	if (event.state == 'desktop-main')
-		desktopMain = DesktopMain.instance;
+		haxenStartingYPosition = DesktopMain.instance.haxen.y;
 }
 
 function onUpdate(event:UpdateEvent)
 {
-	if (desktopMain != null && event.state == 'desktop-main')
+	if (event.state == 'desktop-main')
 	{
-		desktopMain.haxen.alpha = 0.75;
-		if (Mouse.overlaps(desktopMain.haxen))
+		if (DesktopMain.instance.haxen.y == haxenStartingYPosition)
+			DesktopMain.instance.haxen.alpha = 0.75;
+		if (Mouse.overlaps(DesktopMain.instance.haxen) && DesktopMain.instance.haxen.y == haxenStartingYPosition)
 		{
-			desktopMain.haxen.alpha = 1;
+			DesktopMain.instance.haxen.alpha = 1;
 
 			if (Mouse.pressed)
 				Mouse.setMouseState(MouseStates.SELECTED);
-			if (Mouse.justReleased && haxenIdleStates.contains(desktopMain.haxen.graphic.key))
+			if (Mouse.justReleased && haxenIdleStates.contains(DesktopMain.instance.haxen.graphic.key))
 			{
-				desktopMain.haxen_changeState('boop');
+				DesktopMain.instance.haxen_changeState('boop');
 				new FlxTimer().start(1, function(tmr)
 				{
-					desktopMain.haxen_idle();
+					DesktopMain.instance.haxen_idle();
 				});
 			}
 		}
