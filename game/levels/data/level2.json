@@ -3,5 +3,9 @@
         "authors": [
                 "Sphis"
         ],
-        "unlocked": false
+        "unlocked": false,
+
+        "assetFolders": {
+                "haxen": "general"
+        }
 }

@@ -6,5 +6,12 @@ typedef LevelData =
 	var authors:Array<String>;
 	var unlocked:Bool;
 
+	var assetFolders:AssetFolders;
+
 	var ?id:String;
+}
+
+typedef AssetFolders =
+{
+	var haxen:String;
 }
