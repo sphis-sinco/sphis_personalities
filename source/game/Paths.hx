@@ -1,7 +1,5 @@
 package game;
 
-import game.mods.ModManager;
-
 using StringTools;
 
 #if sys
@@ -16,15 +14,6 @@ class Paths
 	public static function getGamePath(path:String)
 	{
 		var retpath = (StringTools.startsWith(path, 'game/') ? '' : 'game/') + path;
-
-		for (mod in ModManager.MOD_IDS)
-		{
-			if (pathExists('game/' + ModManager.MODS_FOLDER + '/' + mod + '/' + StringTools.replace(retpath, 'game/', '')))
-			{
-				retpath = 'game/' + ModManager.MODS_FOLDER + '/' + mod + '/' + StringTools.replace(retpath, 'game/', '');
-			}
-		}
-
 		return retpath;
 	}
 
@@ -67,9 +56,6 @@ class Paths
 
 		readFolder = function(folder:String, ogdir:String)
 		{
-			if (folder == 'mods' && ogdir.split('/')[0] == 'game' && ModManager.MOD_IDS.length > 0)
-				return;
-
 			if (!folder.contains('.'))
 				readFileFolder(folder, ogdir);
 			else
@@ -87,13 +73,6 @@ class Paths
 		for (path in typePaths)
 		{
 			readDir(path);
-			for (mod in ModManager.MOD_IDS)
-				readDir('game/'
-					+ ModManager.MODS_FOLDER
-					+ '/'
-					+ mod
-					+ '/'
-					+ (StringTools.replace(StringTools.replace(path, ModManager.MODS_FOLDER + '/', ''), 'game/', '')));
 		}
 
 		if (foundFilesFunction != null)
