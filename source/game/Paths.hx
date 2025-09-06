@@ -21,7 +21,7 @@ class Paths
 		{
 			final modPath = ModManager.MODS_FOLDER + '/' + mod + '/' + (StringTools.replace(path, 'game/', ''));
 
-			if (pathExists(modPath))
+			if (getText(modPath) != null)
 				retpath = modPath;
 
 			retpath = (StringTools.replace(retpath, 'game/' + ModManager.MODS_FOLDER + '/' + mod + '/', ModManager.MODS_FOLDER + '/' + mod + '/'));
@@ -118,11 +118,18 @@ class Paths
 
 	public static function getText(id:String):String
 	{
-		#if sys
-		return File.getContent(id);
-		#else
-		return Assets.getText(id);
-		#end
+		try
+		{
+			#if sys
+			return File.getContent(id);
+			#else
+			return Assets.getText(id);
+			#end
+		}
+		catch (_)
+		{
+			return null;
+		}
 	}
 
 	public static function saveContent(path:String, content:String)
