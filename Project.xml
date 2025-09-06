@@ -55,8 +55,6 @@
 	<section if="MODDING_ALLOWED">
 		<assets path="game" exclude="*.hx" />
 
-		<define name="FLX_HSCRIPT_EXT" value="hxc" />
-
 		<assets path="mods" if="MODDING_ALLOWED" />
 		<assets path="debug-mods" rename="mods" if="debug MODDING_ALLOWED" />
 
