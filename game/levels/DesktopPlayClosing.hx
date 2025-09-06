@@ -6,10 +6,13 @@ import game.desktop.DesktopMain;
 import game.desktop.DesktopPlay;
 import game.scripts.events.UpdateEvent;
 
+var savedSelection:Int;
+
 function onUpdate(event:UpdateEvent)
 {
-	if (event.state == 'desktop-play' && Controls.getControlJustReleased('ui_leave'))
+	if ((savedSelection == null) && event.state == 'desktop-play' && Controls.getControlJustReleased('ui_leave'))
 	{
+		savedSelection = DesktopPlay.instance.curSel;
 		for (obj in DesktopPlay.instance.levelsGrp.members)
 		{
 			obj.levelIcon.alpha = 1;
@@ -35,7 +38,11 @@ function onUpdate(event:UpdateEvent)
 
 		new FlxTimer().start(1, tmr ->
 		{
+			savedSelection = null;
 			FlxG.switchState(() -> new DesktopMain());
 		});
 	}
+
+	if (savedSelection != null && DesktopPlay.instance.curSel != savedSelection)
+		DesktopPlay.instance.curSel = savedSelection;
 }
