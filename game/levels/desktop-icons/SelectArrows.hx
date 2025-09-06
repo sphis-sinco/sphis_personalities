@@ -3,6 +3,7 @@ import flixel.FlxSprite;
 import game.desktop.DesktopPlay;
 import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
+import game.scripts.imports.FlxScriptedAxes;
 
 var leftArrow:FlxSprite;
 var rightArrow:FlxSprite;
@@ -21,7 +22,7 @@ function onCreate(event:CreateEvent)
 			leftArrow.scale.set(.25, .25);
 			leftArrow.updateHitbox();
 
-			leftArrow.screenCenter(0x11);
+			leftArrow.screenCenter(FlxScriptedAxes.Y);
 			leftArrow.x = 32;
 
 			leftArrow.scrollFactor.set(0, 0);
@@ -74,7 +75,7 @@ function onUpdate(event:UpdateEvent)
 				rightArrow.scale.set(.15, .3);
 		}
 
-		rightArrow.screenCenter(0x11);
+		rightArrow.screenCenter(FlxScriptedAxes.Y);
 		rightArrow.x = FlxG.width - rightArrow.width - 32;
 	}
 }

@@ -6,6 +6,7 @@ import game.mods.ModManager;
 import game.scripts.ScriptManager;
 import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
+import game.scripts.imports.FlxScriptedAxes;
 import game.scripts.imports.FlxScriptedColor;
 
 var modText:FlxText;
@@ -26,7 +27,9 @@ function onCreate(event:CreateEvent)
 		msgBG.setPosition(msgText.x, msgText.y);
 		msgBG.scrollFactor.set();
 
-		modText = new FlxText(10, msgBG.height + 16, 0, '', 16);
+		modText = new FlxText(0, msgBG.height + 16, FlxG.width, '', 16);
+		modText.x = 0;
+		modText.alignment = 'center';
 		BlankState.instance.add(modText);
 
 		BlankState.instance.add(msgBG);
@@ -77,6 +80,6 @@ function onUpdate(event:UpdateEvent)
 		{
 			modText.text = 'No mods downloaded.';
 		}
-		modText.screenCenter();
+		modText.screenCenter(FlxScriptedAxes.Y);
 	}
 }

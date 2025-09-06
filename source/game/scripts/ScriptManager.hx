@@ -11,6 +11,7 @@ import game.scripts.events.BaseEvent;
 import game.scripts.events.BaseStateEvent;
 import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
+import game.scripts.imports.FlxScriptedAxes;
 import game.scripts.imports.FlxScriptedColor;
 import lime.app.Application;
 
@@ -164,11 +165,6 @@ class ScriptManager
 					addThing += '\n';
 					#end
 
-					addThing = StringTools.replace(addThing, '.screenCenter(0x00);', '.screenCenter(NONE);');
-					addThing = StringTools.replace(addThing, '.screenCenter(0x01);', '.screenCenter(X);');
-					addThing = StringTools.replace(addThing, '.screenCenter(0x10);', '.screenCenter(Y);');
-					addThing = StringTools.replace(addThing, '.screenCenter(0x11);', '.screenCenter(XY);');
-
 					if (StringTools.startsWith(addThing, 'function'))
 					{
 						addThing = StringTools.replace(addThing, 'function', 'public static function');
@@ -304,6 +300,7 @@ class ScriptManager
 	static function scriptImports(script:Iris)
 	{
 		script.set('FlxScriptedColor', FlxScriptedColor, false);
+		script.set('FlxScriptedAxes', FlxScriptedAxes, false);
 	}
 
 	public static function loadScriptsByPaths(paths:Array<String>)
