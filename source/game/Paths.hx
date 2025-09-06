@@ -1,5 +1,7 @@
 package game;
 
+import game.mods.ModManager;
+
 using StringTools;
 
 #if sys
@@ -15,6 +17,13 @@ class Paths
 	{
 		var retpath = (StringTools.startsWith(path, 'game/') ? '' : 'game/') + path;
 
+		for (mod in ModManager.MODS_ENABLED)
+		{
+			final modPath = (StringTools.startsWith(path, 'game/') ? '' : 'game/') + ModManager.MODS_FOLDER + '/' + mod + '/' + path;
+
+			if (pathExists(modPath))
+				retpath = path;
+		}
 		return retpath;
 	}
 
