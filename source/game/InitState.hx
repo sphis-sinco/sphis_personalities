@@ -39,10 +39,15 @@ class InitState extends FlxState
 
 		FlxSprite.defaultAntialiasing = true;
 
+		#if dontGenerateWebScript
 		ScriptManager.checkForUpdatedScripts();
+		#end
 		ModManager.loadMods();
+		#if !dontGenerateWebScript
 		ScriptManager.loadAllScripts();
-
+		#else
+		ScriptManager.checkForUpdatedScripts();
+		#end
 		Controls.save = new ControlsSave(Paths.getGamePath('preferences/controls.json'));
 		Controls.save.load(Controls.save.publicPath);
 
