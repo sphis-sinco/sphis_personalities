@@ -86,20 +86,13 @@ class Paths
 		for (path in typePaths)
 			readDir(path);
 
-		var traceArr:Array<String> = [];
-		for (path in arr)
-		{
-			var split = path.split('/');
-			traceArr.push(split[split.length - 1]);
-		}
-
 		if (foundFilesFunction != null)
 		{
 			foundFilesFunction(arr, type);
 		}
 		else
 		{
-			trace('Found ' + traceArr.length + ' ' + type + ' files:');
+			trace('Found ' + arr.length + ' ' + type + ' files:');
 			for (file in arr)
 			{
 				trace(' * ' + file);
