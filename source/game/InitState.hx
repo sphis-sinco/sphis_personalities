@@ -4,7 +4,6 @@ import crowplexus.iris.Iris;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
-import flixel.system.assetSystem.FlxAssetSystem;
 import game.Controls.ControlsSave;
 import game.scripts.ScriptManager;
 

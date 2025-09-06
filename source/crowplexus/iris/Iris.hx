@@ -9,6 +9,7 @@ import crowplexus.iris.utils.UsingEntry;
 import haxe.ds.StringMap;
 import lime.app.Application;
 
+using StringTools;
 using crowplexus.iris.utils.Ansi;
 
 @:structInit
