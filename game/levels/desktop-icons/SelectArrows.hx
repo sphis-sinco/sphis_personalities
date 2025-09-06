@@ -1,5 +1,7 @@
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
 import game.desktop.DesktopPlay;
 import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
@@ -38,15 +40,15 @@ function onCreate(event:CreateEvent)
 			rightArrow.scrollFactor.set(0, 0);
 		}
 
-		if ((ScriptManager.isWeb && moving)
-			|| (!ScriptManager.isWeb && ScriptManager.getVariable('game/desktop/options/DesktopMainOptions.hx', 'moving') == true))
-		{
-			leftArrow.alpha = 0;
-			rightArrow.alpha = 0;
+		leftArrow.alpha = 0;
+		rightArrow.alpha = 0;
 
-			FlxTween.tween(leftArrow, {alpha: 1});
-			FlxTween.tween(rightArrow, {alpha: 1});
-		}
+		FlxTween.tween(leftArrow, {alpha: 1}, 1, {
+			ease: FlxEase.sineInOut
+		});
+		FlxTween.tween(rightArrow, {alpha: 1}, 1, {
+			ease: FlxEase.sineInOut
+		});
 
 		FlxG.state.add(leftArrow);
 		FlxG.state.add(rightArrow);
