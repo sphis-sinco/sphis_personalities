@@ -107,4 +107,11 @@ class Paths
 		return Assets.getText(id);
 		#end
 	}
+
+	public static function saveContent(path:String, content:String)
+	{
+		#if sys
+		File.saveContent(path, content);
+		#end
+	}
 }
