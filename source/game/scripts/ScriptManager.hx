@@ -317,35 +317,37 @@ class ScriptManager
 	public static function checkForUpdatedScripts()
 	{
 		var scriptsString = [];
+		var deletedScripts = [];
 		for (script in SCRIPTS)
 		{
 			scriptsString.push(script.name);
 			var path = script.name;
 
 			@:privateAccess {
-				if (Paths.getText(path) != script.scriptCode)
+				if (!Paths.pathExists(script.name))
 				{
-					trace('script(' + script.name + ') had an update');
-					var scriptLayer:Int = 0;
-
+					trace('script(' + script.name + ') has been removed');
+					deletedScripts.push(script.name);
 					script.destroy();
 					SCRIPTS.remove(script);
-
-					var newScript = (loadScriptByPath(path)) ? SCRIPTS[SCRIPTS.length - 1] : null;
-
-					if (newScript != null)
-					{
-						SCRIPTS.insert(scriptLayer, newScript);
-						SCRIPTS.remove(SCRIPTS[SCRIPTS.length - 1]);
-					}
 				}
 				else
 				{
-					if (!Paths.pathExists(script.name))
+					if (Paths.getText(path) != script.scriptCode)
 					{
-						trace('script(' + script.name + ') has been removed');
+						trace('script(' + script.name + ') had an update');
+						var scriptLayer:Int = 0;
+
 						script.destroy();
 						SCRIPTS.remove(script);
+
+						var newScript = (loadScriptByPath(path)) ? SCRIPTS[SCRIPTS.length - 1] : null;
+
+						if (newScript != null)
+						{
+							SCRIPTS.insert(scriptLayer, newScript);
+							SCRIPTS.remove(SCRIPTS[SCRIPTS.length - 1]);
+						}
 					}
 				}
 			}
@@ -354,8 +356,17 @@ class ScriptManager
 		var needToAdd:Array<String> = [];
 		getAllScriptPaths(function(arr, type)
 		{
+			for (script in deletedScripts)
+				arr.push(script);
+
 			var addition = '(loaded)';
-			trace('Found ' + arr.length + ' ' + type + ' files:');
+			var newCount = 0;
+
+			for (file in arr)
+				if (!scriptsString.contains(file))
+					newCount++;
+
+			trace('Found ' + arr.length + ' ' + type + ' files (' + newCount + ' new):');
 			for (file in arr)
 			{
 				if (!scriptsString.contains(file))
@@ -364,6 +375,10 @@ class ScriptManager
 					needToAdd.push(file);
 					scriptsString.push(file);
 				}
+
+				if (deletedScripts.contains(file))
+					addition = '(removed)';
+
 				trace(' * ' + file + ' ' + addition);
 			}
 
@@ -376,6 +391,9 @@ class ScriptManager
 			{
 				callSingular(script, 'onAdded', [new AddedEvent(script.name)]);
 			}
+
+			for (script in deletedScripts)
+				arr.remove(script);
 		});
 	}
 }
