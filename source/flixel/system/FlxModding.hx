@@ -81,7 +81,7 @@ class FlxModding
 	/**
 	 * A toggle for weither or not scripting is enabled on runtime
 	 */
-	public static var scripting:Bool = #if hscript flixel.util.FlxModUtil.getDefinedBool("FLX_SCRIPTING", true); #else false; #end
+	public static var scripting:Bool = #if hscript flixel.util.FlxModUtil.getDefinedBool("FLX_SCRIPTING", false); #else false; #end
 
 	/**
 	 * SIGNALS API
