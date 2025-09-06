@@ -17,7 +17,6 @@ class Main extends Sprite
 		super();
 
 		#if flixelModding
-		FlxModding.init(PersonalitiesModpack, PersonalitiesMetaDataFormat, null, null, 'game');
 		#if FLXMODDING_SCRIPTING
 		FlxModding.scripting = true;
 
@@ -30,7 +29,10 @@ class Main extends Sprite
 				});
 			}
 		}
+		#else
+		FlxModding.scripting = false;
 		#end
+		FlxModding.init(PersonalitiesModpack, PersonalitiesMetaDataFormat, null, null, 'game');
 		#end
 
 		addChild(new FlxGame(0, 0, game.InitState));

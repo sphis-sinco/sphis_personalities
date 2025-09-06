@@ -53,7 +53,8 @@
 	<define name="hscriptPos" />
 
 	<section if="MODDING_ALLOWED">
-		<assets path="game" exclude="*.hx" />
+		<assets path="game" exclude="*.hxc" if="FLXMODDING_SCRIPTING" />
+		<assets path="game" exclude="*.hx" unless="FLXMODDING_SCRIPTING" />
 
 		<assets path="mods" if="MODDING_ALLOWED" />
 		<assets path="debug-mods" rename="mods" if="debug MODDING_ALLOWED" />
@@ -64,11 +65,6 @@
 		<!-- <haxelib name="rulescript" /> -->
 		<haxelib name="hscript" />
 	</section>
-
-	<section unless="MODDING_ALLOWED">
-		<assets path="game" exclude="*.hxc" />
-	</section>
-
 
 	<!-- ______________________________ Haxedefines _____________________________ -->
 
