@@ -2,6 +2,7 @@ package game.scripts;
 
 import crowplexus.iris.Iris;
 import crowplexus.iris.IrisConfig;
+import game.Controls.ControlsSave;
 import game.desktop.DesktopMain;
 import game.desktop.DesktopPlay;
 import game.desktop.play.LevelSpriteGroup;
@@ -214,6 +215,8 @@ class ScriptManager
 		script.set('UpdateEvent', UpdateEvent, false);
 
 		script.set('LevelSpriteGroup', LevelSpriteGroup, false);
+
+		script.set('Controls', Controls, false);
 
 		scriptImports(script);
 	}
