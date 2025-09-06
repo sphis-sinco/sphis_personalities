@@ -29,12 +29,37 @@ class ScriptManager
 	public static var SCRIPTS_ERRS:Map<String, Dynamic> = [];
 	public static var GIANT_SCRIPT_FILE:String = '';
 
+	public static function setVariableContains(needToContain:String, variable:Dynamic, newValue:Dynamic)
+	{
+		for (script in SCRIPTS)
+		{
+			if (StringTools.contains(script.name, needToContain))
+			{
+				if (script.exists(variable))
+					script.set(variable, newValue);
+			}
+		}
+	}
+
+	public static function getVariableContains(needToContain:String, variable:Dynamic):Dynamic
+	{
+		for (script in SCRIPTS)
+		{
+			if (StringTools.contains(script.name, needToContain))
+				if (script.exists(variable))
+					return script.get(variable);
+		}
+
+		return null;
+	}
+
 	public static function setVariable(scriptPath:String, variable:Dynamic, newValue:Dynamic)
 	{
 		for (script in SCRIPTS)
 		{
 			if (script.name == scriptPath)
-				script.set(variable, newValue);
+				if (script.exists(variable))
+					script.set(variable, newValue);
 		}
 	}
 
@@ -43,7 +68,8 @@ class ScriptManager
 		for (script in SCRIPTS)
 		{
 			if (script.name == scriptPath)
-				return script.get(variable);
+				if (script.exists(variable))
+					return script.get(variable);
 		}
 
 		return null;
@@ -74,37 +100,35 @@ class ScriptManager
 
 	public static function callSingular(script:Iris, method:String, ?args:Array<Dynamic>)
 	{
-		@:privateAccess {
-			if (!script.interp.variables.exists(method))
+		if (!script.exists(method))
+		{
+			final errMsg = 'missing method(' + method + ') for script(' + script.config.name + ')';
+
+			if (!SCRIPTS_ERRS.exists('missing_method(' + method + ')_' + script.config.name))
 			{
-				final errMsg = 'missing method(' + method + ') for script(' + script.config.name + ')';
-
-				if (!SCRIPTS_ERRS.exists('missing_method(' + method + ')_' + script.config.name))
-				{
-					SCRIPTS_ERRS.set('missing_method(' + method + ')_' + script.config.name, errMsg);
-					trace(errMsg);
-				}
-
-				return;
+				SCRIPTS_ERRS.set('missing_method(' + method + ')_' + script.config.name, errMsg);
+				trace(errMsg);
 			}
 
-			var ny:Dynamic = script.interp.variables.get(method);
-			try
-			{
-				if (ny != null && Reflect.isFunction(ny))
-				{
-					script.call(method, args);
-				}
-			}
-			catch (e)
-			{
-				final errMsg = 'error calling method(' + method + ') for script(' + script.config.name + '): ' + e.message;
+			return;
+		}
 
-				if (!SCRIPTS_ERRS.exists('method(' + method + ')_error_' + script.config.name))
-				{
-					SCRIPTS_ERRS.set('method(' + method + ')_error_' + script.config.name, errMsg);
-					trace(errMsg);
-				}
+		var ny:Dynamic = script.get(method);
+		try
+		{
+			if (ny != null && Reflect.isFunction(ny))
+			{
+				script.call(method, args);
+			}
+		}
+		catch (e)
+		{
+			final errMsg = 'error calling method(' + method + ') for script(' + script.config.name + '): ' + e.message;
+
+			if (!SCRIPTS_ERRS.exists('method(' + method + ')_error_' + script.config.name))
+			{
+				SCRIPTS_ERRS.set('method(' + method + ')_error_' + script.config.name, errMsg);
+				trace(errMsg);
 			}
 		}
 	}
