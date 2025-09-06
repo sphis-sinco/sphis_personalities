@@ -18,8 +18,7 @@ class Controls
 		'ui_left' => [LEFT, A],
 		'ui_down' => [DOWN, S],
 		'ui_right' => [RIGHT, D],
-		'ui_accept' => [ENTER],
-		'ui_leave' => [ESCAPE]
+		'ui_accept' => [ENTER]
 	];
 
 	public static var save:ControlsSave;
@@ -61,7 +60,6 @@ class ControlsSave
 		var ui_down:Array<String> = [];
 		var ui_right:Array<String> = [];
 		var ui_accept:Array<String> = [];
-		var ui_leave:Array<String> = [];
 
 		for (key in Controls.controls.get('game_jump'))
 			game_jump.push(key.toString());
@@ -82,8 +80,6 @@ class ControlsSave
 			ui_right.push(key.toString());
 		for (key in Controls.controls.get('ui_accept'))
 			ui_accept.push(key.toString());
-		for (key in Controls.controls.get('ui_leave'))
-			ui_leave.push(key.toString());
 
 		#if sys
 		trace('Saving controls to "' + path + '" preference file via Sys');
@@ -99,7 +95,6 @@ class ControlsSave
 			ui_left: ui_left,
 			ui_up: ui_up,
 			ui_accept: ui_accept,
-			ui_leave: ui_leave,
 		};
 
 		if (path == null)
@@ -147,7 +142,6 @@ class ControlsSave
 				var ui_down:Array<FlxKey> = [];
 				var ui_right:Array<FlxKey> = [];
 				var ui_accept:Array<FlxKey> = [];
-				var ui_leave:Array<FlxKey> = [];
 
 				for (key in saveFile.game_jump)
 					game_jump.push(FlxKey.fromString(key));
@@ -168,8 +162,6 @@ class ControlsSave
 					ui_right.push(FlxKey.fromString(key));
 				for (key in saveFile.ui_accept)
 					ui_accept.push(FlxKey.fromString(key));
-				for (key in saveFile.ui_leave)
-					ui_leave.push(FlxKey.fromString(key));
 
 				Controls.controls.set('game_jump', game_jump);
 				Controls.controls.set('game_right', game_right);
@@ -180,7 +172,6 @@ class ControlsSave
 				Controls.controls.set('ui_down', ui_down);
 				Controls.controls.set('ui_right', ui_right);
 				Controls.controls.set('ui_accept', ui_accept);
-				Controls.controls.set('ui_leave', ui_leave);
 
 				save(path);
 			}
@@ -200,5 +191,4 @@ typedef ControlsPreferenceFile =
 	var ui_down:Array<String>;
 	var ui_right:Array<String>;
 	var ui_accept:Array<String>;
-	var ui_leave:Array<String>;
 }

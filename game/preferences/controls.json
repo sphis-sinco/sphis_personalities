@@ -8,6 +8,5 @@
         "ui_down": ["DOWN", "S"],
         "ui_left": ["LEFT", "A"],
         "ui_right": ["RIGHT", "D"],
-        "ui_up": ["UP", "W"],
-        "ui_leave": ["ESCAPE"]
+        "ui_up": ["UP", "W"]
 }

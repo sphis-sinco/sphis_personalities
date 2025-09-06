@@ -36,9 +36,9 @@ function onUpdate(event:UpdateEvent)
 			{
 				var state = DesktopPlay.instance;
 
-				for (obj in state.levelsGrp.members)
+				for (obj in state.levelsGrp)
 					FlxTween.tween(obj, {alpha: 0});
-				for (obj in state.levelsTextGrp.members)
+				for (obj in state.levelsTextGrp)
 					FlxTween.tween(obj, {alpha: 0});
 
 				FlxTimer.wait(1, () ->
