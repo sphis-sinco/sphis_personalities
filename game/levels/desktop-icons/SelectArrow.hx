@@ -17,6 +17,10 @@ function onCreate(event:CreateEvent)
 			leftArrow.loadGraphic(Paths.getImagePath('levels/desktop-icons/select-arrow'));
 			leftArrow.flipX = true;
 
+			leftArrow.scale.set(.25, .25);
+			leftArrow.updateHitbox();
+
+			leftArrow.screenCenter(Y);
 			leftArrow.x = 32;
 
 			leftArrow.scrollFactor.set(0, 0);
@@ -26,6 +30,10 @@ function onCreate(event:CreateEvent)
 			rightArrow = new FlxSprite();
 			rightArrow.loadGraphic(Paths.getImagePath('levels/desktop-icons/select-arrow'));
 
+			rightArrow.scale.set(.25, .25);
+			rightArrow.updateHitbox();
+
+			rightArrow.screenCenter(Y);
 			rightArrow.x = FlxG.width - rightArrow.width - 32;
 
 			rightArrow.scrollFactor.set(0, 0);
