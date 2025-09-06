@@ -33,9 +33,6 @@ function onCreate(event:CreateEvent)
 			rightArrow.scale.set(.25, .25);
 			rightArrow.updateHitbox();
 
-			rightArrow.screenCenter(0x11);
-			rightArrow.x = FlxG.width - rightArrow.width - 32;
-
 			rightArrow.scrollFactor.set(0, 0);
 		}
 
@@ -46,5 +43,17 @@ function onCreate(event:CreateEvent)
 
 function onUpdate(event:UpdateEvent)
 {
-	if (event.state == 'desktop-play') {}
+	if (event.state == 'desktop-play')
+	{
+		leftArrow.scale.set(.25, .25);
+		rightArrow.scale.set(.25, .25);
+
+		if (Controls.getControlPressed('ui_left'))
+			leftArrow.scale.set(.35, .15);
+		if (Controls.getControlPressed('ui_right'))
+			rightArrow.scale.set(.3, .15);
+
+		rightArrow.screenCenter(0x11);
+		rightArrow.x = FlxG.width - rightArrow.width - 32;
+	}
 }
