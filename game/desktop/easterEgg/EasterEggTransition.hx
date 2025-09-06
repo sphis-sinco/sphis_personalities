@@ -7,6 +7,12 @@ import game.scripts.events.UpdateEvent;
 var transitioning = false;
 var moving:Bool = false;
 
+function onCreate(event:UpdateEvent)
+{
+	transitioning = false;
+	moving = false;
+}
+
 function onUpdate(event:UpdateEvent)
 {
 	if (!transitioning && (FlxG.keys.justReleased.F1 || (FlxG.keys.pressed.SHIFT && FlxG.keys.justReleased.ONE)))
