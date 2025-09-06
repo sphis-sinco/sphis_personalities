@@ -10,6 +10,7 @@ import game.scripts.events.BaseEvent;
 import game.scripts.events.BaseStateEvent;
 import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
+import game.scripts.imports.FlxScriptedColor;
 import lime.app.Application;
 
 class ScriptManager
@@ -297,7 +298,10 @@ class ScriptManager
 		scriptImports(script);
 	}
 
-	static function scriptImports(script:Iris) {}
+	static function scriptImports(script:Iris)
+	{
+		script.set('FlxColor', FlxScriptedColor, false);
+	}
 
 	public static function loadScriptsByPaths(paths:Array<String>)
 	{
