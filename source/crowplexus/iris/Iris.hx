@@ -146,9 +146,9 @@ class Iris
 		}
 		var posPrefix = '[' + prefix + pos.fileName + ']';
 		if (pos.lineNumber != -1)
-			posPrefix = '[' + prefix + pos.fileName + pos.lineNumber + '
-	]
-		';
+		{
+			posPrefix = '[' + prefix + pos.fileName + pos.lineNumber + ']';
+		}
 
 		if (prefix != "" && prefix != null)
 		{
@@ -193,22 +193,17 @@ class Iris
 	}
 
 	/**
-		* Custom warning function for script wrappers.
-		*
-		* Overriding is recommended if you'
-				re
-				doing
-				custom
-				error
-				handling. * * /
-				public
-				dynamic static function warn(x, ?pos:haxe.PosInfos):Void
-				{
-					logLevel(WARN, x, pos);
-				}
+	 * Custom warning function for script wrappers.
+	 *
+	 * Overriding is recommended if you're doing custom error handling.
+	**/
+	public dynamic static function warn(x, ?pos:haxe.PosInfos):Void
+	{
+		logLevel(WARN, x, pos);
+	}
 
-				/**
-				 * Custom fatal error function for script wrappers.
+	/**
+	 * Custom fatal error function for script wrappers.
 	**/
 	public dynamic static function fatal(x, ?pos:haxe.PosInfos):Void
 	{
