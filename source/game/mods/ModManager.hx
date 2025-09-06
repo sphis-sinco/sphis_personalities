@@ -8,6 +8,7 @@ import sys.FileSystem;
 class ModManager
 {
 	public static var MOD_IDS:Array<String> = [];
+	public static var MODS_ENABLED:Array<String> = [];
 	public static var MODS_DISABLED:Array<String> = [];
 	public static var MOD_METAS:Map<String, ModMeta> = [];
 	public static var MOD_METADATA_FILE:String = 'meta.json';
@@ -18,6 +19,9 @@ class ModManager
 	public static function loadMods()
 	{
 		MOD_IDS = [];
+		MODS_ENABLED = [];
+		MODS_DISABLED = [];
+		MOD_METAS = [];
 
 		#if sys
 		if (!Paths.pathExists('$MODS_FOLDER/'))
@@ -61,12 +65,14 @@ class ModManager
 				if (meta != null && (disable == null || disable == ''))
 				{
 					MOD_IDS.push(entry);
+					MODS_ENABLED.push(entry);
 					MOD_METAS.set(entry, meta);
 				}
 				else
 				{
 					if (meta != null)
 					{
+						MOD_IDS.push(entry);
 						MODS_DISABLED.push(entry);
 						MOD_METAS.set(entry, meta);
 					}
@@ -77,13 +83,23 @@ class ModManager
 
 		MOD_IDS.sort(sortByPriority);
 
-		trace('${MOD_IDS.length} valid mods loaded');
+		trace(MOD_IDS.length + ' valid mods loaded');
 		if (MOD_IDS.length > 0)
 		{
 			for (id in MOD_IDS)
 			{
 				final meta = MOD_METAS.get(id);
-				trace(' * ${meta.name}($id) v${meta.version} (Priority: ${meta.priority})');
+				trace(' * '
+					+ meta.name
+					+ '('
+					+ id
+					+ ') v'
+					+ meta.version
+					+ ' (Active: '
+					+ MODS_ENABLED.contains(id)
+					+ ', Priority: '
+					+ meta.priority
+					+ ')');
 			}
 		}
 	}

@@ -31,6 +31,8 @@ function onCreate(event:CreateEvent)
 
 		BlankState.instance.add(msgBG);
 		BlankState.instance.add(msgText);
+
+		trace(ModManager.MOD_IDS.toString());
 	}
 }
 
@@ -47,10 +49,10 @@ function onUpdate(event:UpdateEvent)
 		if (ModManager.MOD_IDS.length > 0)
 		{
 			if (Controls.getControlJustReleased('ui_left'))
-				curSel--;
+				curSel -= 1;
 
 			if (Controls.getControlJustReleased('ui_right'))
-				curSel++;
+				curSel += 1;
 
 			if (Controls.getControlJustReleased('ui_accept'))
 			{
@@ -61,21 +63,20 @@ function onUpdate(event:UpdateEvent)
 
 			if (curSel < 0)
 				curSel = 0;
-			if (curSel >= ModManager.MOD_IDS.length)
+			if (curSel > ModManager.MOD_IDS.length - 1)
 				curSel = ModManager.MOD_IDS.length - 1;
 
 			modText.text = ModManager.MOD_METAS.get(ModManager.MOD_IDS[curSel]).name
 				+ ' (active: '
-				+ !ModManager.MODS_DISABLED.contains(ModManager.MOD_IDS[curSel])
+				+ ModManager.MODS_ENABLED.contains(ModManager.MOD_IDS[curSel])
 				+ ', priority: '
 				+ ModManager.MOD_METAS.get(ModManager.MOD_IDS[curSel]).priority
 				+ ')';
-			modText.screenCenter();
 		}
 		else
 		{
 			modText.text = 'No mods downloaded.';
-			modText.screenCenter();
 		}
+		modText.screenCenter();
 	}
 }
