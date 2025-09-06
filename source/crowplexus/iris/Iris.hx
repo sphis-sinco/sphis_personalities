@@ -4,13 +4,11 @@ import crowplexus.hscript.*;
 import crowplexus.hscript.proxy.ProxyType;
 import crowplexus.iris.ErrorSeverity;
 import crowplexus.iris.IrisConfig;
-import crowplexus.iris.utils.Ansi;
 import crowplexus.iris.utils.UsingEntry;
 import haxe.ds.StringMap;
 import lime.app.Application;
 
 using StringTools;
-using crowplexus.iris.utils.Ansi;
 
 @:structInit
 class IrisCall
