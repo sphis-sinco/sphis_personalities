@@ -2,6 +2,7 @@ package game.scripts;
 
 import crowplexus.iris.Iris;
 import crowplexus.iris.IrisConfig;
+import crowplexus.iris.utils.Ansi;
 import game.desktop.DesktopMain;
 import game.desktop.DesktopPlay;
 import game.desktop.play.LevelSpriteGroup;
@@ -379,19 +380,24 @@ class ScriptManager
 			trace('Found ' + arr.length + ' ' + type + ' files (' + newCount + ' new):');
 			for (file in arr)
 			{
-				addition = '(loaded)';
+				addition = Ansi.fg('(loaded)', WHITE);
 				if (!scriptsString.contains(file))
 				{
-					addition = '(new)';
+					addition = Ansi.fg('(new)', DEFAULT);
 					scriptsString.push(file);
 				}
 
 				if (deletedScripts.contains(file))
-					addition = '(removed)';
+					addition = Ansi.fg('(removed)', RED);
 				if (updatedScripts.contains(file))
-					addition = '(updated)';
+					addition = Ansi.fg('(updated)', CYAN);
 
-				trace(' * ' + Paths.getGamePath(file) + ' ' + addition);
+				if (StringTools.contains(file, 'mods/'))
+				{
+					addition = StringTools.replace(addition, ')', '/' + Ansi.fg('modfile', GREEN) + ')');
+				}
+
+				trace(' * ' + file + ' ' + addition);
 			}
 
 			loadScriptsByPaths(needToAdd);
