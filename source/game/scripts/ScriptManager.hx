@@ -306,10 +306,10 @@ class ScriptManager
 			loadScriptByPath(path);
 	}
 
-	public static function getAllScriptPaths():Array<String>
+	public static function getAllScriptPaths(?foundFilesFunction:(Array<Dynamic>, String) -> Void = null):Array<String>
 	{
 		#if sys
-		return Paths.getTypeArray('script', SCRIPT_FOLDER, SCRIPT_EXTS, SCRIPT_FOLDERS);
+		return Paths.getTypeArray('script', SCRIPT_FOLDER, SCRIPT_EXTS, SCRIPT_FOLDERS, foundFilesFunction);
 		#else
 		return [];
 		#end
@@ -352,14 +352,26 @@ class ScriptManager
 			}
 		}
 
-		for (script in getAllScriptPaths())
+		var needToAdd:Array<String> = [];
+		getAllScriptPaths(function(arr, type)
 		{
-			if (!scriptsString.contains(script))
+			var addition = '(loaded)';
+			trace('Found ' + arr.length + ' ' + type + ' files:');
+			for (file in arr)
 			{
-				trace('new script(' + script + ') found');
-				scriptsString.push(script);
-				loadScriptByPath(script);
+				if (!scriptsString.contains(file))
+				{
+					addition = '(new)';
+					needToAdd.push(file);
+				}
+				trace(' * ' + file + ' ' + addition);
 			}
-		}
+
+			for (file in needToAdd)
+			{
+				scriptsString.push(file);
+				loadScriptByPath(file);
+			}
+		});
 	}
 }

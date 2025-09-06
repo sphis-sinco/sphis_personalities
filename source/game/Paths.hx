@@ -22,7 +22,8 @@ class Paths
 		return (game ? getGamePath(path + '.png') : path + '.png');
 	}
 
-	public static function getTypeArray(type:String, type_folder:String, ext:Array<String>, paths:Array<String>):Array<String>
+	public static function getTypeArray(type:String, type_folder:String, ext:Array<String>, paths:Array<String>,
+			?foundFilesFunction:(Array<Dynamic>, String) -> Void = null):Array<String>
 	{
 		var arr:Array<String> = [];
 		#if sys
@@ -76,10 +77,17 @@ class Paths
 			traceArr.push(split[split.length - 1]);
 		}
 
-		trace('Found ' + traceArr.length + ' ' + type + ' files:');
-		for (file in arr)
+		if (foundFilesFunction != null)
 		{
-			trace(' * ' + file);
+			foundFilesFunction(arr, type);
+		}
+		else
+		{
+			trace('Found ' + traceArr.length + ' ' + type + ' files:');
+			for (file in arr)
+			{
+				trace(' * ' + file);
+			}
 		}
 		#end
 		return arr;
