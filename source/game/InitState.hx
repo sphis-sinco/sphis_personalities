@@ -8,11 +8,28 @@ import game.scripts.ScriptManager;
 
 class InitState extends FlxState
 {
-	public static var initalized:Bool = false;
+	public static var oldTrace:Dynamic;
 
 	override function create()
 	{
 		super.create();
+
+		oldTrace = haxe.Log.trace;
+		haxe.Log.trace = function(v, ?infos)
+		{
+			#if sys
+			final fileName = infos.fileName;
+			final methodName = (infos.methodName == null) ? null : infos.methodName;
+
+			var ln = '[' + fileName.split('/')[fileName.split('/')
+				.length - 1] + ((methodName != null) ? ':' + methodName : '') + ':' + infos.lineNumber + '] ';
+
+			ln += v;
+			Sys.println(ln);
+			#else
+			oldTrace(v, infos);
+			#end
+		};
 
 		FlxSprite.defaultAntialiasing = true;
 
@@ -23,14 +40,6 @@ class InitState extends FlxState
 
 		ScriptManager.loadAllScripts();
 
-		if (!initalized)
-		{
-			initalized = true;
-			FlxG.switchState(() -> new game.desktop.DesktopMain());
-		}
-		else
-		{
-			FlxG.resetState();
-		}
+		FlxG.switchState(() -> new game.desktop.DesktopMain());
 	}
 }
