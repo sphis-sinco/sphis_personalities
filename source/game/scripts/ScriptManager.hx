@@ -244,7 +244,7 @@ class ScriptManager
 
 		try
 		{
-			newScript = new Iris(Paths.getText(path), new IrisConfig(Paths.getGamePath(path), true, true, []));
+			newScript = new Iris(Paths.getText(Paths.getGamePath(path)), new IrisConfig(Paths.getGamePath(path), true, true, []));
 		}
 		catch (e)
 		{
