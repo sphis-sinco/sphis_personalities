@@ -19,10 +19,12 @@ class Paths
 
 		for (mod in ModManager.MODS_ENABLED)
 		{
-			final modPath = (StringTools.startsWith(path, 'game/') ? '' : 'game/') + ModManager.MODS_FOLDER + '/' + mod + '/' + path;
+			final modPath = ModManager.MODS_FOLDER + '/' + mod + '/' + (StringTools.replace(path, 'game/', ''));
 
 			if (pathExists(modPath))
-				retpath = path;
+				retpath = modPath;
+
+			retpath = (StringTools.replace(retpath, 'game/' + ModManager.MODS_FOLDER + '/' + mod + '/', ModManager.MODS_FOLDER + '/' + mod + '/'));
 		}
 		return retpath;
 	}
@@ -55,8 +57,8 @@ class Paths
 					{
 						final path:String = ogdir + folder + endsplitter + file;
 
-						if (!arr.contains(path))
-							arr.push(path);
+						if (!arr.contains(getGamePath(path)))
+							arr.push(getGamePath(path));
 					}
 
 				if (!file.contains('.'))

@@ -244,7 +244,7 @@ class ScriptManager
 
 		try
 		{
-			newScript = new Iris(Paths.getText(Paths.getGamePath(path)), new IrisConfig(Paths.getGamePath(path), true, true, []));
+			newScript = new Iris(Paths.getText(path), new IrisConfig(path, true, true, []));
 		}
 		catch (e)
 		{
@@ -322,6 +322,7 @@ class ScriptManager
 	{
 		var scriptsString = [];
 		var deletedScripts = [];
+		var updatedScripts = [];
 		for (script in SCRIPTS)
 		{
 			scriptsString.push(script.name);
@@ -340,6 +341,7 @@ class ScriptManager
 					if (Paths.getText(path) != script.scriptCode)
 					{
 						trace('script(' + script.name + ') had an update');
+						updatedScripts.push(path);
 						var scriptLayer:Int = 0;
 
 						script.destroy();
@@ -386,6 +388,8 @@ class ScriptManager
 
 				if (deletedScripts.contains(file))
 					addition = '(removed)';
+				if (updatedScripts.contains(file))
+					addition = '(updated)';
 
 				trace(' * ' + Paths.getGamePath(file) + ' ' + addition);
 			}
