@@ -83,6 +83,8 @@ class Paths
 		{
 			readDir(path);
 			readDir(getGamePath(path));
+			readDir(ModManager.MODS_FOLDER + paths);
+			readDir(getGamePath(ModManager.MODS_FOLDER + paths));
 		}
 
 		if (foundFilesFunction != null)
