@@ -41,9 +41,7 @@
 	<define name="MODDING_ALLOWED" unless="html5" />
 
 	<source path="source" />
-
-	<assets path="game" exclude="*.hxc" if="MODDING_ALLOWED FLXMODDING_SCRIPTING" />
-	<assets path="game" exclude="*.hx" unless="MODDING_ALLOWED FLXMODDING_SCRIPTING" />
+	<assets path="game"/>
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
