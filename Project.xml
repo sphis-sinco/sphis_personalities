@@ -37,6 +37,7 @@
 	<source path="source" />
 	<assets path="game" />
 	<assets path="mods" if="MODDING_ALLOWED"/>
+	<assets path="debug-mods" rename="mods" if="debug MODDING_ALLOWED"/>
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
