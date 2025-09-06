@@ -84,7 +84,10 @@ class Paths
 		}
 
 		for (path in typePaths)
+		{
 			readDir(path);
+			readDir(getGamePath(path));
+		}
 
 		if (foundFilesFunction != null)
 		{
@@ -95,7 +98,7 @@ class Paths
 			trace('Found ' + arr.length + ' ' + type + ' files:');
 			for (file in arr)
 			{
-				trace(' * ' + getGamePath(file));
+				trace(' * ' + file);
 			}
 		}
 		#end

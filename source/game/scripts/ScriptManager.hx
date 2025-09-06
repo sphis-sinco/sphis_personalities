@@ -23,9 +23,9 @@ class ScriptManager
 
 	public static var SCRIPT_FOLDER:String = 'scripts';
 
-	public static var SCRIPT_EXTS:Array<String> = ['hxc', 'hx', 'haxe', 'hscript'];
+	public static var SCRIPT_EXTS:Array<String> = ['hx'];
 
-	public static var SCRIPT_FOLDERS:Array<String> = [Paths.getGamePath(''), 'game/'];
+	public static var SCRIPT_FOLDERS:Array<String> = [Paths.getGamePath('game/'), 'game/'];
 
 	public static var SCRIPTS:Array<Iris> = [];
 	public static var SCRIPTS_ERRS:Map<String, Dynamic> = [];
