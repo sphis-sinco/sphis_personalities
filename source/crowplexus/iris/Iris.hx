@@ -166,6 +166,8 @@ class Iris
 		{
 			case WARN, ERROR, FATAL:
 				Application.current.window.alert(out.stripColor(), posPrefix.stripColor().replace('[', '').replace(']', ''));
+			default:
+				// kill me
 		}
 	}
 
