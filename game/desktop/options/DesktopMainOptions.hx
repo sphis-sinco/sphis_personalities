@@ -13,7 +13,29 @@ var moving:Bool = false;
 function onCreate(event:CreateEvent)
 {
 	desktopMain = null;
-	moving = false;
+	if (moving)
+	{
+		moving = false;
+		if (event.state == 'desktop-play')
+		{
+			for (obj in DesktopPlay.instance.levelsGrp.members)
+			{
+				var prevY = obj.levelIcon.y;
+				obj.levelIcon.y = -FlxG.height;
+				FlxTween.tween(obj, {y: prevY}, 1, {
+					ease: FlxEase.sineInOut
+				});
+			}
+			for (obj in DesktopPlay.instance.levelsTextGrp.members)
+			{
+				var prevY = obj.y;
+				obj.y = -FlxG.height;
+				FlxTween.tween(obj, {y: prevY}, 1, {
+					ease: FlxEase.sineInOut
+				});
+			}
+		}
+	}
 
 	if (event.state == 'desktop-main')
 		desktopMain = DesktopMain.instance;

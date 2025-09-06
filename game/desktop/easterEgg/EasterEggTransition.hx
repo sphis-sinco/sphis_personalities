@@ -1,6 +1,7 @@
 import flixel.FlxG;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
+import game.scripts.ScriptManager;
 import game.scripts.events.UpdateEvent;
 
 var transitioning = false;
@@ -9,12 +10,14 @@ function onUpdate(event:UpdateEvent)
 {
 	if (!transitioning && (FlxG.keys.justReleased.F1 || (FlxG.keys.pressed.SHIFT && FlxG.keys.justReleased.ONE)))
 	{
-		transitioning = true;
 		if (event.state != 'z-easter-egg')
 		{
+			transitioning = true;
+
 			if (event.state == 'desktop-main')
 			{
 				var state = DesktopMain.instance;
+				ScriptManager.setVariable('game/desktop/options/DesktopMainOptions.hx', 'moving', true);
 
 				FlxTween.tween(state.haxen, {alpha: 0}, 1, {
 					onComplete: _ ->
