@@ -95,7 +95,7 @@ class Paths
 			trace('Found ' + arr.length + ' ' + type + ' files:');
 			for (file in arr)
 			{
-				trace(' * ' + file);
+				trace(' * ' + getGamePath(file));
 			}
 		}
 		#end
