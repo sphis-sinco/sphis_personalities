@@ -15,7 +15,6 @@ function onCreate(event:CreateEvent)
 	desktopMain = null;
 	if (moving)
 	{
-		moving = false;
 		if (event.state == 'desktop-play')
 		{
 			for (obj in DesktopPlay.instance.levelsGrp.members)
@@ -34,6 +33,10 @@ function onCreate(event:CreateEvent)
 					ease: FlxEase.sineInOut
 				});
 			}
+		}
+		else
+		{
+			moving = false;
 		}
 	}
 

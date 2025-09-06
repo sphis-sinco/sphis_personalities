@@ -36,6 +36,15 @@ function onCreate(event:CreateEvent)
 			rightArrow.scrollFactor.set(0, 0);
 		}
 
+		if (ScriptManager.getVariable('game/desktop/options/DesktopMainOptions.hx', 'moving') == true)
+		{
+			leftArrow.alpha = 0;
+			rightArrow.alpha = 0;
+
+			FlxTween.tween(leftArrow, {alpha: 1});
+			FlxTween.tween(rightArrow, {alpha: 1});
+		}
+
 		FlxG.state.add(leftArrow);
 		FlxG.state.add(rightArrow);
 	}
