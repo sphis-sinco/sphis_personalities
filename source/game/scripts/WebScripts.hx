@@ -30,6 +30,12 @@ class WebScripts
 	static var leftArrow:FlxSprite;
 	static var rightArrow:FlxSprite;
 
+	public static function onAdded(event:AddedEvent)
+	{
+		haxenIdleStates.push(Paths.getImagePath('desktop/haxen/idle-left'));
+		haxenIdleStates.push(Paths.getImagePath('desktop/haxen/idle-right'));
+	}
+
 	public static function onCreate(event:CreateEvent)
 	{
 		if (event.state == 'z-easter-egg')
@@ -66,8 +72,7 @@ class WebScripts
 				moving = false;
 			}
 		}
-		if (event.state == 'desktop-main')
-			desktopMain = DesktopMain.instance;
+
 		scanlineLayerOne = new FlxSprite();
 		scanlineLayerOne.loadGraphic(Paths.getImagePath('LCD/scanlines'));
 		scanlineLayerOne.screenCenter();
@@ -88,6 +93,7 @@ class WebScripts
 					DesktopPlay.instance.scanlineLayer.add(scanlineLayerTwo);
 			}
 		}
+
 		if (event.state == 'desktop-play')
 		{
 			desktopPlay = DesktopPlay.instance;
@@ -135,6 +141,10 @@ class WebScripts
 			FlxG.state.add(leftArrow);
 			FlxG.state.add(rightArrow);
 		}
+	}
+
+	public static function onUpdate(event:UpdateEvent)
+	{
 		if (FlxG.keys.justReleased.ESCAPE && event.state == 'z-easter-egg')
 		{
 			FlxG.switchState(() -> new DesktopMain());
@@ -180,16 +190,7 @@ class WebScripts
 					FlxG.switchState(() -> new BlankState('z-easter-egg'));
 			}
 		}
-	}
 
-	public static function onAdded(event:AddedEvent)
-	{
-		haxenIdleStates.push(Paths.getImagePath('desktop/haxen/idle-left'));
-		haxenIdleStates.push(Paths.getImagePath('desktop/haxen/idle-right'));
-	}
-
-	public static function onUpdate(event:UpdateEvent)
-	{
 		if (desktopMain != null && event.state == 'desktop-main')
 		{
 			desktopMain.haxen.alpha = 0.75;
@@ -210,11 +211,15 @@ class WebScripts
 		}
 		if (desktopMain != null && event.state == 'desktop-main')
 		{
-			desktopMain.option_play.alpha = 0.5;
-			desktopMain.option_options.alpha = 0.5;
+			if (!moving)
+			{
+				desktopMain.option_play.alpha = 0.5;
+				desktopMain.option_options.alpha = 0.5;
+			}
 			if (Mouse.overlaps(desktopMain.option_play))
 			{
-				desktopMain.option_play.alpha = 1;
+				if (!moving)
+					desktopMain.option_play.alpha = 1;
 				if (Mouse.justReleased && !moving)
 				{
 					FlxTimer.globalManager.clear();
@@ -222,7 +227,7 @@ class WebScripts
 					moving = true;
 					desktopMain.haxen.x -= (desktopMain.haxen.width / 10);
 					desktopMain.haxen.y -= (desktopMain.haxen.height / 20);
-					FlxTween.tween(desktopMain.haxen, {y: FlxG.height + desktopMain.haxen.height}, 1, {
+					FlxTween.tween(desktopMain.haxen, {alpha: 1, y: FlxG.height + desktopMain.haxen.height}, 1, {
 						ease: FlxEase.sineInOut,
 						startDelay: 0.5,
 						onComplete: tween ->
@@ -230,13 +235,15 @@ class WebScripts
 							FlxG.switchState(() -> new DesktopPlay());
 						}
 					});
-					FlxTween.tween(desktopMain.option_play, {y: FlxG.height + desktopMain.option_play.height}, 1, {ease: FlxEase.sineInOut, startDelay: 0.1,});
-					FlxTween.tween(desktopMain.option_options, {y: FlxG.height + desktopMain.option_options.height}, 1, {ease: FlxEase.sineInOut});
+					FlxTween.tween(desktopMain.option_play, {alpha: 1, y: FlxG.height + desktopMain.option_play.height}, 1,
+						{ease: FlxEase.sineInOut, startDelay: 0.1,});
+					FlxTween.tween(desktopMain.option_options, {alpha: 1, y: FlxG.height + desktopMain.option_options.height}, 1, {ease: FlxEase.sineInOut});
 				}
 			}
 			else if (Mouse.overlaps(desktopMain.option_options))
 			{
-				desktopMain.option_options.alpha = 0.25;
+				if (!moving)
+					desktopMain.option_options.alpha = 0.25;
 				if (Mouse.pressed && !moving)
 				{
 					desktopMain.option_options.alpha = 0.125;
@@ -255,6 +262,7 @@ class WebScripts
 		{
 			leftArrow.scale.set(.25, .25);
 			rightArrow.scale.set(.25, .25);
+
 			if (Controls.getControlPressed('ui_left'))
 			{
 				if (DesktopPlay.instance.curSel > 0)
@@ -269,6 +277,7 @@ class WebScripts
 				else
 					rightArrow.scale.set(.15, .3);
 			}
+
 			rightArrow.screenCenter(XY);
 			rightArrow.x = FlxG.width - rightArrow.width - 32;
 		}
@@ -289,6 +298,10 @@ class WebScripts
 		if (Mouse.pressed && Mouse.state == MouseStates.CAN_SELECT)
 		{
 			Mouse.setMouseState(MouseStates.SELECTED);
+		}
+		if (FlxG.keys.justReleased.R)
+		{
+			ScriptManager.checkForUpdatedScripts();
 		}
 	}
 }
