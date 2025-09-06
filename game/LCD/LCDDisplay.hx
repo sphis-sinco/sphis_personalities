@@ -4,7 +4,7 @@ import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
 
 var scanlines:FlxSprite;
-var acceptedStates = ['desktop-main'];
+var acceptedStates = ['desktop-main', 'desktop-play'];
 
 function onCreate(event:CreateEvent)
 {
