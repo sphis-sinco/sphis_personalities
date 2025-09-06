@@ -262,7 +262,6 @@ class ScriptManager
 			trace('Loaded script(' + path + ')');
 
 			SCRIPTS.push(newScript);
-			callSingular(newScript, 'onAdded', [new AddedEvent(newScript.name)]);
 
 			return true;
 		}
@@ -363,14 +362,19 @@ class ScriptManager
 				{
 					addition = '(new)';
 					needToAdd.push(file);
+					scriptsString.push(file);
 				}
 				trace(' * ' + file + ' ' + addition);
 			}
 
-			for (file in needToAdd)
+			loadScriptsByPaths(needToAdd);
+
+			for (script in SCRIPTS.filter(f ->
 			{
-				scriptsString.push(file);
-				loadScriptByPath(file);
+				return needToAdd.contains(f.name);
+			}))
+			{
+				callSingular(script, 'onAdded', [new AddedEvent(script.name)]);
 			}
 		});
 	}
