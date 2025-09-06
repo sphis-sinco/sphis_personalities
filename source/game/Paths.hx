@@ -1,9 +1,5 @@
 package game;
 
-#if flixelModding
-import flixel.system.FlxModding;
-#end
-
 using StringTools;
 
 #if sys
@@ -19,18 +15,7 @@ class Paths
 	{
 		var retpath = (StringTools.startsWith(path, 'game/') ? '' : 'game/') + path;
 
-		#if flixelModding
-		try
-		{
-			return FlxModding.system.sanitize(retpath);
-		}
-		catch (_)
-		{
-			return retpath;
-		}
-		#else
 		return retpath;
-		#end
 	}
 
 	public static function getImagePath(path:String, ?game:Bool = true)
@@ -107,9 +92,7 @@ class Paths
 
 	public static function pathExists(id:String):Bool
 	{
-		#if flixelModding
-		return FlxModding.system.assetSystem.exists(id);
-		#elseif sys
+		#if sys
 		return FileSystem.exists(id);
 		#else
 		return Assets.exists(id);
@@ -118,9 +101,7 @@ class Paths
 
 	public static function getText(id:String):String
 	{
-		#if flixelModding
-		return FlxModding.system.assetSystem.getText(id);
-		#elseif sys
+		#if sys
 		return File.getContent(id);
 		#else
 		return Assets.getText(id);

@@ -40,8 +40,6 @@
 
 	<define name="MODDING_ALLOWED" unless="html5" />
 
-	<error value="No." if="FLXMODDING_SCRIPTING" />
-
 	<source path="source" />
 	<assets path="game" />
 
@@ -58,14 +56,6 @@
 	<section if="MODDING_ALLOWED">
 		<assets path="mods" if="MODDING_ALLOWED" />
 		<assets path="debug-mods" rename="mods" if="debug MODDING_ALLOWED" />
-
-		<haxelib name="flixel-modding" />
-		<define name="flixelModding" />
-
-		<section if="FLXMODDING_SCRIPTING">
-			<haxelib name="rulescript" />
-			<haxelib name="hscript" />
-		</section>
 	</section>
 
 	<!-- ______________________________ Haxedefines _____________________________ -->

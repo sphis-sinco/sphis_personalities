@@ -7,9 +7,6 @@ import flixel.FlxState;
 import flixel.system.assetSystem.FlxAssetSystem;
 import game.Controls.ControlsSave;
 import game.scripts.ScriptManager;
-#if flixelModding
-import flixel.system.FlxModding;
-#end
 
 class InitState extends FlxState
 {
@@ -47,9 +44,7 @@ class InitState extends FlxState
 
 		Mouse.setMouseState(MouseStates.IDLE);
 
-		#if !FLXMODDING_SCRIPTING
 		ScriptManager.loadAllScripts();
-		#end
 
 		FlxG.switchState(() -> new game.desktop.DesktopMain());
 	}
