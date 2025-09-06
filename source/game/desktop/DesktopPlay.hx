@@ -125,7 +125,7 @@ class DesktopPlay extends State
 			textField.x = levelGrp.levelIcon.x;
 			textField.y = levelGrp.levelIcon.y - textField.height;
 
-			FlxG.camera.x = levelGrp.levelIcon.getGraphicMidpoint().x;
+			camFollow.x = levelGrp.levelIcon.getGraphicMidpoint().x * 2;
 
 			i++;
 		}
