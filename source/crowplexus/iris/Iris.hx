@@ -142,11 +142,13 @@ class Iris
 		var prefix = ErrorSeverityTools.getPrefix(level);
 		if (prefix != "" && prefix != null)
 		{
-			prefix = '$prefix:';
+			prefix = prefix + ':';
 		}
-		var posPrefix = '[$prefix${pos.fileName}]';
+		var posPrefix = '[' + prefix + pos.fileName + ']';
 		if (pos.lineNumber != -1)
-			posPrefix = '[$prefix${pos.fileName}:${pos.lineNumber}]';
+			posPrefix = '[' + prefix + pos.fileName + pos.lineNumber + '
+	]
+		';
 
 		if (prefix != "" && prefix != null)
 		{
@@ -166,7 +168,9 @@ class Iris
 		switch (level)
 		{
 			case WARN, ERROR, FATAL:
-				Application.current.window.alert(out.stripColor(), posPrefix.stripColor().replace('[', '').replace(']', ''));
+				Application.current.window.alert(out.stripColor(), posPrefix.stripColor().replace('[', ' ').replace(']
+		', '
+		'));
 			default:
 				// kill me
 		}
@@ -189,17 +193,22 @@ class Iris
 	}
 
 	/**
-	 * Custom warning function for script wrappers.
-	 *
-	 * Overriding is recommended if you're doing custom error handling.
-	**/
-	public dynamic static function warn(x, ?pos:haxe.PosInfos):Void
-	{
-		logLevel(WARN, x, pos);
-	}
+		* Custom warning function for script wrappers.
+		*
+		* Overriding is recommended if you'
+				re
+				doing
+				custom
+				error
+				handling. * * /
+				public
+				dynamic static function warn(x, ?pos:haxe.PosInfos):Void
+				{
+					logLevel(WARN, x, pos);
+				}
 
-	/**
-	 * Custom fatal error function for script wrappers.
+				/**
+				 * Custom fatal error function for script wrappers.
 	**/
 	public dynamic static function fatal(x, ?pos:haxe.PosInfos):Void
 	{
@@ -405,7 +414,7 @@ class Iris
 		{
 			isFunction = ny != null && Reflect.isFunction(ny);
 			if (!isFunction)
-				throw 'Tried to call a non-function, for "$fun"';
+				throw 'Tried to call a non-function, for "' + fun + '"';
 			// throw "Variable not found or not callable, for \"" + fun + "\"";
 
 			final ret = Reflect.callMethod(null, ny, args);

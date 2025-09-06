@@ -18,7 +18,7 @@ class State extends FlxState
 		if (stateID != null)
 			this.state = stateID;
 		else
-			this.state = '${posInfos.fileName}${posInfos.className}';
+			this.state = posInfos.fileName + posInfos.className;
 	}
 
 	override function create()
