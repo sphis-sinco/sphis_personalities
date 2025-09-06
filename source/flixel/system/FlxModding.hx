@@ -15,7 +15,6 @@ import flixel.system.polymod.PolymodModpack;
 import flixel.util.FlxScriptUtil;
 import flixel.util.FlxSignal;
 import flixel.util.FlxSort;
-import game.scripts.ScriptManager;
 import haxe.Json;
 import haxe.io.Bytes;
 import lime.utils.AssetType;
@@ -197,6 +196,8 @@ class FlxModding
 	 * Flixel-specific assets directory.
 	 */
 	static inline var flixelDirectory:String = "flixel";
+
+	static inline var hScriptExt:String = '.hxc';
 
 	/**
 	 * File extension used for Polymod script classes.
@@ -782,11 +783,8 @@ class FlxModding
 					}
 					#end
 
-					for (ext in ScriptManager.SCRIPT_EXTS)
-					{
-						if (StringTools.endsWith(asset, ext))
-							FlxScriptUtil.buildHScript(asset);
-					}
+					if (StringTools.endsWith(asset, hScriptExt))
+						FlxScriptUtil.buildHScript(asset);
 				}
 			});
 		}

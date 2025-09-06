@@ -38,10 +38,9 @@
 	<set name="BUILD_DIR" value="export/release" unless="debug" />
 	<set name="BUILD_DIR" value="export/debug" if="debug" />
 
-	<define name="MODDING_ALLOWED" unless="html5"/>
+	<define name="MODDING_ALLOWED" unless="html5" />
 
 	<source path="source" />
-	<assets path="game" />
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
@@ -54,6 +53,10 @@
 	<define name="hscriptPos" />
 
 	<section if="MODDING_ALLOWED">
+		<assets path="game" exclude="*.hx" />
+
+		<define name="FLX_HSCRIPT_EXT" value="hxc" />
+
 		<assets path="mods" if="MODDING_ALLOWED" />
 		<assets path="debug-mods" rename="mods" if="debug MODDING_ALLOWED" />
 
@@ -63,6 +66,11 @@
 		<!-- <haxelib name="rulescript" /> -->
 		<haxelib name="hscript" />
 	</section>
+
+	<section unless="MODDING_ALLOWED">
+		<assets path="game" exclude="*.hxc" />
+	</section>
+
 
 	<!-- ______________________________ Haxedefines _____________________________ -->
 

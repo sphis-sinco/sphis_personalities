@@ -1,11 +1,13 @@
 package;
 
 import flixel.FlxGame;
+import game.scripts.ScriptManager;
 import openfl.display.Sprite;
 #if flixelModding
 import flixel.system.FlxBaseMetadataFormat;
 import flixel.system.FlxBaseModpack;
 import flixel.system.FlxModding;
+import flixel.util.FlxScriptUtil;
 #end
 
 class Main extends Sprite
@@ -17,6 +19,16 @@ class Main extends Sprite
 		#if flixelModding
 		FlxModding.init(PersonalitiesModpack, PersonalitiesMetaDataFormat, null, null, 'game');
 		FlxModding.scripting = true;
+
+		@:privateAccess {
+			for (cls in ScriptManager.clsList)
+			{
+				FlxScriptUtil.defaultGlobalClasses.push({
+					cls: cls,
+					name: '' + cls
+				});
+			}
+		}
 		#end
 
 		addChild(new FlxGame(0, 0, game.InitState));
