@@ -28,6 +28,8 @@ class DesktopPlay extends State
 	public var levelsGrp:FlxTypedGroup<LevelSpriteGroup>;
 	public var levelsTextGrp:FlxTypedGroup<FlxText>;
 
+	public var curSel:Int = 0;
+
 	public var camFollow:FlxObject;
 
 	override function create()
@@ -59,6 +61,18 @@ class DesktopPlay extends State
 			levelsTextGrp.members[levelGrp.ID].x += (levelGrp.levelIcon.width * 1.25) * levelGrp.ID;
 			levelsTextGrp.members[levelGrp.ID].y = levelGrp.levelIcon.y - levelsTextGrp.members[levelGrp.ID].height;
 		}
+
+		camFollow.x = 320 + (640 * curSel);
+
+		if (Controls.getControlJustReleased('ui_left'))
+			curSel--;
+		if (Controls.getControlJustReleased('ui_right'))
+			curSel++;
+
+		if (curSel < 0)
+			curSel = 0;
+		if (curSel >= levels.length)
+			curSel = levels.length - 1;
 	}
 
 	public function reloadLevels()
