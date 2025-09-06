@@ -383,12 +383,12 @@ class ScriptManager
 				addition = Ansi.fg('(loaded)', WHITE);
 				if (!scriptsString.contains(file))
 				{
-					addition = Ansi.fg('(new)', DEFAULT);
+					addition = Ansi.fg('(new)', RED);
 					scriptsString.push(file);
 				}
 
 				if (deletedScripts.contains(file))
-					addition = Ansi.fg('(removed)', RED);
+					addition = Ansi.fg('(removed)', BLACK);
 				if (updatedScripts.contains(file))
 					addition = Ansi.fg('(updated)', CYAN);
 
