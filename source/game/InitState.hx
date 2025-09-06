@@ -5,6 +5,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import game.Controls.ControlsSave;
+import game.mods.ModManager;
 import game.scripts.ScriptManager;
 
 class InitState extends FlxState
@@ -38,12 +39,14 @@ class InitState extends FlxState
 
 		FlxSprite.defaultAntialiasing = true;
 
+		ScriptManager.checkForUpdatedScripts();
+		ModManager.loadMods();
+		ScriptManager.loadAllScripts();
+
 		Controls.save = new ControlsSave(Paths.getGamePath('preferences/controls.json'));
 		Controls.save.load(Controls.save.publicPath);
 
 		Mouse.setMouseState(MouseStates.IDLE);
-
-		ScriptManager.loadAllScripts();
 
 		FlxG.switchState(() -> new game.desktop.DesktopMain());
 	}
