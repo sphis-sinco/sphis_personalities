@@ -17,6 +17,7 @@ function onCreate(event:CreateEvent)
 		msgBG.makeGraphic(FlxG.width, 32, FlxColor.BLACK);
 		msgBG.setPosition(msgText.x, msgText.y);
 		BlankState.instance.add(msgBG);
+
 		msgText = new FlxText(0, 0, 0, 'Press [TAB] to move back to Desktop (Main)', 16);
 		msgText.color = FlxColor.WHITE;
 		BlankState.instance.add(msgText);
