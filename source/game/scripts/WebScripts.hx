@@ -19,8 +19,11 @@ class WebScripts
 	static var desktopMain:DesktopMain = null;
 	static var haxenIdleStates = [];
 	static var moving:Bool = false;
-	static var scanlines:FlxSprite;
-	static var acceptedStates = ['desktop-main', 'desktop-play'];
+	static var ZEasterEggProgress:Int = 0;
+	static var scanlineLayerOne:FlxSprite;
+	static var scanlineLayerTwo:FlxSprite;
+	static var scanlineAcceptedStates = ['desktop-main', 'desktop-play'];
+	static var scanlineAngle = FlxG.random.float(0, 360);
 	static var desktopPlay:DesktopPlay;
 	static var leftArrow:FlxSprite;
 	static var rightArrow:FlxSprite;
@@ -37,12 +40,28 @@ class WebScripts
 		moving = false;
 		if (event.state == 'desktop-main')
 			desktopMain = DesktopMain.instance;
-		scanlines = new FlxSprite();
-		scanlines.loadGraphic(Paths.getImagePath('LCD/scanlines'));
-		scanlines.screenCenter();
+		ZEasterEggProgress = 0;
+		scanlineLayerOne = new FlxSprite();
+		scanlineLayerOne.loadGraphic(Paths.getImagePath('LCD/scanlines'));
+		scanlineLayerOne.screenCenter();
+		scanlineLayerOne.scrollFactor.set(0, 0);
+		scanlineLayerTwo = new FlxSprite();
+		scanlineLayerTwo.loadGraphic(Paths.getImagePath('LCD/scanlines'));
+		scanlineLayerTwo.screenCenter();
+		scanlineLayerTwo.scrollFactor.set(0, 0);
+		if (scanlineAcceptedStates.contains(event.state))
+		{
+			switch (event.state)
+			{
+				case 'desktop-main':
+					DesktopMain.instance.scanlineLayer.add(scanlineLayerOne);
+					DesktopMain.instance.scanlineLayer.add(scanlineLayerTwo);
+				case 'desktop-play':
+					DesktopPlay.instance.scanlineLayer.add(scanlineLayerOne);
+					DesktopPlay.instance.scanlineLayer.add(scanlineLayerTwo);
+			}
+		}
 
-		if (acceptedStates.contains(event.state))
-			FlxG.state.add(scanlines);
 		if (event.state == 'desktop-play')
 		{
 			desktopPlay = DesktopPlay.instance;
@@ -137,9 +156,30 @@ class WebScripts
 				}
 			}
 		}
-		if (scanlines != null)
+		if (FlxG.keys.justReleased.UP && (ZEasterEggProgress == 0 || ZEasterEggProgress == 3))
+			ZEasterEggProgress++;
+		else if (FlxG.keys.justReleased.DOWN && ZEasterEggProgress == 1)
+			ZEasterEggProgress++;
+		else if (FlxG.keys.justReleased.LEFT && ZEasterEggProgress == 2)
+			ZEasterEggProgress++;
+		else if (FlxG.keys.justReleased.RIGHT && ZEasterEggProgress == 4)
+			ZEasterEggProgress++;
+		else
+			ZEasterEggProgress = 0;
+
+		FlxG.watch.addQuick('ZEasterEggProgress', ZEasterEggProgress);
+
+		if (ZEasterEggProgress >= 5)
 		{
-			scanlines.alpha = FlxG.random.float(0.05, 0.1);
+			FlxG.switchState(() -> new BlankState('z-easter-egg'));
+		}
+		if (scanlineLayerOne != null)
+		{
+			scanlineAngle += (1 / FlxG.random.int(10, 100));
+			scanlineLayerOne.angle = scanlineAngle;
+			scanlineLayerOne.alpha = FlxG.random.float(0, 0.2);
+			scanlineLayerTwo.angle = scanlineAngle + 90;
+			scanlineLayerTwo.alpha = scanlineLayerOne.alpha;
 		}
 		if (event.state == 'desktop-play')
 		{
