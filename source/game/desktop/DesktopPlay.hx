@@ -47,9 +47,10 @@ class DesktopPlay extends State
 		FlxG.camera.follow(camFollow, LOCKON, 0.1);
 
 		scanlineLayer = new FlxTypedGroup<FlxSprite>();
-		add(scanlineLayer);
 
 		super.create();
+
+		add(scanlineLayer);
 	}
 
 	override function update(elapsed:Float)

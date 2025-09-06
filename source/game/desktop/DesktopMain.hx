@@ -57,9 +57,10 @@ class DesktopMain extends State
 		option_options.y -= 64;
 
 		scanlineLayer = new FlxTypedGroup<FlxSprite>();
-		add(scanlineLayer);
 
 		super.create();
+
+		add(scanlineLayer);
 	}
 
 	public function haxen_idle()
