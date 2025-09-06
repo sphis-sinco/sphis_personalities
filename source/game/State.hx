@@ -1,6 +1,7 @@
 package game;
 
 import flixel.FlxState;
+import flixel.input.keyboard.FlxKey;
 import game.scripts.ScriptManager;
 import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
@@ -9,6 +10,8 @@ import haxe.PosInfos;
 class State extends FlxState
 {
 	public var state:String;
+
+	public static var reloadKey:FlxKey = R;
 
 	override public function new(?stateID:String, ?posInfos:PosInfos)
 	{

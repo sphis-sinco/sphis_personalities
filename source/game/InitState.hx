@@ -8,6 +8,8 @@ import game.scripts.ScriptManager;
 
 class InitState extends FlxState
 {
+	public static var initalized:Bool = false;
+
 	override function create()
 	{
 		super.create();
@@ -21,6 +23,14 @@ class InitState extends FlxState
 
 		ScriptManager.loadAllScripts();
 
-		FlxG.switchState(() -> new game.desktop.DesktopMain());
+		if (!initalized)
+		{
+			initalized = true;
+			FlxG.switchState(() -> new game.desktop.DesktopMain());
+		}
+		else
+		{
+			FlxG.resetState();
+		}
 	}
 }
