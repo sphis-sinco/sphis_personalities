@@ -12,29 +12,10 @@ var moving:Bool = false;
 
 function onCreate(event:CreateEvent)
 {
-	var previousY = 0.0;
 	desktopMain = null;
 	if (moving)
 	{
-		if (event.state == 'desktop-play')
-		{
-			for (obj in DesktopPlay.instance.levelsGrp.members)
-			{
-				previousY = obj.levelIcon.y;
-				obj.levelIcon.y = -FlxG.height;
-				FlxTween.tween(obj, {y: previousY}, 1, {
-					ease: FlxEase.sineInOut
-				});
-			}
-			for (obj in DesktopPlay.instance.levelsTextGrp.members)
-			{
-				previousY = obj.y;
-				obj.y = -FlxG.height;
-				FlxTween.tween(obj, {y: previousY}, 1, {
-					ease: FlxEase.sineInOut
-				});
-			}
-		}
+		if (event.state == 'desktop-play') {}
 		else
 		{
 			moving = false;

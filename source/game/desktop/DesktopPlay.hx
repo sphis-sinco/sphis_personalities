@@ -59,13 +59,10 @@ class DesktopPlay extends State
 
 		for (levelGrp in levelsGrp.members)
 		{
-			levelGrp.levelIcon.screenCenter();
-			levelGrp.levelIcon.x += ((levelGrp.levelIcon.width) * levelGrp.ID) * 1.5;
+			levelGrp.levelIcon.screenCenter(Y);
+			levelsTextGrp.members[levelGrp.ID].y = levelGrp.levelIcon.y - levelsTextGrp.members[levelGrp.ID].height;
 
 			levelGrp.update(elapsed);
-
-			levelsTextGrp.members[levelGrp.ID].x = levelGrp.levelIcon.x;
-			levelsTextGrp.members[levelGrp.ID].y = levelGrp.levelIcon.y - levelsTextGrp.members[levelGrp.ID].height;
 
 			levelGrp.levelIcon.color = 0xFFFFFF;
 			if (curSel == levelGrp.ID)
@@ -87,12 +84,17 @@ class DesktopPlay extends State
 			curSel = levels.length - 1;
 	}
 
-	public function reloadLevels()
+	public function reloadLevels(onComplete:(levelsGrp:FlxTypedGroup<LevelSpriteGroup>, levelsTextGrp:FlxTypedGroup<FlxText>) -> Void = null)
 	{
 		for (level in levelsGrp.members)
 		{
 			level.destroy();
 			levelsGrp.members.remove(level);
+		}
+		for (level in levelsTextGrp.members)
+		{
+			level.destroy();
+			levelsTextGrp.members.remove(level);
 		}
 
 		levelMetas = [];
@@ -118,7 +120,15 @@ class DesktopPlay extends State
 			textField.size = 32;
 			levelsTextGrp.add(textField);
 
+			levelGrp.levelIcon.screenCenter(XY);
+			levelGrp.levelIcon.x += ((levelGrp.levelIcon.width) * levelGrp.ID) * 1.5;
+			textField.x = levelGrp.levelIcon.x;
+			textField.y = levelGrp.levelIcon.y - textField.height;
+
 			i++;
 		}
+
+		if (onComplete != null)
+			onComplete(levelsGrp, levelsTextGrp);
 	}
 }
