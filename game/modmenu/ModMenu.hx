@@ -59,7 +59,7 @@ function onUpdate(event:UpdateEvent)
 
 			if (Controls.getControlJustReleased('ui_accept'))
 			{
-				Paths.saveContent('mods/' + ModManager.MOD_IDS[curSel] + '/' + ModManager.MOD_DISABLE_FILE,
+				Paths.saveContent('game/' + ModManager.MODS_FOLDER + '/' + ModManager.MOD_IDS[curSel] + '/' + ModManager.MOD_DISABLE_FILE,
 					(ModManager.MODS_DISABLED.contains(ModManager.MOD_IDS[curSel])) ? '' : 'disabled');
 				ModManager.loadMods();
 			}
