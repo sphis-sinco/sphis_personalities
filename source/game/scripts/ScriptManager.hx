@@ -26,11 +26,10 @@ class ScriptManager
 	public static function call(method:String, ?args:Array<Dynamic>)
 	{
 		#if html5
-		final pass = function() {};
 		switch (method)
 		{
 			case 'onAdded':
-				pass();
+				WebScripts.onAdded(args[0]);
 			case 'onCreate':
 				WebScripts.onCreate(args[0]);
 			case 'onUpdate':
