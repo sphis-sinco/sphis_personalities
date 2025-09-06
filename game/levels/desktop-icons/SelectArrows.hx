@@ -9,7 +9,6 @@ import game.scripts.imports.FlxScriptedAxes;
 
 var leftArrow:FlxSprite;
 var rightArrow:FlxSprite;
-var moving:Bool;
 
 function onCreate(event:CreateEvent)
 {

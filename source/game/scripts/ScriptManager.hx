@@ -62,7 +62,7 @@ class ScriptManager
 	{
 		for (script in SCRIPTS)
 		{
-			if (script.name == scriptPath)
+			if (script.name == scriptPath || script.name == Paths.getGamePath(scriptPath))
 				if (script.exists(variable))
 					script.set(variable, newValue);
 		}
@@ -72,7 +72,7 @@ class ScriptManager
 	{
 		for (script in SCRIPTS)
 		{
-			if (script.name == scriptPath)
+			if (script.name == scriptPath || script.name == Paths.getGamePath(scriptPath))
 				if (script.exists(variable))
 					return script.get(variable);
 		}

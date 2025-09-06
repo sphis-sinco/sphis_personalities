@@ -3,14 +3,18 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 import game.scripts.ScriptManager;
 import game.scripts.events.UpdateEvent;
+import game.scripts.imports.FlxScriptedColor;
 
 var transitioning = false;
-var moving:Bool = false;
 
 function onCreate(event:UpdateEvent)
 {
 	transitioning = false;
-	moving = false;
+
+	if (event.state == 'z-easter-egg')
+	{
+		FlxG.camera.fade(FlxScriptedColor.BLACK, 1, true, null);
+	}
 }
 
 function onUpdate(event:UpdateEvent)
@@ -21,34 +25,9 @@ function onUpdate(event:UpdateEvent)
 		{
 			transitioning = true;
 
-			if (event.state == 'desktop-main')
+			if (event.state == 'desktop-main' || event.state == 'desktop-play')
 			{
-				var state = DesktopMain.instance;
-				if (!ScriptManager.isWeb)
-					ScriptManager.setVariable('game/desktop/options/DesktopMainOptions.hx', 'moving', true);
-				else
-					moving = true;
-
-				FlxTween.tween(state.haxen, {alpha: 0}, 1, {
-					onComplete: _ ->
-					{
-						FlxG.switchState(() -> new BlankState('z-easter-egg'));
-					}
-				});
-				FlxTween.tween(state.option_play, {alpha: 0});
-				FlxTween.tween(state.option_options, {alpha: 0});
-			}
-			else if (event.state == 'desktop-play')
-			{
-				var state = DesktopPlay.instance;
-
-				for (obj in state.levelsGrp.members)
-					for (otherobj in obj.members)
-						FlxTween.tween(otherobj, {alpha: 0});
-				for (obj in state.levelsTextGrp.members)
-					FlxTween.tween(obj, {alpha: 0});
-
-				FlxTimer.wait(1, () ->
+				FlxG.camera.fade(FlxScriptedColor.BLACK, 1, false, () ->
 				{
 					FlxG.switchState(() -> new BlankState('z-easter-egg'));
 				});
