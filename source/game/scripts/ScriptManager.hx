@@ -246,7 +246,7 @@ class ScriptManager
 
 		try
 		{
-			newScript = new Iris(Paths.getText(path), new IrisConfig(path, true, true, []));
+			newScript = new Iris(Paths.getText(path), new IrisConfig(Paths.getGamePath(path), true, true, []));
 		}
 		catch (e)
 		{
@@ -383,7 +383,7 @@ class ScriptManager
 				if (deletedScripts.contains(file))
 					addition = '(removed)';
 
-				trace(' * ' + file + ' ' + addition);
+				trace(' * ' + Paths.getGamePath(file) + ' ' + addition);
 			}
 
 			loadScriptsByPaths(needToAdd);
