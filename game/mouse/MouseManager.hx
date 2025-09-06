@@ -17,6 +17,10 @@ function onUpdate(event:UpdateEvent)
 		if (Mouse.overlaps(DesktopMain.instance.option_options))
 			Mouse.setMouseState(MouseStates.CANT_SELECT);
 	}
+	if (event.state == 'desktop-play')
+	{
+		Mouse.setMouseState(MouseStates.BLANK);
+	}
 
 	if (Mouse.pressed && Mouse.state == MouseStates.CAN_SELECT)
 	{
