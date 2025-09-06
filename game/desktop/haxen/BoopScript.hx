@@ -1,15 +1,18 @@
 import flixel.util.FlxTimer;
 import game.Paths;
 import game.desktop.DesktopMain;
+import game.scripts.events.AddedEvent;
 import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
 
 var desktopMain:DesktopMain = null;
+var haxenIdleStates = [];
 
-var haxenIdleStates = [
-	Paths.getImagePath('desktop/haxen/idle-left'),
-	Paths.getImagePath('desktop/haxen/idle-right')
-];
+function onAdded(event:AddedEvent)
+{
+	haxenIdleStates.push(Paths.getImagePath('desktop/haxen/idle-left'));
+	haxenIdleStates.push(Paths.getImagePath('desktop/haxen/idle-right'));
+}
 
 function onCreate(event:CreateEvent)
 {
