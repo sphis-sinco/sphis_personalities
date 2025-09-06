@@ -2,22 +2,17 @@ import flixel.FlxG;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import game.desktop.DesktopMain;
-import game.scripts.events.AddedEvent;
 import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
 
 var msgText:FlxText;
 
-function onAdded(event:AddedEvent)
-{
-	msgText = new FlxText(0, 0, 0, 'Press [TAB] to move to the Mod Menu', 16);
-	msgText.color = FlxColor.WHITE;
-}
-
 function onCreate(event:CreateEvent)
 {
 	if (event.state == 'desktop-main')
 	{
+		msgText = new FlxText(0, 0, 0, 'Press [TAB] to move to the Mod Menu', 16);
+		msgText.color = FlxColor.WHITE;
 		DesktopMain.instance.add(msgText);
 	}
 }

@@ -3,18 +3,11 @@ import flixel.FlxSprite;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import game.desktop.DesktopMain;
-import game.scripts.events.AddedEvent;
 import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
 
 var msgText:FlxText;
 var msgBG:FlxSprite;
-
-function onAdded(event:AddedEvent)
-{
-	msgText = new FlxText(0, 0, 0, 'Press [TAB] to move back to Desktop (Main)', 16);
-	msgText.color = FlxColor.WHITE;
-}
 
 function onCreate(event:CreateEvent)
 {
@@ -24,6 +17,8 @@ function onCreate(event:CreateEvent)
 		msgBG.makeGraphic(FlxG.width, 32, FlxColor.BLACK);
 		msgBG.setPosition(msgText.x, msgText.y);
 		BlankState.instance.add(msgBG);
+		msgText = new FlxText(0, 0, 0, 'Press [TAB] to move back to Desktop (Main)', 16);
+		msgText.color = FlxColor.WHITE;
 		BlankState.instance.add(msgText);
 	}
 }
