@@ -6,6 +6,7 @@ import game.scripts.events.UpdateEvent;
 
 var leftArrow:FlxSprite;
 var rightArrow:FlxSprite;
+var moving:Bool;
 
 function onCreate(event:CreateEvent)
 {
@@ -36,7 +37,8 @@ function onCreate(event:CreateEvent)
 			rightArrow.scrollFactor.set(0, 0);
 		}
 
-		if (ScriptManager.getVariable('game/desktop/options/DesktopMainOptions.hx', 'moving') == true)
+		if ((ScriptManager.isWeb && moving)
+			|| (!ScriptManager.isWeb && ScriptManager.getVariable('game/desktop/options/DesktopMainOptions.hx', 'moving') == true))
 		{
 			leftArrow.alpha = 0;
 			rightArrow.alpha = 0;

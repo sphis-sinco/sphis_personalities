@@ -5,6 +5,7 @@ import game.scripts.ScriptManager;
 import game.scripts.events.UpdateEvent;
 
 var transitioning = false;
+var moving:Bool = false;
 
 function onUpdate(event:UpdateEvent)
 {
@@ -17,7 +18,10 @@ function onUpdate(event:UpdateEvent)
 			if (event.state == 'desktop-main')
 			{
 				var state = DesktopMain.instance;
-				ScriptManager.setVariable('game/desktop/options/DesktopMainOptions.hx', 'moving', true);
+				if (!ScriptManager.isWeb)
+					ScriptManager.setVariable('game/desktop/options/DesktopMainOptions.hx', 'moving', true);
+				else
+					moving = true;
 
 				FlxTween.tween(state.haxen, {alpha: 0}, 1, {
 					onComplete: _ ->

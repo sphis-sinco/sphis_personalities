@@ -12,6 +12,7 @@ var moving:Bool = false;
 
 function onCreate(event:CreateEvent)
 {
+	var previousY = 0.0;
 	desktopMain = null;
 	if (moving)
 	{
@@ -19,17 +20,17 @@ function onCreate(event:CreateEvent)
 		{
 			for (obj in DesktopPlay.instance.levelsGrp.members)
 			{
-				var prevY = obj.levelIcon.y;
+				previousY = obj.levelIcon.y;
 				obj.levelIcon.y = -FlxG.height;
-				FlxTween.tween(obj, {y: prevY}, 1, {
+				FlxTween.tween(obj, {y: previousY}, 1, {
 					ease: FlxEase.sineInOut
 				});
 			}
 			for (obj in DesktopPlay.instance.levelsTextGrp.members)
 			{
-				var prevY = obj.y;
+				previousY = obj.y;
 				obj.y = -FlxG.height;
-				FlxTween.tween(obj, {y: prevY}, 1, {
+				FlxTween.tween(obj, {y: previousY}, 1, {
 					ease: FlxEase.sineInOut
 				});
 			}

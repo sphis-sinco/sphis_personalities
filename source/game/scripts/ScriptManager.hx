@@ -14,6 +14,13 @@ import lime.app.Application;
 
 class ScriptManager
 {
+	public static var isWeb(get, null):Bool;
+
+	static function get_isWeb():Bool
+	{
+		return #if web true #else false #end;
+	}
+
 	public static var SCRIPT_FOLDER:String = 'scripts';
 
 	public static var SCRIPT_EXTS:Array<String> = ['hxc', 'hx', 'haxe', 'hscript'];
@@ -127,9 +134,14 @@ class ScriptManager
 					add = script.scriptCode.split('\n');
 				}
 
+				var inFunc = false;
+
 				for (thing in add)
 				{
 					var addThing = StringTools.replace(thing, '\t', '');
+					#if !sys
+					addThing += '\n';
+					#end
 
 					addThing = StringTools.replace(addThing, '.screenCenter(0x00);', '.screenCenter(NONE);');
 					addThing = StringTools.replace(addThing, '.screenCenter(0x01);', '.screenCenter(X);');
@@ -137,20 +149,29 @@ class ScriptManager
 					addThing = StringTools.replace(addThing, '.screenCenter(0x11);', '.screenCenter(XY);');
 
 					if (StringTools.startsWith(addThing, 'function'))
+					{
 						addThing = StringTools.replace(addThing, 'function', 'public static function');
-					if (StringTools.startsWith(addThing, 'var'))
+
+						inFunc = true;
+					}
+					if (StringTools.endsWith(addThing, '}') && inFunc)
+						inFunc = false;
+
+					if (StringTools.startsWith(addThing, 'import') && !imports.contains(addThing))
+						imports.push(addThing);
+					else if (StringTools.startsWith(addThing, 'var') && !inFunc)
 					{
 						addThing = StringTools.replace(addThing, 'var', 'static var');
 
 						if (!variables.contains(addThing))
 							variables.push(addThing);
 					}
-
-					if (StringTools.startsWith(addThing, 'import') && !imports.contains(addThing))
-						imports.push(addThing);
-
-					if (!StringTools.contains(addThing, 'import') && !StringTools.contains(addThing, 'var'))
+					else
+					{
+						if (StringTools.startsWith(addThing, 'import'))
+							addThing = '';
 						temp_giant_script_file += addThing;
+					}
 				}
 			}
 		}
@@ -172,9 +193,9 @@ class ScriptManager
 		for (varThing in variables)
 		{
 			if (!StringTools.contains(GIANT_SCRIPT_FILE, varThing))
-				if (!varsInitalized.contains(varThing))
+				if (!varsInitalized.contains(varThing.split(':')[0]))
 				{
-					varsInitalized.push(varThing);
+					varsInitalized.push(varThing.split(':')[0]);
 					GIANT_SCRIPT_FILE += varThing;
 				}
 		}
