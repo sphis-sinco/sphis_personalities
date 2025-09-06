@@ -23,31 +23,13 @@ class ScriptManager
 
 	public static var SCRIPT_FOLDER:String = 'scripts';
 
-	public static var SCRIPT_EXTS:Array<String> = ['hx'];
+	public static var SCRIPT_EXTS:Array<String> = ['hxc', 'hx', 'haxe', 'hscript'];
 
 	public static var SCRIPT_FOLDERS:Array<String> = [Paths.getGamePath(''), 'game/'];
 
 	public static var SCRIPTS:Array<Iris> = [];
 	public static var SCRIPTS_ERRS:Map<String, Dynamic> = [];
 	public static var GIANT_SCRIPT_FILE:String = '';
-
-	public static var clsList:Array<Class<Any>> = [
-		ScriptManager,
-		DesktopPlay,
-		DesktopMain,
-		InitState,
-		BlankState,
-		Paths,
-		Mouse,
-		MouseStates,
-		BaseEvent,
-		BaseStateEvent,
-		AddedEvent,
-		CreateEvent,
-		UpdateEvent,
-		LevelSpriteGroup,
-		Controls
-	];
 
 	public static function setVariableContains(needToContain:String, variable:Dynamic, newValue:Dynamic)
 	{
@@ -289,11 +271,28 @@ class ScriptManager
 
 	public static function initalizeScriptVariables(script:Iris)
 	{
-		for (cls in clsList)
-		{
-			trace('' + cls);
-			script.set('' + cls, cls, false);
-		}
+		script.set('ScriptManager', ScriptManager, false);
+
+		script.set('DesktopPlay', DesktopPlay, false);
+		script.set('DesktopMain', DesktopMain, false);
+		script.set('InitState', InitState, false);
+		script.set('BlankState', BlankState, false);
+
+		script.set('Paths', Paths, false);
+
+		script.set('Mouse', Mouse, false);
+		script.set('MouseStates', MouseStates, false);
+
+		script.set('BaseEvent', BaseEvent, false);
+		script.set('BaseStateEvent', BaseStateEvent, false);
+
+		script.set('AddedEvent', AddedEvent, false);
+		script.set('CreateEvent', CreateEvent, false);
+		script.set('UpdateEvent', UpdateEvent, false);
+
+		script.set('LevelSpriteGroup', LevelSpriteGroup, false);
+
+		script.set('Controls', Controls, false);
 
 		scriptImports(script);
 	}
