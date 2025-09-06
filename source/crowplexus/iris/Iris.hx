@@ -9,6 +9,7 @@ import haxe.ds.StringMap;
 import lime.app.Application;
 
 using StringTools;
+using game.Ansi;
 
 @:structInit
 class IrisCall
