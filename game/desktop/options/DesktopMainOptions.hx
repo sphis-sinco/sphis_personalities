@@ -49,12 +49,16 @@ function onUpdate(event:UpdateEvent)
 {
 	if (desktopMain != null && event.state == 'desktop-main')
 	{
-		desktopMain.option_play.alpha = 0.5;
-		desktopMain.option_options.alpha = 0.5;
+		if (!moving)
+		{
+			desktopMain.option_play.alpha = 0.5;
+			desktopMain.option_options.alpha = 0.5;
+		}
 
 		if (Mouse.overlaps(desktopMain.option_play))
 		{
-			desktopMain.option_play.alpha = 1;
+			if (!moving)
+				desktopMain.option_play.alpha = 1;
 
 			if (Mouse.justReleased && !moving)
 			{
@@ -64,7 +68,7 @@ function onUpdate(event:UpdateEvent)
 				desktopMain.haxen.x -= (desktopMain.haxen.width / 10);
 				desktopMain.haxen.y -= (desktopMain.haxen.height / 20);
 
-				FlxTween.tween(desktopMain.haxen, {y: FlxG.height + desktopMain.haxen.height}, 1, {
+				FlxTween.tween(desktopMain.haxen, {alpha: 1, y: FlxG.height + desktopMain.haxen.height}, 1, {
 					ease: FlxEase.sineInOut,
 					startDelay: 0.5,
 					onComplete: tween ->
@@ -73,18 +77,19 @@ function onUpdate(event:UpdateEvent)
 					}
 				});
 
-				FlxTween.tween(desktopMain.option_play, {y: FlxG.height + desktopMain.option_play.height}, 1, {
+				FlxTween.tween(desktopMain.option_play, {alpha: 1, y: FlxG.height + desktopMain.option_play.height}, 1, {
 					ease: FlxEase.sineInOut,
 					startDelay: 0.1,
 				});
-				FlxTween.tween(desktopMain.option_options, {y: FlxG.height + desktopMain.option_options.height}, 1, {
+				FlxTween.tween(desktopMain.option_options, {alpha: 1, y: FlxG.height + desktopMain.option_options.height}, 1, {
 					ease: FlxEase.sineInOut
 				});
 			}
 		}
 		else if (Mouse.overlaps(desktopMain.option_options))
 		{
-			desktopMain.option_options.alpha = 0.25;
+			if (!moving)
+				desktopMain.option_options.alpha = 0.25;
 
 			if (Mouse.pressed && !moving)
 			{
