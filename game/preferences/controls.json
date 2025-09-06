@@ -1,0 +1,12 @@
+{
+        "game_jump": ["SPACE"],
+        "game_left": ["LEFT", "A"],
+        "game_pause": ["ESCAPE"],
+        "game_right": ["RIGHT", "D"],
+        
+        "ui_accept": ["ENTER"],
+        "ui_down": ["DOWN", "S"],
+        "ui_left": ["LEFT", "A"],
+        "ui_right": ["RIGHT", "D"],
+        "ui_up": ["UP", "W"]
+}
