@@ -20,7 +20,14 @@ class Paths
 		var retpath = (StringTools.startsWith(path, 'game/') ? '' : 'game/') + path;
 
 		#if flixelModding
-		return FlxModding.system.sanitize(retpath);
+		try
+		{
+			return FlxModding.system.sanitize(retpath);
+		}
+		catch (_)
+		{
+			return retpath;
+		}
 		#else
 		return retpath;
 		#end
