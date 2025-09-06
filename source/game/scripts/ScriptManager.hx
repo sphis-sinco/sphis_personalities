@@ -2,7 +2,6 @@ package game.scripts;
 
 import crowplexus.iris.Iris;
 import crowplexus.iris.IrisConfig;
-import game.Controls.ControlsSave;
 import game.desktop.DesktopMain;
 import game.desktop.DesktopPlay;
 import game.desktop.play.LevelSpriteGroup;
