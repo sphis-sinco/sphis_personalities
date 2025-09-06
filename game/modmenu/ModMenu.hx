@@ -1,10 +1,10 @@
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.text.FlxText;
-import flixel.util.FlxColor;
 import game.desktop.DesktopMain;
 import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
+import game.scripts.imports.FlxScriptedColor;
 
 var msgText:FlxText;
 var msgBG:FlxSprite;
@@ -14,10 +14,10 @@ function onCreate(event:CreateEvent)
 	if (event.state == 'mod-menu')
 	{
 		msgText = new FlxText(0, 0, 0, 'Press [TAB] to move back to Desktop (Main)', 16);
-		msgText.color = FlxColor.WHITE;
+		msgText.color = FlxScriptedColor.WHITE;
 
 		msgBG = new FlxSprite();
-		msgBG.makeGraphic(FlxG.width, 32, FlxColor.BLACK);
+		msgBG.makeGraphic(FlxG.width, 32, FlxScriptedColor.BLACK);
 		msgBG.setPosition(msgText.x, msgText.y);
 
 		BlankState.instance.add(msgBG);

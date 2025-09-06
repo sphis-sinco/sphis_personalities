@@ -300,7 +300,7 @@ class ScriptManager
 
 	static function scriptImports(script:Iris)
 	{
-		script.set('FlxColor', FlxScriptedColor, false);
+		script.set('FlxScriptedColor', FlxScriptedColor, false);
 	}
 
 	public static function loadScriptsByPaths(paths:Array<String>)
