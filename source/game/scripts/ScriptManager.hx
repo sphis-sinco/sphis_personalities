@@ -296,7 +296,7 @@ class ScriptManager
 
 		script.set('Controls', Controls, false);
 
-		script.set('ModManager', ModManager, false);
+		// script.set('ModManager', ModManager, false);
 
 		scriptImports(script);
 	}
