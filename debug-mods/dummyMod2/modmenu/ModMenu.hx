@@ -18,11 +18,11 @@ function onCreate(event:CreateEvent)
 	if (event.state == 'mod-menu')
 	{
 		msgText = new FlxText(0, 0, 0, 'Press [TAB] to move back to Desktop (Main)', 16);
-		msgText.color = FlxScriptedColor.WHITE;
+		msgText.color = FlxScriptedColor.BLACK;
 		msgText.scrollFactor.set();
 
 		msgBG = new FlxSprite();
-		msgBG.makeGraphic(FlxG.width, 32, FlxScriptedColor.BLACK);
+		msgBG.makeGraphic(FlxG.width, 32, FlxScriptedColor.WHITE);
 		msgBG.setPosition(msgText.x, msgText.y);
 		msgBG.scrollFactor.set();
 

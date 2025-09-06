@@ -1,0 +1,12 @@
+{
+        "name": "Dummy mod 2: Dumber then dum",
+        "version": "2",
+        "description": "Dummy mod to test shit",
+
+        "credits":[
+                {
+                        "name":"Sphis",
+                        "title":"Maker"
+                }
+        ]
+}
