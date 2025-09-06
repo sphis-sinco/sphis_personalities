@@ -83,23 +83,14 @@ class ModManager
 
 		MOD_IDS.sort(sortByPriority);
 
-		trace(MOD_IDS.length + ' valid mods loaded');
+		trace(Ansi.fg('', GREEN) + MOD_IDS.length + ' valid mods loaded');
 		if (MOD_IDS.length > 0)
 		{
 			for (id in MOD_IDS)
 			{
 				final meta = MOD_METAS.get(id);
-				trace(' * '
-					+ meta.name
-					+ '('
-					+ id
-					+ ') v'
-					+ meta.version
-					+ ' (Active: '
-					+ MODS_ENABLED.contains(id)
-					+ ', Priority: '
-					+ meta.priority
-					+ ')');
+				trace(' * ' + Ansi.fg('', GREEN) + meta.name + '(' + id + ') v' + meta.version + ' (Active: ' + MODS_ENABLED.contains(id) + ', Priority: '
+					+ meta.priority + ')');
 			}
 		}
 	}

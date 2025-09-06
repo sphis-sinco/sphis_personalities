@@ -2,7 +2,6 @@ package game.scripts;
 
 import crowplexus.iris.Iris;
 import crowplexus.iris.IrisConfig;
-import crowplexus.iris.utils.Ansi;
 import game.desktop.DesktopMain;
 import game.desktop.DesktopPlay;
 import game.desktop.play.LevelSpriteGroup;
@@ -108,11 +107,14 @@ class ScriptManager
 	{
 		if (!script.exists(method))
 		{
-			final errMsg = 'missing method(' + method + ') for script(' + script.config.name + ')';
+			var errMsg = Ansi.fg('missing method(-method) for script(-script.config.name)', RED);
+
+			errMsg = StringTools.replace(errMsg, '-method', Ansi.fg(method, WHITE) + Ansi.fg('', RED));
+			errMsg = StringTools.replace(errMsg, '-script.config.name', Ansi.fg(script.config.name, WHITE) + Ansi.fg('', RED));
 
 			if (!SCRIPTS_ERRS.exists('missing_method(' + method + ')_' + script.config.name))
 			{
-				SCRIPTS_ERRS.set('missing_method(' + method + ')_' + script.config.name, errMsg);
+				SCRIPTS_ERRS.set('missing_method(' + method + ')_' + script.config.name, Ansi.stripColor(errMsg));
 				trace(errMsg);
 			}
 
@@ -129,11 +131,14 @@ class ScriptManager
 		}
 		catch (e)
 		{
-			final errMsg = 'error calling method(' + method + ') for script(' + script.config.name + '): ' + e.message;
+			var errMsg = Ansi.fg('error calling method(-method) for script(-script.config.name): ', RED) + Ansi.fg(e.message, WHITE);
+
+			errMsg = StringTools.replace(errMsg, '-method', Ansi.fg(method, WHITE) + Ansi.fg('', RED));
+			errMsg = StringTools.replace(errMsg, '-script.config.name', Ansi.fg(script.config.name, WHITE) + Ansi.fg('', RED));
 
 			if (!SCRIPTS_ERRS.exists('method(' + method + ')_error_' + script.config.name))
 			{
-				SCRIPTS_ERRS.set('method(' + method + ')_error_' + script.config.name, errMsg);
+				SCRIPTS_ERRS.set('method(' + method + ')_error_' + script.config.name, Ansi.stripColor(errMsg));
 				trace(errMsg);
 			}
 		}
@@ -250,7 +255,7 @@ class ScriptManager
 		catch (e)
 		{
 			newScript = null;
-			trace('Error loading script(' + path + '): ' + e.message);
+			trace(Ansi.fg('', RED) + 'Error loading script(' + Ansi.fg(path, WHITE) + Ansi.fg('', RED) + '): ' + e.message);
 			Application.current.window.alert('Error loading script(' + path + '): ' + e.message + '\n\n' + e.details, 'Error loading script');
 		}
 
@@ -258,7 +263,7 @@ class ScriptManager
 		{
 			initalizeScriptVariables(newScript);
 
-			trace('Loaded script(' + path + ')');
+			trace('Loaded script(' + Ansi.fg(path, WHITE) + Ansi.reset('') + ')');
 
 			SCRIPTS.push(newScript);
 
@@ -294,6 +299,8 @@ class ScriptManager
 		script.set('Controls', Controls, false);
 
 		script.set('ModManager', ModManager, false);
+
+		script.set('Ansi', Ansi, false);
 
 		scriptImports(script);
 	}
@@ -378,7 +385,7 @@ class ScriptManager
 					needToAdd.push(file);
 				}
 
-			var newText = ((newCount > 0) ? (' (' + newCount + ' new)') : '');
+			var newText = ((newCount > 0) ? (Ansi.fg(' (' + newCount + ' new)', GREEN)) : '');
 			trace('Found ' + arr.length + ' ' + type + ' file(s)' + newText + ':');
 
 			var i = 0;
@@ -409,7 +416,7 @@ class ScriptManager
 					addition = StringTools.replace(addition, ')', '/' + Ansi.fg('modfile', GREEN) + ')');
 				}
 
-				trace(' * ' + file + ' ' + addition);
+				trace(' * ' + Ansi.fg(file, WHITE) + ' ' + addition);
 
 				i++;
 			}
