@@ -18,6 +18,7 @@ class Main extends Sprite
 
 		#if flixelModding
 		FlxModding.init(PersonalitiesModpack, PersonalitiesMetaDataFormat, null, null, 'game');
+		#if FLXMODDING_SCRIPTING
 		FlxModding.scripting = true;
 
 		@:privateAccess {
@@ -29,6 +30,7 @@ class Main extends Sprite
 				});
 			}
 		}
+		#end
 		#end
 
 		addChild(new FlxGame(0, 0, game.InitState));

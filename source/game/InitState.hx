@@ -47,7 +47,7 @@ class InitState extends FlxState
 
 		Mouse.setMouseState(MouseStates.IDLE);
 
-		#if !flixelModding
+		#if !FLXMODDING_SCRIPTING
 		ScriptManager.loadAllScripts();
 		#end
 
