@@ -6,6 +6,7 @@ import game.mods.ModManager;
 import game.scripts.ScriptManager;
 import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
+import game.scripts.imports.FlxScriptedAxes;
 import game.scripts.imports.FlxScriptedColor;
 
 var modText:FlxText;
@@ -26,11 +27,15 @@ function onCreate(event:CreateEvent)
 		msgBG.setPosition(msgText.x, msgText.y);
 		msgBG.scrollFactor.set();
 
-		modText = new FlxText(10, msgBG.height + 16, 0, '', 16);
+		modText = new FlxText(0, msgBG.height + 16, FlxG.width, '', 16);
+		modText.x = 0;
+		modText.alignment = 'center';
 		BlankState.instance.add(modText);
 
 		BlankState.instance.add(msgBG);
 		BlankState.instance.add(msgText);
+
+		trace(ModManager.MOD_IDS.toString());
 	}
 }
 
@@ -47,10 +52,10 @@ function onUpdate(event:UpdateEvent)
 		if (ModManager.MOD_IDS.length > 0)
 		{
 			if (Controls.getControlJustReleased('ui_left'))
-				curSel--;
+				curSel -= 1;
 
 			if (Controls.getControlJustReleased('ui_right'))
-				curSel++;
+				curSel += 1;
 
 			if (Controls.getControlJustReleased('ui_accept'))
 			{
@@ -61,21 +66,20 @@ function onUpdate(event:UpdateEvent)
 
 			if (curSel < 0)
 				curSel = 0;
-			if (curSel >= ModManager.MOD_IDS.length)
+			if (curSel > ModManager.MOD_IDS.length - 1)
 				curSel = ModManager.MOD_IDS.length - 1;
 
 			modText.text = ModManager.MOD_METAS.get(ModManager.MOD_IDS[curSel]).name
 				+ ' (active: '
-				+ !ModManager.MODS_DISABLED.contains(ModManager.MOD_IDS[curSel])
+				+ ModManager.MODS_ENABLED.contains(ModManager.MOD_IDS[curSel])
 				+ ', priority: '
 				+ ModManager.MOD_METAS.get(ModManager.MOD_IDS[curSel]).priority
 				+ ')';
-			modText.screenCenter();
 		}
 		else
 		{
 			modText.text = 'No mods downloaded.';
-			modText.screenCenter();
 		}
+		modText.screenCenter(FlxScriptedAxes.Y);
 	}
 }
