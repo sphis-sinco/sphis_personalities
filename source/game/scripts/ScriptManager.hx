@@ -5,6 +5,7 @@ import crowplexus.iris.IrisConfig;
 import game.desktop.DesktopMain;
 import game.desktop.DesktopPlay;
 import game.desktop.play.LevelSpriteGroup;
+import game.mods.ModManager;
 import game.scripts.events.AddedEvent;
 import game.scripts.events.BaseEvent;
 import game.scripts.events.BaseStateEvent;
@@ -295,12 +296,14 @@ class ScriptManager
 
 		script.set('Controls', Controls, false);
 
+		script.set('ModManager', ModManager, false);
+
 		scriptImports(script);
 	}
 
 	static function scriptImports(script:Iris)
 	{
-		script.set('FlxColor', FlxScriptedColor, false);
+		script.set('FlxScriptedColor', FlxScriptedColor, false);
 	}
 
 	public static function loadScriptsByPaths(paths:Array<String>)

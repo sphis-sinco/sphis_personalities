@@ -9,6 +9,7 @@ import crowplexus.iris.utils.UsingEntry;
 import haxe.ds.StringMap;
 import lime.app.Application;
 
+using StringTools;
 using crowplexus.iris.utils.Ansi;
 
 @:structInit
@@ -151,21 +152,20 @@ class Iris
 		{
 			posPrefix = posPrefix.fg(ErrorSeverityTools.getColor(level)).reset();
 			if (level == FATAL)
-			{
 				posPrefix = posPrefix.attr(INTENSITY_BOLD);
-			}
 		}
+
 		#if sys
-		Sys.println((posPrefix + ": " + out).stripColor());
+		Sys.println((posPrefix + ": " + out));
 		#else
 		// Since non-sys targets lack printLn, a simple trace should work
-		trace((posPrefix + ": " + out).stripColor());
+		trace((posPrefix + ": " + out));
 		#end
 
 		switch (level)
 		{
 			case WARN, ERROR, FATAL:
-				Application.current.window.alert(out, posPrefix);
+				Application.current.window.alert(out.stripColor(), posPrefix.stripColor().replace('[', '').replace(']', ''));
 			default:
 				// nothing
 		}

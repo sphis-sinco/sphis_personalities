@@ -4,12 +4,9 @@ import crowplexus.iris.Iris;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
-import flixel.system.assetSystem.FlxAssetSystem;
 import game.Controls.ControlsSave;
+import game.mods.ModManager;
 import game.scripts.ScriptManager;
-#if flixelModding
-import flixel.system.FlxModding;
-#end
 
 class InitState extends FlxState
 {
@@ -42,14 +39,14 @@ class InitState extends FlxState
 
 		FlxSprite.defaultAntialiasing = true;
 
+		ScriptManager.checkForUpdatedScripts();
+		// ModManager.loadMods();
+		ScriptManager.loadAllScripts();
+
 		Controls.save = new ControlsSave(Paths.getGamePath('preferences/controls.json'));
 		Controls.save.load(Controls.save.publicPath);
 
 		Mouse.setMouseState(MouseStates.IDLE);
-
-		#if !FLXMODDING_SCRIPTING
-		ScriptManager.loadAllScripts();
-		#end
 
 		FlxG.switchState(() -> new game.desktop.DesktopMain());
 	}

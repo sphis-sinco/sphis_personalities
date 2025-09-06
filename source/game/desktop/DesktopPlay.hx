@@ -80,6 +80,8 @@ class DesktopPlay extends State
 			curSel--;
 		if (Controls.getControlJustReleased('ui_right'))
 			curSel++;
+		if (Controls.getControlJustReleased('ui_leave'))
+			FlxG.switchState(() -> new DesktopMain());
 
 		if (curSel < 0)
 			curSel = 0;

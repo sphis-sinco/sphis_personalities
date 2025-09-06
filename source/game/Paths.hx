@@ -1,8 +1,6 @@
 package game;
 
-#if flixelModding
-import flixel.system.FlxModding;
-#end
+import game.mods.ModManager;
 
 using StringTools;
 
@@ -19,18 +17,15 @@ class Paths
 	{
 		var retpath = (StringTools.startsWith(path, 'game/') ? '' : 'game/') + path;
 
-		#if flixelModding
-		try
+		for (mod in ModManager.MOD_IDS)
 		{
-			return FlxModding.system.sanitize(retpath);
+			if (pathExists('${(StringTools.startsWith(path, 'game/') ? '' : 'game/')}${ModManager.MODS_FOLDER}/$mod/$path'))
+			{
+				retpath = '${(StringTools.startsWith(path, 'game/') ? '' : 'game/')}${ModManager.MODS_FOLDER}/$mod/$path';
+			}
 		}
-		catch (_)
-		{
-			return retpath;
-		}
-		#else
+
 		return retpath;
-		#end
 	}
 
 	public static function getImagePath(path:String, ?game:Bool = true)
@@ -105,11 +100,16 @@ class Paths
 		return arr;
 	}
 
+	public static function saveContent(path:String, content:String)
+	{
+		#if sys
+		File.saveContent(path, content);
+		#end
+	}
+
 	public static function pathExists(id:String):Bool
 	{
-		#if flixelModding
-		return FlxModding.system.assetSystem.exists(id);
-		#elseif sys
+		#if sys
 		return FileSystem.exists(id);
 		#else
 		return Assets.exists(id);
@@ -118,9 +118,7 @@ class Paths
 
 	public static function getText(id:String):String
 	{
-		#if flixelModding
-		return FlxModding.system.assetSystem.getText(id);
-		#elseif sys
+		#if sys
 		return File.getContent(id);
 		#else
 		return Assets.getText(id);
