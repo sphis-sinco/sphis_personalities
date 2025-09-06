@@ -42,7 +42,6 @@
 
 	<source path="source" />
 	<assets path="game" />
-	<assets path="flixel" />
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
