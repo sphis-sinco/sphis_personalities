@@ -32,15 +32,17 @@
 	<set name="BUILD_DIR" value="export/release" unless="debug"/>
 	<set name="BUILD_DIR" value="export/debug" if="debug"/>
 
+	<define name="MODDING_ALLOWED" />
+
 	<source path="source" />
 	<assets path="game" />
-	<assets path="mods" />
+	<assets path="mods" if="MODDING_ALLOWED"/>
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
 	<haxelib name="flixel" />
 	
-	<haxelib name="flixel-modding" />
+	<haxelib name="flixel-modding" if="MODDING_ALLOWED"/>
 	<define name="flixelModding" if="flixel-modding"/>
 
 	<haxelib name="lime" />
