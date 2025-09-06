@@ -6,6 +6,9 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import game.Controls.ControlsSave;
 import game.scripts.ScriptManager;
+#if flixelModding
+import flixel.system.FlxModding;
+#end
 
 class InitState extends FlxState
 {
@@ -37,6 +40,13 @@ class InitState extends FlxState
 		#end
 
 		FlxSprite.defaultAntialiasing = true;
+
+		#if flixelModding
+		FlxModding.init();
+		@:privateAccess {
+			FlxModding.assetDirectory = 'game';
+		}
+		#end
 
 		Controls.save = new ControlsSave(Paths.getGamePath('preferences/controls.json'));
 		Controls.save.load(Controls.save.publicPath);

@@ -34,13 +34,20 @@
 
 	<source path="source" />
 	<assets path="game" />
+	<assets path="mods" />
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
 	<haxelib name="flixel" />
+	
+	<haxelib name="flixel-modding" />
+	<define name="flixelModding" if="flixel-modding"/>
+
 	<haxelib name="lime" />
 	<haxelib name="openfl" />
 
+	<haxelib name="rulescript" if="flixel-modding"/>
+	<haxelib name="hscript" if="flixel-modding"/>
 	<haxelib name="hscript-iris" />
 	<define name="hscriptPos" />
 
