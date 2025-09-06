@@ -1,5 +1,6 @@
 package game;
 
+import crowplexus.iris.Iris;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -15,6 +16,7 @@ class InitState extends FlxState
 		super.create();
 
 		oldTrace = haxe.Log.trace;
+		#if trimmedTrace
 		haxe.Log.trace = function(v, ?infos)
 		{
 			#if sys
@@ -30,6 +32,9 @@ class InitState extends FlxState
 			oldTrace(v, infos);
 			#end
 		};
+		#else
+		haxe.Log.trace = Iris.print;
+		#end
 
 		FlxSprite.defaultAntialiasing = true;
 
