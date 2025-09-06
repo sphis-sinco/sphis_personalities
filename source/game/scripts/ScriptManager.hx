@@ -359,20 +359,23 @@ class ScriptManager
 			for (script in deletedScripts)
 				arr.push(script);
 
-			var addition = '(loaded)';
+			var addition = '';
 			var newCount = 0;
 
 			for (file in arr)
 				if (!scriptsString.contains(file))
+				{
 					newCount++;
+					needToAdd.push(file);
+				}
 
 			trace('Found ' + arr.length + ' ' + type + ' files (' + newCount + ' new):');
 			for (file in arr)
 			{
+				addition = '(loaded)';
 				if (!scriptsString.contains(file))
 				{
 					addition = '(new)';
-					needToAdd.push(file);
 					scriptsString.push(file);
 				}
 
