@@ -99,6 +99,7 @@ class ScriptManager
 		var temp_giant_script_file = '';
 		var add:Array<String> = [];
 		var imports:Array<String> = [];
+		var variables:Array<String> = [];
 
 		for (script in SCRIPTS)
 		{
@@ -118,14 +119,14 @@ class ScriptManager
 					{
 						addThing = StringTools.replace(addThing, 'var', 'static var');
 
-						if (StringTools.contains(temp_giant_script_file, addThing))
-							addThing = '';
+						if (!variables.contains(addThing))
+							variables.push(addThing);
 					}
 
 					if (StringTools.startsWith(addThing, 'import') && !imports.contains(addThing))
 						imports.push(addThing);
 
-					if (!StringTools.contains(addThing, 'import'))
+					if (!StringTools.contains(addThing, 'import') && !StringTools.contains(addThing, 'var'))
 						temp_giant_script_file += addThing;
 				}
 			}
@@ -145,6 +146,17 @@ class ScriptManager
 		}
 
 		GIANT_SCRIPT_FILE += 'class WebScripts {';
+
+		var varsInitalized = [];
+		for (varThing in variables)
+		{
+			if (!StringTools.contains(GIANT_SCRIPT_FILE, varThing))
+				if (!varsInitalized.contains(varThing))
+				{
+					varsInitalized.push(varThing);
+					GIANT_SCRIPT_FILE += varThing;
+				}
+		}
 		GIANT_SCRIPT_FILE += temp_giant_script_file;
 		GIANT_SCRIPT_FILE += '}';
 
