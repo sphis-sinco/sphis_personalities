@@ -25,6 +25,8 @@ class ScriptManager
 
 	public static var SCRIPT_EXTS:Array<String> = ['hxc', 'hx', 'haxe', 'hscript'];
 
+	public static var SCRIPT_FOLDERS:Array<String> = [Paths.getGamePath(''), 'game/'];
+
 	public static var SCRIPTS:Array<Iris> = [];
 	public static var SCRIPTS_ERRS:Map<String, Dynamic> = [];
 	public static var GIANT_SCRIPT_FILE:String = '';
@@ -314,9 +316,7 @@ class ScriptManager
 	public static function getAllScriptPaths():Array<String>
 	{
 		#if sys
-		var typePaths:Array<String> = [Paths.getGamePath(''), 'game/'];
-
-		return Paths.getTypeArray('script', SCRIPT_FOLDER, SCRIPT_EXTS, typePaths);
+		return Paths.getTypeArray('script', SCRIPT_FOLDER, SCRIPT_EXTS, SCRIPT_FOLDERS);
 		#else
 		return [];
 		#end
@@ -324,14 +324,16 @@ class ScriptManager
 
 	public static function checkForUpdatedScripts()
 	{
+		var scriptsString = [];
 		for (script in SCRIPTS)
 		{
+			scriptsString.push(script.name);
 			var path = script.name;
 
 			@:privateAccess {
 				if (Paths.getText(path) != script.scriptCode)
 				{
-					trace(script.name + ' has had an update');
+					trace('script(' + script.name + ') had an update');
 					var scriptLayer:Int = 0;
 
 					script.destroy();
@@ -345,6 +347,25 @@ class ScriptManager
 						SCRIPTS.remove(SCRIPTS[SCRIPTS.length - 1]);
 					}
 				}
+				else
+				{
+					if (!Paths.pathExists(script.name))
+					{
+						trace('script(' + script.name + ') has been removed');
+						script.destroy();
+						SCRIPTS.remove(script);
+					}
+				}
+			}
+		}
+
+		for (script in getAllScriptPaths())
+		{
+			if (!scriptsString.contains(script))
+			{
+				trace('new script(' + script + ') found');
+				scriptsString.push(script);
+				loadScriptByPath(script);
 			}
 		}
 	}
