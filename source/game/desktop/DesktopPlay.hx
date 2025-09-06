@@ -41,7 +41,7 @@ class DesktopPlay extends State
 
 		camFollow = new FlxObject(320, 240);
 		add(camFollow);
-		FlxG.camera.follow(camFollow, LOCKON, 1.0);
+		FlxG.camera.follow(camFollow, LOCKON, 0.1);
 
 		super.create();
 	}
@@ -57,12 +57,17 @@ class DesktopPlay extends State
 
 			levelGrp.update(elapsed);
 
-			levelsTextGrp.members[levelGrp.ID].screenCenter(X);
-			levelsTextGrp.members[levelGrp.ID].x += (levelGrp.levelIcon.width * 1.25) * levelGrp.ID;
+			levelsTextGrp.members[levelGrp.ID].x = levelGrp.levelIcon.x;
 			levelsTextGrp.members[levelGrp.ID].y = levelGrp.levelIcon.y - levelsTextGrp.members[levelGrp.ID].height;
-		}
 
-		camFollow.x = 320 + (640 * curSel);
+			levelGrp.levelIcon.color = 0xFFFFFF;
+			if (curSel == levelGrp.ID)
+			{
+				camFollow.x = levelGrp.levelIcon.getGraphicMidpoint().x;
+				levelGrp.levelIcon.color = 0xFFFF00;
+			}
+			levelsTextGrp.members[levelGrp.ID].color = levelGrp.levelIcon.color;
+		}
 
 		if (Controls.getControlJustReleased('ui_left'))
 			curSel--;

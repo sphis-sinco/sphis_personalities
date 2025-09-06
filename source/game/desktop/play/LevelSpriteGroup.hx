@@ -62,6 +62,9 @@ class LevelSpriteGroup extends FlxTypedGroup<FlxSprite>
 	{
 		super.update(elapsed);
 
+		box.color = levelIcon.color;
+		lock.color = levelIcon.color;
+
 		box.setPosition(levelIcon.x, levelIcon.y);
 		lock.setPosition(box.x, box.y);
 
