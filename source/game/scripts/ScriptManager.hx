@@ -377,7 +377,8 @@ class ScriptManager
 					needToAdd.push(file);
 				}
 
-			trace('Found ' + arr.length + ' ' + type + ' files (' + newCount + ' new):');
+			var newText = ((newCount > 0) ? (' files (' + newCount + ' new)') : '');
+			trace('Found ' + arr.length + ' ' + type + newText + ':');
 			for (file in arr)
 			{
 				addition = Ansi.fg('(loaded)', WHITE);
