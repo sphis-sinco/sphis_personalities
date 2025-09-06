@@ -7,10 +7,10 @@ import sys.FileSystem;
 
 class ModManager
 {
+	public static var MOD_ALL:Array<String> = [];
 	public static var MOD_IDS:Array<String> = [];
-	public static var MODS_ENABLED:Array<String> = [];
-	public static var MODS_DISABLED:Array<String> = [];
 	public static var MOD_METAS:Map<String, ModMeta> = [];
+
 	public static var MOD_METADATA_FILE:String = 'meta.json';
 	public static var MOD_DISABLE_FILE:String = 'disable';
 
@@ -18,10 +18,12 @@ class ModManager
 
 	public static function loadMods()
 	{
-		MOD_IDS = [];
-		MODS_ENABLED = [];
-		MODS_DISABLED = [];
-		MOD_METAS = [];
+		for (mod in MOD_ALL)
+		{
+			MOD_ALL.remove(mod);
+			MOD_IDS.remove(mod);
+			MOD_METAS.remove(mod);
+		}
 
 		#if sys
 		if (!Paths.pathExists('game/' + MODS_FOLDER + '/'))
@@ -60,36 +62,26 @@ class ModManager
 				{
 					if (meta.priority == null)
 						meta.priority = 0;
-				}
 
-				if (meta != null && (disable == null || disable == ''))
-				{
-					MOD_IDS.push(entry);
-					MODS_ENABLED.push(entry);
+					MOD_ALL.push(entry);
 					MOD_METAS.set(entry, meta);
-				}
-				else
-				{
-					if (meta != null)
-					{
+					if (disable == null || disable == '')
 						MOD_IDS.push(entry);
-						MODS_DISABLED.push(entry);
-						MOD_METAS.set(entry, meta);
-					}
 				}
 			}
 		}
 		#end
 
 		MOD_IDS.sort(sortByPriority);
+		MOD_ALL.sort(sortByPriority);
 
 		trace(Ansi.fg('', GREEN) + MOD_IDS.length + ' valid mods loaded');
 		if (MOD_IDS.length > 0)
 		{
-			for (id in MOD_IDS)
+			for (id in MOD_ALL)
 			{
 				final meta = MOD_METAS.get(id);
-				trace(' * ' + Ansi.fg('', GREEN) + meta.name + '(' + id + ') v' + meta.version + ' (Active: ' + MODS_ENABLED.contains(id) + ', Priority: '
+				trace(' * ' + Ansi.fg('', GREEN) + meta.name + '(' + id + ') v' + meta.version + ' (Active: ' + MOD_IDS.contains(id) + ', Priority: '
 					+ meta.priority + ')');
 			}
 		}

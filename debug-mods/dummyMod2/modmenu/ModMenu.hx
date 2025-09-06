@@ -19,11 +19,11 @@ function onCreate(event:CreateEvent)
 	if (event.state == 'mod-menu')
 	{
 		msgText = new FlxText(0, 0, 0, 'Press [TAB] to move back to Desktop (Main)', 16);
-		msgText.color = FlxScriptedColor.BLACK;
+		msgText.color = FlxScriptedColor.WHITE;
 		msgText.scrollFactor.set();
 
 		msgBG = new FlxSprite();
-		msgBG.makeGraphic(FlxG.width, 32, FlxScriptedColor.WHITE);
+		msgBG.makeGraphic(FlxG.width, 32, FlxScriptedColor.BLACK);
 		msgBG.setPosition(msgText.x, msgText.y);
 		msgBG.scrollFactor.set();
 
@@ -35,7 +35,7 @@ function onCreate(event:CreateEvent)
 		BlankState.instance.add(msgBG);
 		BlankState.instance.add(msgText);
 
-		trace(ModManager.MOD_IDS.toString());
+		trace(ModManager.MOD_ALL.toString());
 	}
 }
 
@@ -49,7 +49,7 @@ function onUpdate(event:UpdateEvent)
 			ScriptManager.checkForUpdatedScripts();
 		}
 
-		if (ModManager.MOD_IDS.length > 0)
+		if (ModManager.MOD_ALL.length > 0)
 		{
 			if (Controls.getControlJustReleased('ui_left'))
 				curSel -= 1;
@@ -59,27 +59,30 @@ function onUpdate(event:UpdateEvent)
 
 			if (Controls.getControlJustReleased('ui_accept'))
 			{
-				Paths.saveContent('game/' + ModManager.MODS_FOLDER + '/' + ModManager.MOD_IDS[curSel] + '/' + ModManager.MOD_DISABLE_FILE,
-					(ModManager.MODS_DISABLED.contains(ModManager.MOD_IDS[curSel])) ? '' : 'disabled');
+				Paths.saveContent('game/' + ModManager.MODS_FOLDER + '/' + ModManager.MOD_ALL[curSel] + '/' + ModManager.MOD_DISABLE_FILE,
+					(!ModManager.MOD_IDS.contains(ModManager.MOD_ALL[curSel])) ? '' : 'disabled');
 				ModManager.loadMods();
 			}
 
 			if (curSel < 0)
 				curSel = 0;
-			if (curSel > ModManager.MOD_IDS.length - 1)
-				curSel = ModManager.MOD_IDS.length - 1;
+			if (curSel > ModManager.MOD_ALL.length - 1)
+				curSel = ModManager.MOD_ALL.length - 1;
 
-			modText.text = ModManager.MOD_METAS.get(ModManager.MOD_IDS[curSel]).name
-				+ ' (active: '
-				+ ModManager.MODS_ENABLED.contains(ModManager.MOD_IDS[curSel])
-				+ ', priority: '
-				+ ModManager.MOD_METAS.get(ModManager.MOD_IDS[curSel]).priority
-				+ ')';
+			if (modText != null)
+				modText.text = ModManager.MOD_METAS.get(ModManager.MOD_ALL[curSel]).name
+					+ ' (active: '
+					+ ModManager.MOD_IDS.contains(ModManager.MOD_ALL[curSel])
+					+ ', priority: '
+					+ ModManager.MOD_METAS.get(ModManager.MOD_ALL[curSel]).priority
+					+ ')';
 		}
 		else
 		{
-			modText.text = 'No mods downloaded.';
+			if (modText != null)
+				modText.text = 'No mods downloaded.';
 		}
-		modText.screenCenter(FlxScriptedAxes.Y);
+		if (modText != null)
+			modText.screenCenter(FlxScriptedAxes.Y);
 	}
 }

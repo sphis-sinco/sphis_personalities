@@ -17,7 +17,7 @@ class Paths
 	{
 		var retpath = (StringTools.startsWith(path, 'game/') ? '' : 'game/') + path;
 
-		for (mod in ModManager.MODS_ENABLED)
+		for (mod in ModManager.MOD_IDS)
 		{
 			if (pathExists('game/' + ModManager.MODS_FOLDER + '/' + mod + '/' + StringTools.replace(retpath, 'game/', '')))
 			{
@@ -67,6 +67,9 @@ class Paths
 
 		readFolder = function(folder:String, ogdir:String)
 		{
+			if (folder == 'mods' && ogdir.split('/')[0] == 'game' && ModManager.MOD_IDS.length > 0)
+				return;
+
 			if (!folder.contains('.'))
 				readFileFolder(folder, ogdir);
 			else
@@ -74,17 +77,17 @@ class Paths
 		}
 		var readDir:Dynamic = function(directory:String)
 		{
-			// trace(directory);
 			if (pathExists(directory))
 				for (folder in FileSystem.readDirectory(directory))
-					if ((directory == 'game/') && folder != 'mods')
-						readFolder(folder, directory);
+				{
+					readFolder(folder, directory);
+				}
 		}
 
 		for (path in typePaths)
 		{
 			readDir(path);
-			for (mod in ModManager.MODS_ENABLED)
+			for (mod in ModManager.MOD_IDS)
 				readDir('game/'
 					+ ModManager.MODS_FOLDER
 					+ '/'
