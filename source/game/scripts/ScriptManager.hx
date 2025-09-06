@@ -236,7 +236,7 @@ class ScriptManager
 		#end
 	}
 
-	public static function loadScriptByPath(path:String)
+	public static function loadScriptByPath(path:String):Bool
 	{
 		var newScript:Iris;
 
@@ -247,7 +247,7 @@ class ScriptManager
 				noExt++;
 		}
 		if (noExt >= SCRIPT_EXTS.length)
-			return;
+			return false;
 
 		try
 		{
@@ -268,7 +268,11 @@ class ScriptManager
 
 			SCRIPTS.push(newScript);
 			callSingular(newScript, 'onAdded', [new AddedEvent(newScript.name)]);
+
+			return true;
 		}
+
+		return false;
 	}
 
 	public static function initalizeScriptVariables(script:Iris)
@@ -316,5 +320,32 @@ class ScriptManager
 		#else
 		return [];
 		#end
+	}
+
+	public static function checkForUpdatedScripts()
+	{
+		for (script in SCRIPTS)
+		{
+			var path = script.name;
+
+			@:privateAccess {
+				if (Paths.getText(path) != script.scriptCode)
+				{
+					trace(script.name + ' has had an update');
+					var scriptLayer:Int = 0;
+
+					script.destroy();
+					SCRIPTS.remove(script);
+
+					var newScript = (loadScriptByPath(path)) ? SCRIPTS[SCRIPTS.length - 1] : null;
+
+					if (newScript != null)
+					{
+						SCRIPTS.insert(scriptLayer, newScript);
+						SCRIPTS.remove(SCRIPTS[SCRIPTS.length - 1]);
+					}
+				}
+			}
+		}
 	}
 }

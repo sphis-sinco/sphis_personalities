@@ -11,8 +11,6 @@ class State extends FlxState
 {
 	public var state:String;
 
-	public static var reloadKey:FlxKey = R;
-
 	override public function new(?stateID:String, ?posInfos:PosInfos)
 	{
 		super();
