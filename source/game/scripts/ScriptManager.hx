@@ -22,6 +22,26 @@ class ScriptManager
 	public static var SCRIPTS_ERRS:Map<String, Dynamic> = [];
 	public static var GIANT_SCRIPT_FILE:String = '';
 
+	public static function setVariable(scriptPath:String, variable:Dynamic, newValue:Dynamic)
+	{
+		for (script in SCRIPTS)
+		{
+			if (script.name == scriptPath)
+				script.set(variable, newValue);
+		}
+	}
+
+	public static function getVariable(scriptPath:String, variable:Dynamic):Dynamic
+	{
+		for (script in SCRIPTS)
+		{
+			if (script.name == scriptPath)
+				return script.get(variable);
+		}
+
+		return null;
+	}
+
 	public static function call(method:String, ?args:Array<Dynamic>)
 	{
 		#if html5
