@@ -39,6 +39,7 @@
 	<set name="BUILD_DIR" value="export/debug" if="debug" />
 
 	<define name="MODDING_ALLOWED" unless="html5" />
+	<define name="ansiStuff" />
 
 	<source path="source" />
 	<assets path="game" />

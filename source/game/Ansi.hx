@@ -88,13 +88,18 @@ class Ansi
 	public static inline final ESC = "\x1B[";
 
 	inline public static function reset(str:String):String
-		return str + ESC + "0m";
+	{
+		return str #if ansiStuff + ESC + "0m" #end;
+	}
 
 	/**
 	 * sets the given text attribute
 	 */
 	inline public static function attr(str:String, attr:AnsiTextAttribute):String
-		return ESC + (attr) + "m" + str;
+	{
+		return #if ansiStuff ESC + (attr) + "m" + #end
+		str;
+	}
 
 	/**
 	 * set the text background color
@@ -104,19 +109,34 @@ class Ansi
 	 * </code></pre>
 	 */
 	inline public static function bg(str:String, color:AnsiColor):String
-		return ESC + "4" + color + "m" + str;
+	{
+		return #if ansiStuff ESC + "4" + color + "m" + #end
+		str;
+	}
 
 	/**
 	 * Clears the screen and moves the cursor to the home position
 	 */
 	inline public static function clearScreen():String
+	{
+		#if ansiStuff
 		return ESC + "2Jm";
+		#else
+		return '';
+		#end
+	}
 
 	/**
 	 * Clear all characters from current position to the end of the line including the character at the current position
 	 */
 	inline public static function clearLine():String
+	{
+		#if ansiStuff
 		return ESC + "Km";
+		#else
+		return '';
+		#end
+	}
 
 	/**
 	 * set the text foreground color
@@ -126,7 +146,10 @@ class Ansi
 	 * </code></pre>
 	 */
 	inline public static function fg(str:String, color:AnsiColor):String
-		return ESC + "38;5;" + color + "m" + str;
+	{
+		return #if ansiStuff ESC + "38;5;" + color + "m" + #end
+		str;
+	}
 
 	private static var colorSupported:Null<Bool> = null;
 
