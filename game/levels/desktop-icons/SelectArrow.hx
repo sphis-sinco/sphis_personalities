@@ -20,7 +20,7 @@ function onCreate(event:CreateEvent)
 			leftArrow.scale.set(.25, .25);
 			leftArrow.updateHitbox();
 
-			leftArrow.screenCenter(Y);
+			leftArrow.screenCenter(0x11);
 			leftArrow.x = 32;
 
 			leftArrow.scrollFactor.set(0, 0);
@@ -33,7 +33,7 @@ function onCreate(event:CreateEvent)
 			rightArrow.scale.set(.25, .25);
 			rightArrow.updateHitbox();
 
-			rightArrow.screenCenter(Y);
+			rightArrow.screenCenter(0x11);
 			rightArrow.x = FlxG.width - rightArrow.width - 32;
 
 			rightArrow.scrollFactor.set(0, 0);
