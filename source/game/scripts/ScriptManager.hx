@@ -115,7 +115,7 @@ class ScriptManager
 			if (!SCRIPTS_ERRS.exists('missing_method(' + method + ')_' + script.config.name))
 			{
 				SCRIPTS_ERRS.set('missing_method(' + method + ')_' + script.config.name, Ansi.stripColor(errMsg));
-				trace(errMsg);
+				trace(errMsg + Ansi.reset(''));
 			}
 
 			return;
@@ -139,12 +139,12 @@ class ScriptManager
 			if (!SCRIPTS_ERRS.exists('method(' + method + ')_error_' + script.config.name))
 			{
 				SCRIPTS_ERRS.set('method(' + method + ')_error_' + script.config.name, Ansi.stripColor(errMsg));
-				trace(errMsg);
+				trace(errMsg + Ansi.reset(''));
 			}
 		}
 	}
 
-	public static function loadAllScripts()
+	public static function generateWebScript()
 	{
 		checkForUpdatedScripts();
 
@@ -226,13 +226,11 @@ class ScriptManager
 		GIANT_SCRIPT_FILE += temp_giant_script_file;
 		GIANT_SCRIPT_FILE += '}';
 
-		#if !dontGenerateWebScript
 		trace('Giant script file (for web shit): ');
 		#if sys
 		Sys.println(GIANT_SCRIPT_FILE);
 		#else
 		trace(GIANT_SCRIPT_FILE);
-		#end
 		#end
 	}
 
@@ -256,7 +254,13 @@ class ScriptManager
 		catch (e)
 		{
 			newScript = null;
-			trace(Ansi.fg('', RED) + 'Error loading script(' + Ansi.fg(path, WHITE) + Ansi.fg('', RED) + '): ' + e.message);
+			trace(Ansi.fg('', RED)
+				+ 'Error loading script('
+				+ Ansi.fg(path, WHITE)
+				+ Ansi.fg('', RED)
+				+ '): '
+				+ e.message
+				+ Ansi.reset(''));
 			Application.current.window.alert('Error loading script(' + path + '): ' + e.message + '\n\n' + e.details, 'Error loading script');
 		}
 
@@ -417,7 +421,7 @@ class ScriptManager
 					addition = StringTools.replace(addition, ')', '/' + Ansi.fg('modfile', GREEN) + ')');
 				}
 
-				trace(' * ' + Ansi.fg(file, WHITE) + ' ' + addition);
+				trace(' * ' + Ansi.fg(file, WHITE) + ' ' + addition + Ansi.reset(''));
 
 				i++;
 			}

@@ -36,6 +36,10 @@ class InitState extends FlxState
 		haxe.Log.trace = Iris.print;
 		#end
 
+		#if generateWebScript
+		ScriptManager.generateWebScript();
+		throw 'Done';
+		#else
 		FlxSprite.defaultAntialiasing = true;
 
 		Controls.save = new ControlsSave(Paths.getGamePath('preferences/controls.json'));
@@ -43,12 +47,9 @@ class InitState extends FlxState
 
 		Mouse.setMouseState(MouseStates.IDLE);
 
-		#if !dontGenerateWebScript
-		ScriptManager.loadAllScripts();
-		#else
 		ScriptManager.checkForUpdatedScripts();
-		#end
 
 		FlxG.switchState(() -> new game.desktop.DesktopMain());
+		#end
 	}
 }

@@ -51,7 +51,7 @@ class LevelSpriteGroup extends FlxTypedGroup<FlxSprite>
 		sprPath = Paths.getImagePath('levels/desktop-icons/level-' + levelID);
 		if (!Paths.pathExists(sprPath))
 		{
-			trace(Ansi.fg('Level icon path: ', RED) + Ansi.fg(sprPath, WHITE) + Ansi.fg(' doesn\'t exist', RED));
+			trace(Ansi.fg('Level icon path: ', RED) + Ansi.fg(sprPath, WHITE) + Ansi.fg(' doesn\'t exist', RED) + Ansi.reset(''));
 			sprPath = unknownSprPath;
 		}
 
