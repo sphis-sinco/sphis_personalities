@@ -53,7 +53,7 @@ function onUpdate(event:UpdateEvent)
 	{
 		pauseBG.alpha = (level_paused) ? 0.5 : 0.0;
 
-		if (Controls.getControlJustReleased('ui_leave') && level_paused && !level_pausing)
+		if (Controls.getControlJustReleased('ui_leave') && level_paused)
 		{
 			FlxG.camera.fade(FlxScriptedColor.BLACK, 1, false, () ->
 			{
