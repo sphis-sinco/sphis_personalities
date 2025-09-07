@@ -57,7 +57,7 @@ class InitState extends FlxState
 
 		var startingState = Compiler.getDefine('StartingState');
 		if (startingState != null)
-			startingState.split('=')[0];
+			startingState = startingState.split('=')[0];
 		trace(Std.string(startingState).toLowerCase());
 
 		if (startingState != null)
