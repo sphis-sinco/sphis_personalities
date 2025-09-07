@@ -168,9 +168,7 @@ class ScriptManager
 				for (thing in add)
 				{
 					var addThing = StringTools.replace(thing, '\t', '');
-					#if !sys
 					addThing += '\n';
-					#end
 
 					if (StringTools.startsWith(addThing, 'function'))
 					{
@@ -211,7 +209,7 @@ class ScriptManager
 				}
 		}
 
-		GIANT_SCRIPT_FILE += 'class WebScripts {';
+		GIANT_SCRIPT_FILE += 'class WebScripts {\n';
 
 		var varsInitalized = [];
 		for (varThing in variables)
@@ -224,7 +222,7 @@ class ScriptManager
 				}
 		}
 		GIANT_SCRIPT_FILE += temp_giant_script_file;
-		GIANT_SCRIPT_FILE += '}';
+		GIANT_SCRIPT_FILE += '\n}';
 
 		trace('Giant script file (for web shit): ');
 		#if sys

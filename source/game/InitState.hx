@@ -38,7 +38,9 @@ class InitState extends FlxState
 
 		#if generateWebScript
 		ScriptManager.generateWebScript();
-		throw 'Done';
+		#if sys
+		Sys.exit(0);
+		#end
 		#else
 		FlxSprite.defaultAntialiasing = true;
 
