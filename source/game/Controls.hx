@@ -12,7 +12,7 @@ class Controls
 		'game_left' => [LEFT, A],
 		'game_right' => [RIGHT, D],
 		'game_jump' => [SPACE],
-		'game_pause' => [ESCAPE],
+		'game_pause' => [ENTER],
 		// ui_
 		'ui_up' => [UP, W],
 		'ui_left' => [LEFT, A],

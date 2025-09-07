@@ -1,7 +1,7 @@
 {
         "game_jump": ["SPACE"],
         "game_left": ["LEFT", "A"],
-        "game_pause": ["ESCAPE"],
+        "game_pause": ["ENTER"],
         "game_right": ["RIGHT", "D"],
         
         "ui_accept": ["ENTER"],
