@@ -16,30 +16,25 @@ function onCreate(event:CreateEvent)
 	if (event.state == 'desktop-play')
 	{
 		arrowsnotLeaving = true;
-		if (leftArrow == null)
-		{
-			leftArrow = new FlxSprite();
-			leftArrow.loadGraphic(Paths.getImagePath('levels/desktop-icons/select-arrow'));
-			leftArrow.flipX = true;
+		leftArrow = new FlxSprite();
+		leftArrow.loadGraphic(Paths.getImagePath('levels/desktop-icons/select-arrow'));
+		leftArrow.flipX = true;
 
-			leftArrow.scale.set(.25, .25);
-			leftArrow.updateHitbox();
+		leftArrow.scale.set(.25, .25);
+		leftArrow.updateHitbox();
 
-			leftArrow.screenCenter(FlxScriptedAxes.Y);
-			leftArrow.x = 32;
+		leftArrow.screenCenter(FlxScriptedAxes.Y);
+		leftArrow.x = 32;
 
-			leftArrow.scrollFactor.set(0, 0);
-		}
-		if (rightArrow == null)
-		{
-			rightArrow = new FlxSprite();
-			rightArrow.loadGraphic(Paths.getImagePath('levels/desktop-icons/select-arrow'));
+		leftArrow.scrollFactor.set(0, 0);
 
-			rightArrow.scale.set(.25, .25);
-			rightArrow.updateHitbox();
+		rightArrow = new FlxSprite();
+		rightArrow.loadGraphic(Paths.getImagePath('levels/desktop-icons/select-arrow'));
 
-			rightArrow.scrollFactor.set(0, 0);
-		}
+		rightArrow.scale.set(.25, .25);
+		rightArrow.updateHitbox();
+
+		rightArrow.scrollFactor.set(0, 0);
 
 		leftArrow.alpha = 0;
 		rightArrow.alpha = 0;
@@ -60,38 +55,41 @@ function onUpdate(event:UpdateEvent)
 {
 	if (event.state == 'desktop-play')
 	{
-		leftArrow.scale.set(.25, .25);
-		rightArrow.scale.set(.25, .25);
+		if (leftArrow != null && rightArrow != null)
+		{
+			leftArrow.scale.set(.25, .25);
+			rightArrow.scale.set(.25, .25);
 
-		if (Controls.getControlPressed('ui_left') && arrowsnotLeaving)
-		{
-			if (DesktopPlay.instance.curSel > 0)
-				leftArrow.scale.set(.3, .15);
-			else
-				leftArrow.scale.set(.15, .3);
-		}
-		if (Controls.getControlPressed('ui_right') && arrowsnotLeaving)
-		{
-			if (DesktopPlay.instance.curSel < DesktopPlay.instance.levels.length - 1)
-				rightArrow.scale.set(.3, .15);
-			else
-				rightArrow.scale.set(.15, .3);
-		}
-		if (arrowsnotLeaving && Controls.getControlJustReleased('ui_leave'))
-		{
-			arrowsnotLeaving = false;
+			if (Controls.getControlPressed('ui_left') && arrowsnotLeaving)
+			{
+				if (DesktopPlay.instance.curSel > 0)
+					leftArrow.scale.set(.3, .15);
+				else
+					leftArrow.scale.set(.15, .3);
+			}
+			if (Controls.getControlPressed('ui_right') && arrowsnotLeaving)
+			{
+				if (DesktopPlay.instance.curSel < DesktopPlay.instance.levels.length - 1)
+					rightArrow.scale.set(.3, .15);
+				else
+					rightArrow.scale.set(.15, .3);
+			}
+			if (arrowsnotLeaving && Controls.getControlJustReleased('ui_leave'))
+			{
+				arrowsnotLeaving = false;
 
-			FlxTween.tween(leftArrow, {alpha: 0}, 1, {
-				ease: FlxEase.sineInOut
-			});
-			FlxTween.tween(rightArrow, {alpha: 0}, 1, {
-				ease: FlxEase.sineInOut
-			});
-		}
-		if (arrowsnotLeaving)
-		{
-			rightArrow.screenCenter(FlxScriptedAxes.Y);
-			rightArrow.x = FlxG.width - rightArrow.width - 32;
+				FlxTween.tween(leftArrow, {alpha: 0}, 1, {
+					ease: FlxEase.sineInOut
+				});
+				FlxTween.tween(rightArrow, {alpha: 0}, 1, {
+					ease: FlxEase.sineInOut
+				});
+			}
+			if (arrowsnotLeaving)
+			{
+				rightArrow.screenCenter(FlxScriptedAxes.Y);
+				rightArrow.x = FlxG.width - rightArrow.width - 32;
+			}
 		}
 	}
 }
