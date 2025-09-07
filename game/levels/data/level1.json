@@ -6,6 +6,7 @@
         "unlocked": true,
 
         "assetFolders": {
-                "haxen": "general"
+                "haxen": "general",
+                "general": "one"
         }
 }

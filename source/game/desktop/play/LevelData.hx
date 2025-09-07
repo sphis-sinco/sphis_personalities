@@ -14,4 +14,5 @@ typedef LevelData =
 typedef AssetFolders =
 {
 	var haxen:String;
+	var general:String;
 }
