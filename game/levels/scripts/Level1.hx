@@ -41,8 +41,8 @@ function onCreate(event:CreateEvent)
 		pauseBG.screenCenter();
 
 		BlankState.instance.add(level_one_bg_sky);
-		BlankState.instance.add(level_one_haxen);
 		BlankState.instance.add(level_one_bg_ground);
+		BlankState.instance.add(level_one_haxen);
 		BlankState.instance.add(pauseBG);
 	}
 }
@@ -51,6 +51,9 @@ function onUpdate(event:UpdateEvent)
 {
 	if (is_level_one)
 	{
+		level_one_haxen.screenCenter();
+		level_one_haxen.y += (level_one_haxen.height / 2);
+
 		pauseBG.alpha = (level_paused) ? 0.5 : 0.0;
 
 		if (Controls.getControlJustReleased('ui_leave') && level_paused)
