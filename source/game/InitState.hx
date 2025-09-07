@@ -5,7 +5,9 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import game.Controls.ControlsSave;
+import game.desktop.DesktopMain;
 import game.scripts.ScriptManager;
+import haxe.macro.Compiler;
 
 class InitState extends FlxState
 {
@@ -53,7 +55,24 @@ class InitState extends FlxState
 
 		ScriptManager.checkForUpdatedScripts();
 
-		FlxG.switchState(() -> new game.desktop.DesktopMain());
+		var startingState = Compiler.getDefine('StartingState').split('=');
+
+		if (startingState.length >= 1)
+		{
+			switch (Std.string(startingState).toLowerCase())
+			{
+				case 'blankstate':
+					var blankStateID = Compiler.getDefine('StartingState').split('=');
+					if (blankStateID == '1')
+						blankStateID = null;
+
+					FlxG.switchState(() -> new BlankState(blankStateID));
+				default:
+					FlxG.switchState(() -> new DesktopMain());
+			}
+		}
+		else
+			FlxG.switchState(() -> new game.desktop.DesktopMain());
 		#end
 	}
 }
