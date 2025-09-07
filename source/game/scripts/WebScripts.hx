@@ -84,6 +84,119 @@ class WebScripts
 				ease: FlxEase.sineInOut
 			});
 		}
+		if (event.state == 'z-easter-egg')
+		{
+			hisHead = new FlxSprite();
+			hisHead.loadGraphic(Paths.getImagePath('desktop/easterEgg/hisHead'));
+			FlxG.state.add(hisHead);
+		}
+		transitioning = false;
+		if (event.state == 'z-easter-egg')
+		{
+			FlxG.camera.fade(FlxScriptedColor.BLACK, 1, true, null);
+		}
+		scanlineLayerOne = new FlxSprite();
+		scanlineLayerOne.loadGraphic(Paths.getImagePath('LCD/scanlines'));
+		scanlineLayerOne.screenCenter();
+		scanlineLayerOne.scrollFactor.set(0, 0);
+
+		scanlineLayerTwo = new FlxSprite();
+		scanlineLayerTwo.loadGraphic(Paths.getImagePath('LCD/scanlines'));
+		scanlineLayerTwo.screenCenter();
+		scanlineLayerTwo.scrollFactor.set(0, 0);
+
+		if (scanlineAcceptedStates.contains(event.state))
+		{
+			switch (event.state)
+			{
+				case 'desktop-main':
+					DesktopMain.instance.scanlineLayer.add(scanlineLayerOne);
+					DesktopMain.instance.scanlineLayer.add(scanlineLayerTwo);
+				case 'desktop-play':
+					DesktopPlay.instance.scanlineLayer.add(scanlineLayerOne);
+					DesktopPlay.instance.scanlineLayer.add(scanlineLayerTwo);
+			}
+		}
+		if (event.state == 'desktop-play')
+		{
+			DesktopPlay.instance.levels.push('level1');
+			DesktopPlay.instance.levels.push('level2');
+		}
+		if (event.state == 'desktop-play')
+		{
+			arrowsnotLeaving = true;
+			if (leftArrow == null)
+			{
+				leftArrow = new FlxSprite();
+				leftArrow.loadGraphic(Paths.getImagePath('levels/desktop-icons/select-arrow'));
+				leftArrow.flipX = true;
+
+				leftArrow.scale.set(.25, .25);
+				leftArrow.updateHitbox();
+
+				leftArrow.screenCenter(FlxScriptedAxes.Y);
+				leftArrow.x = 32;
+
+				leftArrow.scrollFactor.set(0, 0);
+			}
+			if (rightArrow == null)
+			{
+				rightArrow = new FlxSprite();
+				rightArrow.loadGraphic(Paths.getImagePath('levels/desktop-icons/select-arrow'));
+
+				rightArrow.scale.set(.25, .25);
+				rightArrow.updateHitbox();
+
+				rightArrow.scrollFactor.set(0, 0);
+			}
+
+			leftArrow.alpha = 0;
+			rightArrow.alpha = 0;
+
+			FlxTween.tween(leftArrow, {alpha: 1}, 1, {
+				ease: FlxEase.sineInOut
+			});
+			FlxTween.tween(rightArrow, {alpha: 1}, 1, {
+				ease: FlxEase.sineInOut
+			});
+
+			FlxG.state.add(leftArrow);
+			FlxG.state.add(rightArrow);
+		}
+		if (event.state == 'desktop-play')
+		{
+			DesktopPlay.instance.reloadLevels((levelsGrp, levelsTextGrp) ->
+			{
+				for (obj in levelsGrp.members)
+				{
+					obj.levelIcon.alpha = 0;
+					FlxTween.tween(obj.levelIcon, {alpha: 1}, 1, {
+						ease: FlxEase.sineInOut
+					});
+					obj.box.alpha = 0;
+					FlxTween.tween(obj.box, {alpha: 1}, 1, {
+						ease: FlxEase.sineInOut
+					});
+					obj.lock.alpha = 0;
+					FlxTween.tween(obj.lock, {alpha: 1}, 1, {
+						ease: FlxEase.sineInOut
+					});
+				}
+				for (obj in levelsTextGrp.members)
+				{
+					obj.alpha = 0;
+					FlxTween.tween(obj, {alpha: 1}, 1, {
+						ease: FlxEase.sineInOut
+					});
+				}
+			});
+		}
+		is_level_one = (event.state == 'level1');
+		if (is_level_one)
+		{
+			level_one = new LevelModule(event.state);
+			FlxG.camera.fade(FlxScriptedColor.BLACK, 1, true, () -> {});
+		}
 	}
 
 	public static function onUpdate(event:UpdateEvent)
@@ -140,38 +253,10 @@ class WebScripts
 				}
 			}
 		}
-	}
-
-	public static function onCreate(event:CreateEvent)
-	{
-		if (event.state == 'z-easter-egg')
-		{
-			hisHead = new FlxSprite();
-			hisHead.loadGraphic(Paths.getImagePath('desktop/easterEgg/hisHead'));
-			FlxG.state.add(hisHead);
-		}
-	}
-
-	public static function onUpdate(event:UpdateEvent)
-	{
 		if (FlxG.keys.justReleased.ESCAPE && event.state == 'z-easter-egg')
 		{
 			FlxG.switchState(() -> new DesktopMain());
 		}
-	}
-
-	public static function onCreate(event:UpdateEvent)
-	{
-		transitioning = false;
-
-		if (event.state == 'z-easter-egg')
-		{
-			FlxG.camera.fade(FlxScriptedColor.BLACK, 1, true, null);
-		}
-	}
-
-	public static function onUpdate(event:UpdateEvent)
-	{
 		if (!transitioning && (FlxG.keys.justReleased.F1 || (FlxG.keys.pressed.SHIFT && FlxG.keys.justReleased.ONE)))
 		{
 			if (event.state != 'z-easter-egg')
@@ -189,16 +274,6 @@ class WebScripts
 					FlxG.switchState(() -> new BlankState('z-easter-egg'));
 			}
 		}
-	}
-
-	public static function onAdded(event:AddedEvent)
-	{
-		haxenIdleStates.push(Paths.getImagePath('desktop/haxen/idle-left'));
-		haxenIdleStates.push(Paths.getImagePath('desktop/haxen/idle-right'));
-	}
-
-	public static function onUpdate(event:UpdateEvent)
-	{
 		if (event.state == 'desktop-main')
 		{
 			if (DesktopMain.instance.haxen.y == DesktopMain.instance.haxenStartingYPosition)
@@ -219,36 +294,6 @@ class WebScripts
 				}
 			}
 		}
-	}
-
-	public static function onCreate(event:CreateEvent)
-	{
-		scanlineLayerOne = new FlxSprite();
-		scanlineLayerOne.loadGraphic(Paths.getImagePath('LCD/scanlines'));
-		scanlineLayerOne.screenCenter();
-		scanlineLayerOne.scrollFactor.set(0, 0);
-
-		scanlineLayerTwo = new FlxSprite();
-		scanlineLayerTwo.loadGraphic(Paths.getImagePath('LCD/scanlines'));
-		scanlineLayerTwo.screenCenter();
-		scanlineLayerTwo.scrollFactor.set(0, 0);
-
-		if (scanlineAcceptedStates.contains(event.state))
-		{
-			switch (event.state)
-			{
-				case 'desktop-main':
-					DesktopMain.instance.scanlineLayer.add(scanlineLayerOne);
-					DesktopMain.instance.scanlineLayer.add(scanlineLayerTwo);
-				case 'desktop-play':
-					DesktopPlay.instance.scanlineLayer.add(scanlineLayerOne);
-					DesktopPlay.instance.scanlineLayer.add(scanlineLayerTwo);
-			}
-		}
-	}
-
-	public static function onUpdate(event:UpdateEvent)
-	{
 		if (scanlineLayerOne != null)
 		{
 			scanlineAngle += (1 / FlxG.random.int(10, 100));
@@ -257,64 +302,6 @@ class WebScripts
 			scanlineLayerTwo.angle = scanlineAngle + 90;
 			scanlineLayerTwo.alpha = scanlineLayerOne.alpha;
 		}
-	}
-
-	public static function onCreate(event:CreateEvent)
-	{
-		if (event.state == 'desktop-play')
-		{
-			DesktopPlay.instance.levels.push('level1');
-			DesktopPlay.instance.levels.push('level2');
-		}
-	}
-
-	public static function onCreate(event:CreateEvent)
-	{
-		if (event.state == 'desktop-play')
-		{
-			arrowsnotLeaving = true;
-			if (leftArrow == null)
-			{
-				leftArrow = new FlxSprite();
-				leftArrow.loadGraphic(Paths.getImagePath('levels/desktop-icons/select-arrow'));
-				leftArrow.flipX = true;
-
-				leftArrow.scale.set(.25, .25);
-				leftArrow.updateHitbox();
-
-				leftArrow.screenCenter(FlxScriptedAxes.Y);
-				leftArrow.x = 32;
-
-				leftArrow.scrollFactor.set(0, 0);
-			}
-			if (rightArrow == null)
-			{
-				rightArrow = new FlxSprite();
-				rightArrow.loadGraphic(Paths.getImagePath('levels/desktop-icons/select-arrow'));
-
-				rightArrow.scale.set(.25, .25);
-				rightArrow.updateHitbox();
-
-				rightArrow.scrollFactor.set(0, 0);
-			}
-
-			leftArrow.alpha = 0;
-			rightArrow.alpha = 0;
-
-			FlxTween.tween(leftArrow, {alpha: 1}, 1, {
-				ease: FlxEase.sineInOut
-			});
-			FlxTween.tween(rightArrow, {alpha: 1}, 1, {
-				ease: FlxEase.sineInOut
-			});
-
-			FlxG.state.add(leftArrow);
-			FlxG.state.add(rightArrow);
-		}
-	}
-
-	public static function onUpdate(event:UpdateEvent)
-	{
 		if (event.state == 'desktop-play')
 		{
 			leftArrow.scale.set(.25, .25);
@@ -351,10 +338,6 @@ class WebScripts
 				rightArrow.x = FlxG.width - rightArrow.width - 32;
 			}
 		}
-	}
-
-	public static function onUpdate(event:UpdateEvent)
-	{
 		if ((savedSelection == null) && event.state == 'desktop-play' && Controls.getControlJustReleased('ui_leave'))
 		{
 			savedSelection = DesktopPlay.instance.curSel;
@@ -387,45 +370,8 @@ class WebScripts
 				FlxG.switchState(() -> new DesktopMain());
 			});
 		}
-
 		if (savedSelection != null && DesktopPlay.instance.curSel != savedSelection)
 			DesktopPlay.instance.curSel = savedSelection;
-	}
-
-	public static function onCreate(event:CreateEvent)
-	{
-		if (event.state == 'desktop-play')
-		{
-			DesktopPlay.instance.reloadLevels((levelsGrp, levelsTextGrp) ->
-			{
-				for (obj in levelsGrp.members)
-				{
-					obj.levelIcon.alpha = 0;
-					FlxTween.tween(obj.levelIcon, {alpha: 1}, 1, {
-						ease: FlxEase.sineInOut
-					});
-					obj.box.alpha = 0;
-					FlxTween.tween(obj.box, {alpha: 1}, 1, {
-						ease: FlxEase.sineInOut
-					});
-					obj.lock.alpha = 0;
-					FlxTween.tween(obj.lock, {alpha: 1}, 1, {
-						ease: FlxEase.sineInOut
-					});
-				}
-				for (obj in levelsTextGrp.members)
-				{
-					obj.alpha = 0;
-					FlxTween.tween(obj, {alpha: 1}, 1, {
-						ease: FlxEase.sineInOut
-					});
-				}
-			});
-		}
-	}
-
-	public static function onUpdate(event:UpdateEvent)
-	{
 		if (savedSelection != null && DesktopPlay.instance.curSel != savedSelection)
 			DesktopPlay.instance.curSel = savedSelection;
 
@@ -447,28 +393,6 @@ class WebScripts
 				});
 			}
 		}
-	}
-
-	public static function onCreate(event:CreateEvent)
-	{
-		is_level_one = (event.state == 'level1');
-		if (is_level_one)
-		{
-			level_one = new LevelModule(event.state);
-			FlxG.camera.fade(FlxScriptedColor.BLACK, 1, true, () -> {});
-		}
-	}
-
-	public static function onUpdate(event:UpdateEvent) {}
-
-	public static function onAdded(event:AddedEvent) {}
-
-	public static function onCreate(event:CreateEvent) {}
-
-	public static function onUpdate(event:UpdateEvent) {}
-
-	public static function onUpdate(event:UpdateEvent)
-	{
 		Mouse.setMouseState(MouseStates.IDLE);
 
 		if (event.state == 'desktop-main' && DesktopMain.instance.haxen.y == DesktopMain.instance.haxenStartingYPosition)
@@ -490,13 +414,15 @@ class WebScripts
 		{
 			Mouse.setMouseState(MouseStates.SELECTED);
 		}
-	}
-
-	public static function onUpdate(event:UpdateEvent)
-	{
 		if (FlxG.keys.justReleased.R)
 		{
 			ScriptManager.checkForUpdatedScripts();
 		}
+	}
+
+	public static function onAdded(event:AddedEvent)
+	{
+		haxenIdleStates.push(Paths.getImagePath('desktop/haxen/idle-left'));
+		haxenIdleStates.push(Paths.getImagePath('desktop/haxen/idle-right'));
 	}
 }
