@@ -13,7 +13,36 @@ class Paths
 {
 	public static function getGamePath(path:String)
 	{
-		var retpath = (StringTools.startsWith(path, 'game/') ? '' : 'game/') + path;
+		var startsWithDir = false;
+		var dir = 'C';
+		var dirLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+		for (i in 0...dirLetters.length)
+		{
+			if (!startsWithDir)
+			{
+				// trace(dirLetters.charAt(i));
+				startsWithDir = StringTools.startsWith(path, dirLetters.charAt(i) + ':/');
+				if (startsWithDir)
+					dir = dirLetters.charAt(i);
+			}
+		}
+
+		var retpath = ((StringTools.startsWith(path, 'game/') || startsWithDir) ? '' : 'game/') + path;
+
+		return retpath;
+	}
+
+	public static function getGameSysPath(path:String)
+	{
+		var retpath = getGamePath(path);
+
+		#if (og_path && sys)
+		final syspath = Sys.programPath().substring(0, Sys.programPath().indexOf('\\export')).replace('\\', '/');
+		retpath = syspath + '/' + retpath;
+		trace(retpath);
+		#end
+
 		return retpath;
 	}
 
