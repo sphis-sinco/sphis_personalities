@@ -24,12 +24,15 @@ function onCreate(event:CreateEvent)
 
 		level_one_bg_sky = new FlxSprite();
 		level_one_bg_sky.loadGraphic(level_one.getGeneralAsset('sky'));
+		level_one_bg_sky.screenCenter();
 
 		level_one_bg_ground = new FlxSprite();
 		level_one_bg_ground.loadGraphic(level_one.getGeneralAsset('ground'));
+		level_one_bg_ground.screenCenter();
 
 		level_one_haxen = new FlxSprite();
 		level_one_haxen.loadGraphic(level_one.getHaxenAsset('idle'));
+		level_one_haxen.screenCenter();
 
 		BlankState.instance.add(level_one_bg_sky);
 		BlankState.instance.add(level_one_haxen);
