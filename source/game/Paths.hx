@@ -33,6 +33,19 @@ class Paths
 		return retpath;
 	}
 
+	public static function getGameSysPath(path:String)
+	{
+		var retpath = getGamePath(path);
+
+		#if (og_path && sys)
+		final syspath = Sys.programPath().substring(0, Sys.programPath().indexOf('\\export')).replace('\\', '/');
+		retpath = syspath + '/' + retpath;
+		trace(retpath);
+		#end
+
+		return retpath;
+	}
+
 	public static function getImagePath(path:String, ?game:Bool = true)
 	{
 		return (game ? getGamePath(path + '.png') : path + '.png');
