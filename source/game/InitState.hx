@@ -55,21 +55,30 @@ class InitState extends FlxState
 
 		ScriptManager.checkForUpdatedScripts();
 
-		var startingState = Compiler.getDefine('StartingState').split('=')[0];
+		var startingState = Compiler.getDefine('StartingState');
+		if (startingState != null)
+			startingState.split('=')[0];
 		trace(Std.string(startingState).toLowerCase());
 
-		if (startingState.length >= 1)
+		if (startingState != null)
 		{
-			switch (Std.string(startingState).toLowerCase())
+			if (startingState.length >= 1)
 			{
-				case 'blankstate':
-					var blankStateID = Compiler.getDefine('BlankStateID').split('=')[0];
-					if (blankStateID == '1')
-						blankStateID = null;
+				switch (Std.string(startingState).toLowerCase())
+				{
+					case 'blankstate':
+						var blankStateID = Compiler.getDefine('BlankStateID');
+						if (blankStateID != null)
+						{
+							blankStateID = blankStateID.split('=')[0];
+							if (blankStateID == '1')
+								blankStateID = null;
+						}
 
-					FlxG.switchState(() -> new BlankState(blankStateID));
-				default:
-					FlxG.switchState(() -> new DesktopMain());
+						FlxG.switchState(() -> new BlankState(blankStateID));
+					default:
+						FlxG.switchState(() -> new DesktopMain());
+				}
 			}
 		}
 		else
