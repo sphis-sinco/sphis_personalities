@@ -25,13 +25,7 @@ class ScriptManager
 
 	public static var SCRIPT_EXTS:Array<String> = ['hx'];
 
-	public static var SCRIPT_FOLDERS:Array<String> = [
-		#if og_path
-		Paths.getGameSysPath('game/')
-		#else
-		Paths.getGamePath('game/'), 'game/'
-		#end
-	];
+	public static var SCRIPT_FOLDERS:Array<String> = [Paths.getGamePath('game/'), 'game/'];
 
 	public static var SCRIPTS:Array<Iris> = [];
 	public static var SCRIPTS_ERRS:Map<String, Dynamic> = [];
@@ -65,8 +59,7 @@ class ScriptManager
 	{
 		for (script in SCRIPTS)
 		{
-			if (script.name == scriptPath
-				|| script.name == #if og_path Paths.getGameSysPath(scriptPath) #else Paths.getGamePath(scriptPath) #end)
+			if (script.name == scriptPath || script.name == Paths.getGamePath(scriptPath))
 				if (script.exists(variable))
 					script.set(variable, newValue);
 		}
@@ -76,8 +69,7 @@ class ScriptManager
 	{
 		for (script in SCRIPTS)
 		{
-			if (script.name == scriptPath
-				|| script.name == #if og_path Paths.getGameSysPath(scriptPath) #else Paths.getGamePath(scriptPath) #end)
+			if (script.name == scriptPath || script.name == Paths.getGamePath(scriptPath))
 				if (script.exists(variable))
 					return script.get(variable);
 		}
