@@ -19,12 +19,7 @@ import lime.system.Clipboard;
 
 class ScriptManager
 {
-	public static var isWeb(get, null):Bool;
-
-	static function get_isWeb():Bool
-	{
-		return false;
-	}
+	public static var isWeb(default, null):Bool = false;
 
 	public static var SCRIPT_FOLDER:String = 'scripts';
 
@@ -441,36 +436,7 @@ class ScriptManager
 #else
 class ScriptManager
 {
-	public static var isWeb(get, null):Bool;
-
-	static function get_isWeb():Bool
-	{
-		return true;
-	}
-
-	public static var SCRIPT_FOLDER:String = 'scripts';
-
-	public static var SCRIPT_EXTS:Array<String> = ['hx'];
-
-	public static var SCRIPT_FOLDERS:Array<String> = [Paths.getGamePath('game/'), 'game/'];
-
-	public static var SCRIPTS:Array<Dynamic> = [];
-	public static var SCRIPTS_ERRS:Map<String, Dynamic> = [];
-	public static var GIANT_SCRIPT_FILE:String = '';
-
-	public static function setVariableContains(needToContain:String, variable:Dynamic, newValue:Dynamic) {}
-
-	public static function getVariableContains(needToContain:String, variable:Dynamic):Dynamic
-	{
-		return null;
-	}
-
-	public static function setVariable(scriptPath:String, variable:Dynamic, newValue:Dynamic) {}
-
-	public static function getVariable(scriptPath:String, variable:Dynamic):Dynamic
-	{
-		return null;
-	}
+	public static var isWeb(default, null):Bool = true;
 
 	public static function call(method:String, ?args:Array<Dynamic>)
 	{
@@ -483,24 +449,6 @@ class ScriptManager
 			case 'onUpdate':
 				WebScripts.onUpdate(args[0]);
 		}
-	}
-
-	public static function callSingular(script:Dynamic, method:String, ?args:Array<Dynamic>) {}
-
-	public static function generateWebScript() {}
-
-	public static function loadScriptByPath(path:String):Bool
-	{
-		return false;
-	}
-
-	public static function initalizeScriptVariables(script:Dynamic) {}
-
-	public static function loadScriptsByPaths(paths:Array<String>) {}
-
-	public static function getAllScriptPaths(?foundFilesFunction:(Array<Dynamic>, String) -> Void = null):Array<String>
-	{
-		return [];
 	}
 
 	public static function checkForUpdatedScripts() {}
