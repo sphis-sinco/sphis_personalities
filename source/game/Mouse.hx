@@ -24,7 +24,7 @@ class Mouse
 			return;
 		}
 
-		FlxG.mouse.load(graphic.key);
+		FlxG.mouse.load(graphic.key, 1, -32, -32);
 	}
 
 	public static var pressed(get, default):Bool;
