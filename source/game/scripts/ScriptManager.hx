@@ -14,6 +14,7 @@ import game.scripts.events.UpdateEvent;
 import game.scripts.imports.FlxScriptedAxes;
 import game.scripts.imports.FlxScriptedColor;
 import lime.app.Application;
+import lime.system.Clipboard;
 
 class ScriptManager
 {
@@ -230,6 +231,15 @@ class ScriptManager
 		#else
 		trace(GIANT_SCRIPT_FILE);
 		#end
+
+		try
+		{
+			Clipboard.text = GIANT_SCRIPT_FILE;
+		}
+		catch (_)
+		{
+			trace('Clipboard modif failed');
+		}
 	}
 
 	public static function loadScriptByPath(path:String):Bool
