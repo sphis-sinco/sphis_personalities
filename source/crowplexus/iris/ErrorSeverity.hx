@@ -14,7 +14,7 @@ enum ErrorSeverity
 	FATAL;
 }
 
-class ErrorSeverityTools implements crowplexus.iris.IrisUsingClass
+class ErrorSeverityTools #if !html5 implements crowplexus.iris.IrisUsingClass #end
 {
 	public static function getPrefix(severity:ErrorSeverity):String
 	{

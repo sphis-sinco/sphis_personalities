@@ -50,7 +50,7 @@
 	<haxelib name="lime" />
 	<haxelib name="openfl" />
 
-	<haxelib name="hscript-iris" />
+	<haxelib name="hscript-iris" unless="html5"/>
 	<define name="hscriptPos" />
 
 	<!-- ______________________________ Haxedefines _____________________________ -->

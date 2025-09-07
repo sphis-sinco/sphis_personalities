@@ -30,7 +30,7 @@ class LevelModule
 		}
 		catch (e)
 		{
-			Iris.error('Cannot get level data file: ' + dataFileid + '\n\n' + e.message);
+			#if !html5 Iris.error #else trace #end ('Cannot get level data file: ' + dataFileid + '\n\n' + e.message);
 		}
 	}
 

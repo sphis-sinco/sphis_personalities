@@ -1,5 +1,6 @@
 package crowplexus.iris;
 
+#if !html5
 import crowplexus.hscript.*;
 import crowplexus.hscript.proxy.ProxyType;
 import crowplexus.iris.ErrorSeverity;
@@ -481,3 +482,4 @@ class Iris
 		return entry;
 	}
 }
+#end

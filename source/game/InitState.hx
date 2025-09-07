@@ -33,7 +33,9 @@ class InitState extends FlxState
 			#end
 		};
 		#else
+		#if !html5
 		haxe.Log.trace = Iris.print;
+		#end
 		#end
 
 		#if generateWebScript
