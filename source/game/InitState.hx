@@ -55,14 +55,15 @@ class InitState extends FlxState
 
 		ScriptManager.checkForUpdatedScripts();
 
-		var startingState = Compiler.getDefine('StartingState').split('=');
+		var startingState = Compiler.getDefine('StartingState').split('=')[0];
+		trace(Std.string(startingState).toLowerCase());
 
 		if (startingState.length >= 1)
 		{
 			switch (Std.string(startingState).toLowerCase())
 			{
 				case 'blankstate':
-					var blankStateID = Compiler.getDefine('StartingState').split('=');
+					var blankStateID = Compiler.getDefine('BlankStateID').split('=')[0];
 					if (blankStateID == '1')
 						blankStateID = null;
 
