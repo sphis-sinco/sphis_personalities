@@ -43,7 +43,8 @@ class ModList
 		if (FlxG.save != null)
 		{
 			modList = FlxG.save.data.modList;
-			trace(modList.toString());
+			if (modList != null)
+				trace(modList.toString());
 		}
 	}
 }
