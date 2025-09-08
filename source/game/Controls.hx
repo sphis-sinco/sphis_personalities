@@ -94,15 +94,10 @@ class ControlsSave
 			if (addGrp)
 				xml.addChild(controlGrp);
 		}
-
-		trace(xml.toString());
-
-		return;
-
 		#if sys
 		trace('Saving controls to "' + path + '" preference file via Sys');
 
-		sys.io.File.saveContent(path, '');
+		sys.io.File.saveContent(path, '<!DOCTYPE personalities-controls-xml>\n' + xml.toString());
 		#else
 		trace('Not sys, cannot save.');
 		#end

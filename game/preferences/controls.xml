@@ -13,7 +13,6 @@
                         <key value="SPACE" />
                 </control>
         </control-group>
-        
         <control-group id="ui">
                 <control id="left">
                         <key value="LEFT" />
