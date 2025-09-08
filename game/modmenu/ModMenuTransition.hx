@@ -1,5 +1,6 @@
 import flixel.FlxG;
 import game.modding.ModMenu;
+import game.scripts.ScriptManager;
 import game.scripts.events.UpdateEvent;
 
 function onUpdate(event:UpdateEvent)
