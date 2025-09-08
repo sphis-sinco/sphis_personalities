@@ -5,7 +5,7 @@
 
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Personalities: HAXEN" file="PersonalitiesHaxen" main="Main" version="1.0"
+	<app title="Personalities: HAXEN" file="PersonalitiesHaxen" main="Main" version=""
 		company="Sphis" />
 
 	<!--The

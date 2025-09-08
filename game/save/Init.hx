@@ -7,7 +7,12 @@ var levels = ['level1'];
 
 function onAdded(event:AddedEvent)
 {
-	FlxG.save.bind('PersonalitiesHAXEN', 'Sphis');
+	FlxG.save.bind('PersonalitiesHAXEN', Application.current.meta.get('company'));
+
+	if (FlxG.save.data.version == null)
+	{
+		FlxG.save.data.version = Application.current.meta.get('version');
+	}
 
 	if (FlxG.save.data.levelTimes == null)
 	{
@@ -22,7 +27,7 @@ function onAdded(event:AddedEvent)
 	ModList.load();
 	if (FlxG.save.data.levels == null)
 	{
-		FlxG.save.data.levels = levels;
+		FlxG.save.data.levels = [];
 	}
 	if (FlxG.save.data.newlevels == null)
 	{
@@ -40,7 +45,13 @@ function onAdded(event:AddedEvent)
 		}
 	}
 
-	trace('Save dump: ' + {modList: FlxG.save.data.modList, levelTimes: FlxG.save.data.levelTimes, volume: FlxG.save.data.volume});
+	trace('Save dump: ' + {
+		newlevels: FlxG.save.data.newlevels,
+		levels: FlxG.save.data.levels,
+		modList: FlxG.save.data.modList,
+		levelTimes: FlxG.save.data.levelTimes,
+		volume: FlxG.save.data.volume
+	});
 
 	Application.current.onExit.add(l ->
 	{
