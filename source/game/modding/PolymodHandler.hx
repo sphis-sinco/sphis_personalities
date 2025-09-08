@@ -59,7 +59,6 @@ class PolymodHandler
 		Polymod.init({
 			modRoot: "mods/",
 			dirs: ModList.getActiveMods(metadataArrays),
-			framework: OPENFL,
 			errorCallback: function(error:PolymodError)
 			{
 				#if debug
