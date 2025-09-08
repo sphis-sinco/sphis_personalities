@@ -91,6 +91,8 @@ class ModMenu extends State
 
 		if (Controls.getControlJustReleased('ui_leave'))
 		{
+			if (FlxG.save != null)
+				FlxG.save.flush();
 			FlxG.switchState(() -> new DesktopMain());
 		}
 
