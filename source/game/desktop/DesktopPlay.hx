@@ -6,8 +6,8 @@ import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
 import game.desktop.play.LevelData;
+import game.desktop.play.LevelModule;
 import game.desktop.play.LevelSpriteGroup;
-import haxe.Json;
 
 class DesktopPlay extends State
 {
@@ -25,7 +25,7 @@ class DesktopPlay extends State
 	}
 
 	public var levels:Array<String> = [];
-	public var levelMetas:Array<LevelData> = [];
+	public var levelMetas:Array<LevelModule> = [];
 	public var levelsGrp:FlxTypedGroup<LevelSpriteGroup>;
 	public var levelsTextGrp:FlxTypedGroup<FlxText>;
 
@@ -112,11 +112,11 @@ class DesktopPlay extends State
 
 			levelGrp.loadLevelAsset();
 
-			levelMetas.push(Json.parse(Paths.getText(Paths.getGamePath('levels/data/' + level + '.json'))));
-			levelGrp.locked = !levelMetas[i].unlocked;
+			levelMetas.push(new LevelModule(level));
+			levelGrp.locked = !(levelMetas[i].unlocked ?? true);
 
 			var textField = new FlxText();
-			textField.text = levelMetas[i].displayName;
+			textField.text = (levelMetas[i].displayName ?? 'Unknown');
 			textField.size = 32;
 			levelsTextGrp.add(textField);
 

@@ -3,6 +3,7 @@ package game.desktop.play;
 import crowplexus.iris.Iris;
 import game.desktop.play.LevelData.AssetFolders;
 import haxe.Json;
+import haxe.xml.Access;
 
 class LevelModule
 {
@@ -20,13 +21,65 @@ class LevelModule
 
 		try
 		{
-			final jsonData:LevelData = Json.parse(Paths.getText(path));
+			var xmlData = new Access(Xml.parse(Paths.getText(path)).firstElement());
 
-			displayName = jsonData.displayName;
-			authors = jsonData.authors;
-			unlocked = jsonData.unlocked;
-			id = (jsonData.id ?? dataFileid);
-			assetFolders = jsonData.assetFolders;
+			authors = [];
+			assetFolders.haxen = 'general';
+			assetFolders.hand = 'general';
+			assetFolders.general = 'one';
+
+			displayName = null;
+			unlocked = null;
+			id = dataFileid;
+
+			if (!xmlData.hasNode.displayName)
+			{
+				trace('Missing XML Node: displayName');
+				return;
+			}
+			if (!xmlData.hasNode.authors)
+			{
+				trace('Missing XML Node: authors');
+			}
+			else {}
+			if (!xmlData.hasNode.unlocked)
+			{
+				trace('Missing XML Node: unlocked');
+				return;
+			}
+			if (!xmlData.hasNode.id)
+			{
+				trace('Missing XML Node: id');
+			}
+			if (!xmlData.hasNode.assetFolders)
+			{
+				trace('Missing XML Node: assetFolders');
+				return;
+			}
+			else
+			{
+				var assetFoldersNode = xmlData.node.assetFolders;
+
+				if (!assetFoldersNode.hasNode.haxen)
+				{
+					trace('Missing XML "assetFolders" Node: haxen');
+					return;
+				}
+				if (!assetFoldersNode.hasNode.hand)
+				{
+					trace('Missing XML "assetFolders" Node: hand');
+					return;
+				}
+				if (!assetFoldersNode.hasNode.general)
+				{
+					trace('Missing XML "assetFolders" Node: general');
+					return;
+				}
+			}
+
+			displayName = xmlData.node.displayName.innerData;
+			unlocked = (xmlData.node.unlocked.att.value.toLowerCase() == 'true' || xmlData.node.unlocked.att.value.toLowerCase() == '1');
+			id = (xmlData.att.id ?? dataFileid);
 		}
 		catch (e)
 		{
