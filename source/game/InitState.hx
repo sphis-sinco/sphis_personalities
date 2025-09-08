@@ -95,6 +95,7 @@ class InitState extends FlxState
 
 		Controls.save = new ControlsSave(Paths.getGamePath('preferences/controls.xml'));
 		Controls.save.load(Controls.save.publicPath);
+		Controls.save.save(Controls.save.publicPath);
 
 		Mouse.setMouseState(MouseStates.IDLE);
 

@@ -53,14 +53,54 @@ class ControlsSave
 
 	public function save(path:Null<String> = null)
 	{
-		#if sys
-		trace('Saving controls to "' + path + '" preference file via Sys');
-
 		if (path == null)
 		{
-			trace('PATH NULL! CANNOT SAVE!!');
+			trace('Null path');
 			return;
 		}
+
+		var xml = Xml.createElement('controls');
+
+		var groups:Array<String> = ['game_', 'ui_'];
+		var keys:Array<String> = ['left', 'down', 'up', 'right', 'jump', 'accept', 'leave'];
+
+		for (grp in groups)
+		{
+			var addGrp = true;
+
+			var controlGrp = Xml.createElement('control-group');
+			controlGrp.set('id', StringTools.replace(grp, '_', ''));
+
+			for (key in keys)
+			{
+				if (Controls.controls.exists(grp + key))
+				{
+					var controlElement = Xml.createElement('control');
+					controlElement.set('id', key);
+
+					trace(grp + key);
+					for (controlKey in Controls.controls.get(grp + key))
+					{
+						var keyElement = Xml.createElement('key');
+						controlElement.set('value', controlKey);
+
+						controlElement.addChild(keyElement);
+					}
+
+					controlGrp.addChild(controlElement);
+				}
+			}
+
+			if (addGrp)
+				xml.addChild(controlGrp);
+		}
+
+		trace(xml.toString());
+
+		return;
+
+		#if sys
+		trace('Saving controls to "' + path + '" preference file via Sys');
 
 		sys.io.File.saveContent(path, '');
 		#else
@@ -89,32 +129,47 @@ class ControlsSave
 			return;
 		}
 
+		var control_groups = [];
 		var controls = [];
 
 		for (grp in xml.elements)
 			if (grp.name == 'control-group')
+			{
+				control_groups.push(grp);
 				for (control in grp.elements)
 					if (control.name == 'control' && control.has.id)
 						controls.push(control);
+			}
 
 		var controls_map:Map<String, Array<FlxKey>> = [];
 		var current_controls:Array<FlxKey> = [];
 
+		var i = 0;
 		for (control in controls)
 		{
 			current_controls = [];
 
-			for (key in control.elements)
-				if (key.name == 'key' && key.has.value)
-				{
-					trace('control(' + control.att.id + ') : ' + key.att.value);
-					current_controls.push(FlxKey.fromString(key.att.value.toUpperCase()));
-				}
+			try
+			{
+				for (key in control.elements)
+					if (key.name == 'key' && key.has.value)
+					{
+						trace('control(' + control.att.id + ') : ' + key.att.value);
+						current_controls.push(FlxKey.fromString(key.att.value.toUpperCase()));
+					}
 
-			controls_map.set(control.att.id, current_controls);
+				controls_map.set(((control_groups[i].has.id) ? control_groups[i].att.id : '') + ((control_groups[i].has.id) ? '_' : '') + control.att.id,
+					current_controls);
+			}
+			catch (e)
+			{
+				trace(e.message);
+			}
+			i++;
 		}
 
 		Controls.controls = controls_map;
+		trace('Updated Controls!');
 		trace('Updated Controls!');
 	}
 }
