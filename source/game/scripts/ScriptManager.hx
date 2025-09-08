@@ -1,5 +1,8 @@
 package game.scripts;
 
+import game.modding.ModList;
+import game.modding.ModMenu;
+import game.modding.PolymodHandler;
 import game.scripts.imports.FlxTextScriptedBorderStyle;
 #if !html5
 import crowplexus.iris.Iris;
@@ -312,11 +315,9 @@ class ScriptManager
 		script.set('Ansi', Ansi, false);
 		script.set('Defines', Defines, false);
 
-		#if polymod
-		script.set('PolymodHandler', game.modding.PolymodHandler, false);
-		script.set('ModMenu', game.modding.ModMenu, false);
-		script.set('ModList', game.modding.ModList, false);
-		#end
+		script.set('PolymodHandler', PolymodHandler, false);
+		script.set('ModMenu', ModMenu, false);
+		script.set('ModList', ModList, false);
 
 		scriptImports(script);
 	}

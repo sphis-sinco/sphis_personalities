@@ -2,13 +2,18 @@ package game.modding;
 
 import flixel.FlxG;
 #if polymod
-import polymod.Polymod;
+import polymod.Polymod.ModMetadata;
+#end
 
 class ModList
 {
 	public static var modList:Map<String, Bool> = [];
 
+	#if polymod
 	public static var modMetadatas:Map<String, ModMetadata> = [];
+	#else
+	public static var modMetadatas:Map<String, Dynamic> = [];
+	#end
 
 	public static function setModEnabled(mod:String, enabled:Bool):Void
 	{
@@ -62,4 +67,3 @@ class ModList
 		}
 	}
 }
-#end

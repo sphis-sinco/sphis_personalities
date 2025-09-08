@@ -40,6 +40,17 @@ class Controls
 	{
 		return FlxG.keys.anyJustPressed(controls.get(controlKey));
 	}
+
+	public static function getControlKeys(controlKey:String):Array<String>
+	{
+		var grp = controls.get(controlKey);
+		var array = [];
+		for (key in grp)
+		{
+			array.push(key.toString().toUpperCase());
+		}
+		return array;
+	}
 }
 
 class ControlsSave

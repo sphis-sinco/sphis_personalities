@@ -1,21 +1,18 @@
 package game.modding;
 
+import flixel.FlxG;
+import flixel.FlxSprite;
+import flixel.group.FlxGroup;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import game.desktop.DesktopMain;
-#if polymod
-import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.FlxState;
-import flixel.group.FlxGroup;
 import game.modding.ModList;
 import game.modding.PolymodHandler;
 import openfl.display.BitmapData;
-import polymod.Polymod;
 import thx.semver.Version.SemVer;
 import thx.semver.Version;
 
-class ModMenu extends FlxState
+class ModMenu extends State
 {
 	public static var savedSelection:Int = 0;
 
@@ -29,6 +26,11 @@ class ModMenu extends FlxState
 	var descBg:FlxSprite;
 	var descIcon:FlxSprite;
 
+	override public function new()
+	{
+		super('modmenu');
+	}
+
 	override function create()
 	{
 		instance = this;
@@ -41,9 +43,8 @@ class ModMenu extends FlxState
 
 		var menuBG:FlxSprite;
 
-		menuBG = new FlxSprite().makeGraphic(1286, 730, FlxColor.fromString("#E1E1E1"), false, "optimizedMenuDesat");
-
-		menuBG.color = 0xFFea71fd;
+		menuBG = new FlxSprite().makeGraphic(FlxG.width, FlxG.height);
+		menuBG.color = 0xfff0b368;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
 		menuBG.screenCenter();
@@ -68,7 +69,7 @@ class ModMenu extends FlxState
 		descIcon.setPosition(FlxG.width - descIcon.width, 325);
 		add(descIcon);
 
-		descriptionText = new FlxText(descBg.x, descBg.y + 4, FlxG.width, "Template Description", 16);
+		descriptionText = new FlxText(descBg.x, descBg.y + 4, FlxG.width, 'Template Description', 16);
 		descriptionText.scrollFactor.set();
 		add(descriptionText);
 
@@ -78,7 +79,7 @@ class ModMenu extends FlxState
 			descriptionText.alignment = CENTER;
 		}
 
-		var leText:String = 'Press ' + Controls.controls.get('ui_accept') + ' to enable / disable the currently selected mod.';
+		var leText:String = 'Press ' + Controls.getControlKeys('ui_accept') + ' to enable / disable the currently selected mod.';
 
 		var text:FlxText = new FlxText(0, FlxG.height - 22, FlxG.width, leText, 16);
 		text.scrollFactor.set();
@@ -194,18 +195,18 @@ class ModMenu extends FlxState
 						outdatedText += '%';
 					}
 
-					descriptionText.text = ModList.modMetadatas.get(curModId).description + "\nContributors: ";
+					descriptionText.text = ModList.modMetadatas.get(curModId).description + '\nContributors:\n';
 
 					var i = 0;
 					var len = ModList.modMetadatas.get(curModId).contributors.length - 1;
 					for (contributor in ModList.modMetadatas.get(curModId).contributors)
 					{
 						i++;
-						descriptionText.text += '${contributor.name} (${contributor.role})${i < len ? ', ' : ''}';
+						descriptionText.text += '  *' + contributor.name + '(' + contributor.role + ')';
 					}
 
-					descriptionText.text += "\nDreamland Version: " + ModList.modMetadatas.get(curModId).apiVersion + outdatedText + "\nMod Version: "
-						+ ModList.modMetadatas.get(curModId).modVersion + "\n";
+					descriptionText.text += '\nAPI Version: ' + ModList.modMetadatas.get(curModId).apiVersion + outdatedText + '\nMod Version: '
+						+ ModList.modMetadatas.get(curModId).modVersion + '\n';
 					descriptionText.applyMarkup(descriptionText.text, [
 						new FlxTextFormatMarkerPair(new FlxTextFormat(FlxColor.YELLOW, true, true), '%'),
 						new FlxTextFormatMarkerPair(new FlxTextFormat(FlxColor.ORANGE, true, true), '$')
@@ -231,4 +232,3 @@ class ModMenu extends FlxState
 			descIcon.loadGraphic(BitmapData.fromBytes(modMeta.icon));
 	}
 }
-#end

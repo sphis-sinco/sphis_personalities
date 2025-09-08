@@ -1,12 +1,14 @@
 package game.modding;
 
 import game.scripts.ScriptManager;
-import polymod.format.ParseRules;
-#if polymod
-import polymod.Polymod;
 
 using StringTools;
 using game.utils.MapUtil;
+
+#if polymod
+import polymod.Polymod;
+import polymod.format.ParseRules;
+#end
 
 class PolymodHandler
 {
@@ -30,6 +32,7 @@ class PolymodHandler
 	{
 		metadataArrays = [];
 
+		#if polymod
 		var tempArray:Array<ModMetadata> = Polymod.scan({
 			modRoot: "mods/",
 			apiVersionRule: "*.*.*",
@@ -52,13 +55,20 @@ class PolymodHandler
 			if (!metadata.apiVersion.satisfies('>=' + MINIMUM_MOD_VERSION + ' <' + MAXIMUM_MOD_VERSION))
 				outdatedMods.push(metadata.id);
 		}
+		#end
 		trace('metadataArrays: ' + metadataArrays.toString());
 		trace('outdatedMods: ' + outdatedMods.toString());
 	}
 
+	#if polymod
 	static function buildParseRules():polymod.format.ParseRules
+	#else
+	static function buildParseRules()
+	#end
 	{
+		#if polymod
 		var output:polymod.format.ParseRules = polymod.format.ParseRules.getDefault();
+
 		// Ensure TXT files have merge support.
 		output.addType('txt', TextFileFormat.LINES);
 		// Ensure script files have merge support.
@@ -66,15 +76,20 @@ class PolymodHandler
 		{
 			output.addType(ext, TextFileFormat.PLAINTEXT);
 		}
-
 		// You can specify the format of a specific file, with file extension.
 		// output.addFile("data/introText.txt", TextFileFormat.LINES)
 		return output;
+		#end
 	}
 
 	static function buildIgnoreList():Array<String>
 	{
-		var result = Polymod.getDefaultIgnoreList();
+		var result =
+			#if polymod
+			Polymod.getDefaultIgnoreList();
+			#else
+			[];
+			#end
 
 		result.push('.haxelib');
 		result.push('hmm.json');
@@ -88,6 +103,7 @@ class PolymodHandler
 
 	static function init()
 	{
+		#if polymod
 		Polymod.init({
 			modRoot: "mods/",
 			dirs: ModList.getActiveMods(metadataArrays),
@@ -127,6 +143,7 @@ class PolymodHandler
 			},
 			apiVersionRule: '>=' + MINIMUM_MOD_VERSION + ' <' + MAXIMUM_MOD_VERSION
 		});
+		#end
 
 		for (key in ModList.modList.keysArray())
 		{
@@ -134,4 +151,3 @@ class PolymodHandler
 		}
 	}
 }
-#end
