@@ -1,0 +1,41 @@
+<!DOCTYPE personalities-controls-xml>
+<controls>
+        <control-group id="game">
+                <control id="left">
+                        <key value="LEFT" />
+                        <key value="A" />
+                </control>
+                <control id="right">
+                        <key value="RIGHT" />
+                        <key value="D" />
+                </control>
+                <control id="jump">
+                        <key value="SPACE" />
+                </control>
+        </control-group>
+        
+        <control-group id="ui">
+                <control id="left">
+                        <key value="LEFT" />
+                        <key value="A" />
+                </control>
+                <control id="down">
+                        <key value="DOWN" />
+                        <key value="S" />
+                </control>
+                <control id="up">
+                        <key value="UP" />
+                        <key value="W" />
+                </control>
+                <control id="right">
+                        <key value="RIGHT" />
+                        <key value="D" />
+                </control>
+                <control id="accept">
+                        <key value="ENTER" />
+                </control>
+                <control id="leave">
+                        <key value="ESCAPE" />
+                </control>
+        </control-group>
+</controls>
