@@ -93,7 +93,7 @@ class InitState extends FlxState
 		#else
 		FlxSprite.defaultAntialiasing = true;
 
-		Controls.save = new ControlsSave(Paths.getGamePath('preferences/controls.json'));
+		Controls.save = new ControlsSave(Paths.getGamePath('preferences/controls.xml'));
 		Controls.save.load(Controls.save.publicPath);
 
 		Mouse.setMouseState(MouseStates.IDLE);

@@ -1,8 +1,10 @@
 package game;
 
+import Xml.XmlType;
 import flixel.FlxG;
 import flixel.input.keyboard.FlxKey;
 import haxe.Json;
+import haxe.xml.Access;
 import lime.utils.Assets;
 
 class Controls
@@ -51,56 +53,8 @@ class ControlsSave
 
 	public function save(path:Null<String> = null)
 	{
-		var game_jump:Array<String> = [];
-		var game_right:Array<String> = [];
-		var game_left:Array<String> = [];
-		var game_pause:Array<String> = [];
-
-		var ui_up:Array<String> = [];
-		var ui_left:Array<String> = [];
-		var ui_down:Array<String> = [];
-		var ui_right:Array<String> = [];
-		var ui_accept:Array<String> = [];
-		var ui_leave:Array<String> = [];
-
-		for (key in Controls.controls.get('game_jump'))
-			game_jump.push(key.toString());
-		for (key in Controls.controls.get('game_left'))
-			game_left.push(key.toString());
-		for (key in Controls.controls.get('game_right'))
-			game_right.push(key.toString());
-		for (key in Controls.controls.get('game_pause'))
-			game_pause.push(key.toString());
-
-		for (key in Controls.controls.get('ui_up'))
-			ui_up.push(key.toString());
-		for (key in Controls.controls.get('ui_left'))
-			ui_left.push(key.toString());
-		for (key in Controls.controls.get('ui_down'))
-			ui_down.push(key.toString());
-		for (key in Controls.controls.get('ui_right'))
-			ui_right.push(key.toString());
-		for (key in Controls.controls.get('ui_accept'))
-			ui_accept.push(key.toString());
-		for (key in Controls.controls.get('ui_leave'))
-			ui_leave.push(key.toString());
-
 		#if sys
 		trace('Saving controls to "' + path + '" preference file via Sys');
-
-		var saveFile:ControlsPreferenceFile = {
-			game_pause: game_pause,
-			game_left: game_left,
-			game_right: game_right,
-			game_jump: game_jump,
-
-			ui_right: ui_right,
-			ui_down: ui_down,
-			ui_left: ui_left,
-			ui_up: ui_up,
-			ui_accept: ui_accept,
-			ui_leave: ui_leave,
-		};
 
 		if (path == null)
 		{
@@ -108,7 +62,7 @@ class ControlsSave
 			return;
 		}
 
-		sys.io.File.saveContent(path, Json.stringify(saveFile));
+		sys.io.File.saveContent(path, '');
 		#else
 		trace('Not sys, cannot save.');
 		#end
@@ -116,89 +70,38 @@ class ControlsSave
 
 	public function load(path:Null<String> = null)
 	{
-		if (!Paths.pathExists(path))
-			save(path);
-
-		if (Paths.pathExists(path))
+		if (!StringTools.endsWith(path, '.xml'))
 		{
-			trace('Loading "' + path + '" controls preference file');
-
-			var saveFile:ControlsPreferenceFile;
-
-			try
-			{
-				saveFile = Json.parse(Paths.getText(path));
-			}
-			catch (e)
-			{
-				saveFile = null;
-				trace('LOADING ERROR: "' + e.message + '"');
-			}
-
-			if (saveFile != null)
-			{
-				var game_jump:Array<FlxKey> = [];
-				var game_left:Array<FlxKey> = [];
-				var game_right:Array<FlxKey> = [];
-				var game_pause:Array<FlxKey> = [];
-
-				var ui_up:Array<FlxKey> = [];
-				var ui_left:Array<FlxKey> = [];
-				var ui_down:Array<FlxKey> = [];
-				var ui_right:Array<FlxKey> = [];
-				var ui_accept:Array<FlxKey> = [];
-				var ui_leave:Array<FlxKey> = [];
-
-				for (key in saveFile.game_jump)
-					game_jump.push(FlxKey.fromString(key));
-				for (key in saveFile.game_right)
-					game_right.push(FlxKey.fromString(key));
-				for (key in saveFile.game_left)
-					game_left.push(FlxKey.fromString(key));
-				for (key in saveFile.game_pause)
-					game_pause.push(FlxKey.fromString(key));
-
-				for (key in saveFile.ui_up)
-					ui_up.push(FlxKey.fromString(key));
-				for (key in saveFile.ui_left)
-					ui_left.push(FlxKey.fromString(key));
-				for (key in saveFile.ui_down)
-					ui_down.push(FlxKey.fromString(key));
-				for (key in saveFile.ui_right)
-					ui_right.push(FlxKey.fromString(key));
-				for (key in saveFile.ui_accept)
-					ui_accept.push(FlxKey.fromString(key));
-				for (key in saveFile.ui_leave)
-					ui_leave.push(FlxKey.fromString(key));
-
-				Controls.controls.set('game_jump', game_jump);
-				Controls.controls.set('game_right', game_right);
-				Controls.controls.set('game_pause', game_pause);
-
-				Controls.controls.set('ui_up', ui_up);
-				Controls.controls.set('ui_left', ui_left);
-				Controls.controls.set('ui_down', ui_down);
-				Controls.controls.set('ui_right', ui_right);
-				Controls.controls.set('ui_accept', ui_accept);
-				Controls.controls.set('ui_leave', ui_leave);
-
-				save(path);
-			}
+			trace('Not an XML');
+			return;
 		}
+		if (!Paths.pathExists(path))
+		{
+			trace('Non-existant file');
+			return;
+		}
+
+		var xml:Access = new Access(Xml.parse(Paths.getText(path)).firstElement());
+
+		if (xml == null)
+		{
+			trace('Null XML');
+			return;
+		}
+
+		var controls = [];
+
+		for (grp in xml.elements)
+			if (grp.name == 'control-group')
+				for (control in grp.elements)
+					if (control.name == 'control' && control.has.id)
+						controls.push(control);
+
+		for (control in controls)
+			for (key in control.elements)
+				if (key.name == 'key' && key.has.value)
+				{
+					trace('control(' + control.att.id + ') : ' + key.att.value);
+				}
 	}
-}
-
-typedef ControlsPreferenceFile =
-{
-	var game_left:Array<String>;
-	var game_right:Array<String>;
-	var game_jump:Array<String>;
-	var game_pause:Array<String>;
-
-	var ui_up:Array<String>;
-	var ui_left:Array<String>;
-	var ui_down:Array<String>;
-	var ui_right:Array<String>;
-	var ui_accept:Array<String>;
-	var ui_leave:Array<String>;
 }
