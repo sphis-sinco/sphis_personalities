@@ -45,7 +45,7 @@ class Paths
 	{
 		var arr:Array<String> = [];
 		#if sys
-		var rawNames:Array<String> = [];
+		var arr_rawFileNames:Array<String> = [];
 		var typePaths:Array<String> = paths;
 		var typeExtensions:Array<String> = ext;
 
@@ -65,9 +65,9 @@ class Paths
 						final path:String = ogdir + folder + endsplitter + file;
 
 						#if polymod
-						if (!rawNames.contains(file) && !arr.contains(getGamePath(path)))
+						if (!arr_rawFileNames.contains(file) && !arr.contains(getGamePath(path)))
 						{
-							rawNames.push(file);
+							arr_rawFileNames.push(file);
 							arr.push(getGamePath(path));
 						}
 						#else
