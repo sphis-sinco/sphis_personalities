@@ -56,37 +56,6 @@ class DesktopPlay extends State
 		add(scanlineLayer);
 	}
 
-	override function update(elapsed:Float)
-	{
-		super.update(elapsed);
-
-		for (levelGrp in levelsGrp.members)
-		{
-			levelGrp.levelIcon.screenCenter(Y);
-			levelsTextGrp.members[levelGrp.ID].y = levelGrp.levelIcon.y - levelsTextGrp.members[levelGrp.ID].height;
-
-			levelGrp.update(elapsed);
-
-			levelGrp.levelIcon.color = 0xFFFFFF;
-			if (curSel == levelGrp.ID)
-			{
-				camFollow.x = levelGrp.levelIcon.getGraphicMidpoint().x;
-				levelGrp.levelIcon.color = 0xFFFF00;
-			}
-			levelsTextGrp.members[levelGrp.ID].color = levelGrp.levelIcon.color;
-		}
-
-		if (Controls.getControlJustReleased('ui_left'))
-			curSel--;
-		if (Controls.getControlJustReleased('ui_right'))
-			curSel++;
-
-		if (curSel < 0)
-			curSel = 0;
-		if (curSel >= levels.length)
-			curSel = levels.length - 1;
-	}
-
 	public function reloadLevels(onComplete:(levelsGrp:FlxTypedGroup<LevelSpriteGroup>, levelsTextGrp:FlxTypedGroup<FlxText>) -> Void = null)
 	{
 		for (level in levelsGrp.members)

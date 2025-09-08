@@ -15,22 +15,15 @@ function onUpdate(event:UpdateEvent)
 		savedSelection = DesktopPlay.instance.curSel;
 		for (obj in DesktopPlay.instance.levelsGrp.members)
 		{
-			obj.levelIcon.alpha = 1;
 			FlxTween.tween(obj.levelIcon, {alpha: 0}, 1, {
 				ease: FlxEase.sineInOut
 			});
-			obj.box.alpha = 1;
-			FlxTween.tween(obj.box, {alpha: 0}, 1, {
-				ease: FlxEase.sineInOut
-			});
-			obj.lock.alpha = 1;
 			FlxTween.tween(obj.lock, {alpha: 0}, 1, {
 				ease: FlxEase.sineInOut
 			});
 		}
 		for (obj in DesktopPlay.instance.levelsTextGrp.members)
 		{
-			obj.alpha = 1;
 			FlxTween.tween(obj, {alpha: 0}, 1, {
 				ease: FlxEase.sineInOut
 			});
