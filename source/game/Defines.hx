@@ -49,7 +49,7 @@ class Defines
 
 		for (key => value in map)
 		{
-			trace('Define(' + Ansi.fg('', BLUE) + key + Ansi.reset('') + '): ' + value);
+			trace('Define(' + Ansi.fg('', ORANGE) + key + Ansi.reset('') + '): ' + value);
 		}
 	}
 }
