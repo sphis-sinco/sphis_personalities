@@ -7,6 +7,7 @@
 
         "assetFolders": {
                 "haxen": "general",
+                "hand": "general",
                 "general": "one"
         }
 }

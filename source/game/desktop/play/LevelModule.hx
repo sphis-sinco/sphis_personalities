@@ -39,6 +39,11 @@ class LevelModule
 		return Paths.getImagePath('levels/assets/' + assetFolders.haxen + '/haxen/' + state);
 	}
 
+	public function getHandAsset(state:String)
+	{
+		return Paths.getImagePath('levels/assets/' + assetFolders.hand + '/hand/' + state);
+	}
+
 	public function getGeneralAsset(asset:String)
 	{
 		return Paths.getImagePath('levels/assets/' + assetFolders.general + '/' + asset);
