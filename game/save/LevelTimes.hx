@@ -4,6 +4,8 @@ import flixel.util.FlxTimer;
 import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
 import game.scripts.imports.FlxScriptedAxes;
+import game.scripts.imports.FlxScriptedColor;
+import game.scripts.imports.FlxTextScriptedBorderStyle;
 
 var levelTime = 0;
 var levelTimer:FlxTimer;
@@ -18,6 +20,8 @@ function onCreate(event:CreateEvent)
 	levelTimerText.size = 16;
 	levelTimerText.screenCenter(FlxScriptedAxes.X);
 	levelTimerText.y = 32;
+	levelTimerText.color = FlxScriptedColor.WHITE;
+	levelTimerText.setBorderStyle(FlxTextScriptedBorderStyle.OUTLINE, FlxScriptedColor.BLACK, 2);
 	levelTimerText.alpha = 0.75;
 
 	if (event.state == 'level1')

@@ -1,5 +1,6 @@
 package game.scripts;
 
+import game.scripts.imports.FlxTextScriptedBorderStyle;
 #if !html5
 import crowplexus.iris.Iris;
 import crowplexus.iris.IrisConfig;
@@ -306,6 +307,7 @@ class ScriptManager
 	{
 		script.set('FlxScriptedColor', FlxScriptedColor, false);
 		script.set('FlxScriptedAxes', FlxScriptedAxes, false);
+		script.set('FlxTextScriptedBorderStyle', FlxTextScriptedBorderStyle, false);
 	}
 
 	public static function loadScriptsByPaths(paths:Array<String>)
