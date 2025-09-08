@@ -43,6 +43,7 @@ class Defines
 			set('controls_loadExtraTraces', Compiler.getDefine('controls_loadExtraTraces') == '1');
 
 			set('typeArray_foundfilesfunc_traces', Compiler.getDefine('typeArray_foundfilesfunc_traces') == '1');
+			set('typeArray_dupeFilePrevention', Compiler.getDefine('typeArray_dupeFilePrevention') == '1');
 		}
 		catch (_) {}
 

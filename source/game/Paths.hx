@@ -64,16 +64,12 @@ class Paths
 					{
 						final path:String = ogdir + folder + endsplitter + file;
 
-						#if polymod
-						if (!arr_rawFileNames.contains(file) && !arr.contains(getGamePath(path)))
+						if ((Defines.get('typeArray_dupeFilePrevention') && !arr_rawFileNames.contains(file))
+							&& !arr.contains(getGamePath(path)))
 						{
 							arr_rawFileNames.push(file);
 							arr.push(getGamePath(path));
 						}
-						#else
-						if (!arr.contains(getGamePath(path)))
-							arr.push(getGamePath(path));
-						#end
 					}
 
 				if (!file.contains('.'))
