@@ -57,33 +57,40 @@ class InitState extends FlxState
 		Defines.getDefines();
 
 		#if hscript
-		ConsoleUtil.registerObject('InitState', InitState);
-		ConsoleUtil.registerObject('Controls', Controls);
-		ConsoleUtil.registerObject('Mouse', Mouse);
-		ConsoleUtil.registerObject('MouseStates', MouseStates);
-		ConsoleUtil.registerObject('Paths', Paths);
-		ConsoleUtil.registerObject('State', State);
-		ConsoleUtil.registerObject('Ansi', Ansi);
-		ConsoleUtil.registerObject('BlankState', BlankState);
+		try
+		{
+			ConsoleUtil.registerObject('InitState', InitState);
+			ConsoleUtil.registerObject('Controls', Controls);
+			ConsoleUtil.registerObject('Mouse', Mouse);
+			ConsoleUtil.registerObject('MouseStates', MouseStates);
+			ConsoleUtil.registerObject('Paths', Paths);
+			ConsoleUtil.registerObject('State', State);
+			ConsoleUtil.registerObject('Ansi', Ansi);
+			ConsoleUtil.registerObject('BlankState', BlankState);
 
-		ConsoleUtil.registerObject('DesktopMain', DesktopMain);
-		ConsoleUtil.registerObject('DesktopPlay', DesktopPlay);
+			ConsoleUtil.registerObject('DesktopMain', DesktopMain);
+			ConsoleUtil.registerObject('DesktopPlay', DesktopPlay);
 
-		// ConsoleUtil.registerObject('LevelData', LevelData);
-		ConsoleUtil.registerObject('LevelModule', LevelModule);
-		ConsoleUtil.registerObject('LevelSpriteGroup', LevelSpriteGroup);
+			// ConsoleUtil.registerObject('LevelData', LevelData);
+			ConsoleUtil.registerObject('LevelModule', LevelModule);
+			ConsoleUtil.registerObject('LevelSpriteGroup', LevelSpriteGroup);
 
-		ConsoleUtil.registerObject('ScriptManager', ScriptManager);
-		ConsoleUtil.registerObject('WebScripts', WebScripts);
+			ConsoleUtil.registerObject('ScriptManager', ScriptManager);
+			ConsoleUtil.registerObject('WebScripts', WebScripts);
 
-		ConsoleUtil.registerObject('AddedEvent', AddedEvent);
-		ConsoleUtil.registerObject('BaseEvent', BaseEvent);
-		ConsoleUtil.registerObject('BaseStateEvent', BaseStateEvent);
-		ConsoleUtil.registerObject('CreateEvent', CreateEvent);
-		ConsoleUtil.registerObject('UpdateEvent', UpdateEvent);
+			ConsoleUtil.registerObject('AddedEvent', AddedEvent);
+			ConsoleUtil.registerObject('BaseEvent', BaseEvent);
+			ConsoleUtil.registerObject('BaseStateEvent', BaseStateEvent);
+			ConsoleUtil.registerObject('CreateEvent', CreateEvent);
+			ConsoleUtil.registerObject('UpdateEvent', UpdateEvent);
 
-		ConsoleUtil.registerObject('FlxScriptedAxes', FlxScriptedAxes);
-		ConsoleUtil.registerObject('FlxScriptedColor', FlxScriptedColor);
+			ConsoleUtil.registerObject('FlxScriptedAxes', FlxScriptedAxes);
+			ConsoleUtil.registerObject('FlxScriptedColor', FlxScriptedColor);
+		}
+		catch (e)
+		{
+			trace(e.message);
+		}
 		#end
 
 		#if generateWebScript
