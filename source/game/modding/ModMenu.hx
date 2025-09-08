@@ -24,14 +24,14 @@ class ModMenu extends State
 	override public function new()
 	{
 		super('modmenu');
+
+		if (instance != null)
+			instance = null;
+		instance = this;
 	}
 
 	override function create()
 	{
-		instance = this;
-
-		PolymodHandler.loadMods();
-
 		curSelected = savedSelection;
 
 		var menuBG:FlxSprite;
@@ -45,8 +45,6 @@ class ModMenu extends State
 		add(menuBG);
 
 		super.create();
-
-		PolymodHandler.loadModMetadata();
 
 		modIcon = new FlxSprite();
 		modIcon.loadGraphic(Paths.getImagePath('default-mod-icon'));
@@ -100,7 +98,6 @@ class ModMenu extends State
 		{
 			savedSelection = curSelected;
 			ModList.setModEnabled(curModId, !ModList.getModEnabled(curModId));
-			FlxG.resetState();
 		}
 
 		var leftTxt = '< ';
@@ -165,6 +162,7 @@ class ModMenu extends State
 
 	function updateSel()
 	{
+		modIcon.loadGraphic(Paths.getImagePath('default-mod-icon'));
 		if (PolymodHandler.metadataArrays.length < 1)
 			return;
 
