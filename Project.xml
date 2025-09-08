@@ -58,6 +58,8 @@
 	<haxelib name="lime" />
 	<haxelib name="openfl" />
 
+	<haxelib name="hxcpp-debug-server" if="windows debug"/>
+
 	<section unless="disable_polymodSupport">
 		<haxelib name="polymod" />
 		<assets path="mods" />
