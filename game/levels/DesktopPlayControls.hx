@@ -1,6 +1,5 @@
 import game.desktop.DesktopPlay;
 import game.scripts.events.UpdateEvent;
-import game.scripts.imports.FlxScriptedAxes;
 
 function onUpdate(event:UpdateEvent)
 {

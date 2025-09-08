@@ -106,6 +106,27 @@ class DesktopPlay extends State
 			onComplete(levelsGrp, levelsTextGrp);
 	}
 
+	public static function initalizeLevelModules(dir:String):Array<String>
+	{
+		var lvls = [];
+
+		for (level in FileSystem.readDirectory(dir))
+		{
+			if (StringTools.endsWith(level, '.json') || StringTools.endsWith(level, '.xml'))
+			{
+				var trimmed = StringTools.replace(StringTools.replace(level, '.xml', ''), '.json', '');
+
+				if (!lvls.contains(trimmed))
+					lvls.push(trimmed);
+			}
+		}
+
+		for (lvl in lvls)
+			var module = new LevelModule(lvl);
+
+		return lvls;
+	}
+
 	public function sysLoadLevels(dir:String):Bool
 	{
 		levels = [];
