@@ -13,7 +13,7 @@ function onAdded(event:AddedEvent)
 		}
 	}
 
-	trace('Save dump: ' + FlxG.save.data);
+	trace('Save dump: ' + {levelTimes: FlxG.save.data.levelTimes, volume: FlxG.save.data.volume});
 
 	Application.current.onExit.add(l ->
 	{
