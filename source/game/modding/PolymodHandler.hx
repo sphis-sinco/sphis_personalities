@@ -55,7 +55,7 @@ class PolymodHandler
 				outdatedMods.push(metadata.id);
 		}
 		trace('metadataArrays: ' + metadataArrays.toString());
-		trace('outdatedMods: ': + outdatedMods.toString());
+		trace('outdatedMods: ' + outdatedMods.toString());
 	}
 
 	static function init()
