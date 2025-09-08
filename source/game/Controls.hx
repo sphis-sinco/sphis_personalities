@@ -78,7 +78,6 @@ class ControlsSave
 					var controlElement = Xml.createElement('control');
 					controlElement.set('id', key);
 
-					trace(grp + key);
 					for (controlKey in Controls.controls.get(grp + key))
 					{
 						var keyElement = Xml.createElement('key');
