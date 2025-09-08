@@ -28,9 +28,12 @@ class LevelModule
 		unlocked = null;
 		id = dataFileid;
 
+		trace(path);
+
 		try
 		{
 			var xmlData = new Access(Xml.parse(Paths.getText(path)).firstElement());
+			trace(xmlData.innerHTML);
 
 			for (node in xmlData.elements)
 			{
