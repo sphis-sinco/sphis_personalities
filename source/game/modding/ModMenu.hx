@@ -2,7 +2,6 @@ package game.modding;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.group.FlxGroup;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import game.desktop.DesktopMain;
@@ -17,8 +16,6 @@ class ModMenu extends State
 	public static var savedSelection:Int = 0;
 
 	var curSelected:Int = 0;
-
-	public var page:FlxTypedGroup<FlxText> = new FlxTypedGroup<FlxText>();
 
 	public static var instance:ModMenu;
 
@@ -53,15 +50,7 @@ class ModMenu extends State
 
 		super.create();
 
-		add(page);
-
 		PolymodHandler.loadModMetadata();
-
-		loadMods();
-
-		descBg = new FlxSprite(0, FlxG.height - 160).makeGraphic(FlxG.width, 160, 0xFF000000);
-		descBg.alpha = 0.6;
-		add(descBg);
 
 		descIcon = new FlxSprite();
 		descIcon.loadGraphic(Paths.getImagePath('default-mod-icon'));
@@ -69,7 +58,7 @@ class ModMenu extends State
 		descIcon.setPosition(FlxG.width - descIcon.width, 325);
 		add(descIcon);
 
-		descriptionText = new FlxText(descBg.x, descBg.y + 4, FlxG.width, 'Template Description', 8);
+		descriptionText = new FlxText(0, 0, FlxG.width, 'Template Description', 16);
 		descriptionText.scrollFactor.set();
 		add(descriptionText);
 
@@ -88,44 +77,19 @@ class ModMenu extends State
 		updateSel();
 	}
 
-	function loadMods()
-	{
-		page.forEachExists(function(option:FlxText)
-		{
-			page.remove(option);
-			option.kill();
-			option.destroy();
-		});
-
-		var optionLoopNum:Int = 0;
-
-		if (PolymodHandler.metadataArrays.length < 1)
-		{
-			return;
-		}
-
-		for (modId in PolymodHandler.metadataArrays)
-		{
-			var modOption = new FlxText(10, 0, 0, ModList.modMetadatas.get(modId).title, 16);
-			modOption.ID = optionLoopNum;
-			page.add(modOption);
-			optionLoopNum++;
-		}
-	}
-
 	public var curModId = '';
 
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
 
-		if (Controls.getControlJustReleased('ui_up'))
+		if (Controls.getControlJustReleased('ui_left'))
 		{
 			curSelected -= 1;
 			updateSel();
 		}
 
-		if (Controls.getControlJustReleased('ui_down'))
+		if (Controls.getControlJustReleased('ui_right'))
 		{
 			curSelected += 1;
 			updateSel();
@@ -145,90 +109,89 @@ class ModMenu extends State
 			FlxG.resetState();
 		}
 
-		if (curSelected < 0)
-		{
-			curSelected = page.length - 1;
-			updateSel();
-		}
+		var leftTxt = '< ';
+		var rightTxt = ' >';
 
-		if (curSelected >= page.length)
+		if (curSelected <= 0)
 		{
 			curSelected = 0;
+			leftTxt = '| ';
 			updateSel();
 		}
 
-		var bruh = 0;
+		if (curSelected >= PolymodHandler.metadataArrays.length - 1)
+		{
+			curSelected = PolymodHandler.metadataArrays.length - 1;
+			rightTxt = ' |';
+			updateSel();
+		}
 
 		if (PolymodHandler.metadataArrays.length >= 1)
 		{
-			for (x in page.members)
+			descriptionText.alpha = ModList.getModEnabled(curModId) ? 1.0 : 0.6;
+
+			var outdatedText:String = '';
+			descriptionText.color = FlxColor.WHITE;
+
+			if (PolymodHandler.outdatedMods.contains(curModId))
 			{
-				x.y = 10 + (bruh * 32);
-				x.alpha = ModList.getModEnabled(PolymodHandler.metadataArrays[x.ID]) ? 1.0 : 0.6;
-				x.color = (curSelected == x.ID) ? FlxColor.YELLOW : FlxColor.WHITE;
+				// Commented out code is from Dreamland
 
-				if (curSelected == x.ID)
-				{
-					@:privateAccess
-					var outdatedText:String = '';
+				/*
+					var old_level_system_version = ModList.modMetadatas.get(curModId).apiVersion.lessThan(Version.arrayToVersion([0, 9, 0]));
+					var old_player_results_version = !ModList.modMetadatas.get(curModId).apiVersion.lessThan(Version.arrayToVersion([1, 0, 0]));
+				 */
 
-					descriptionText.color = FlxColor.WHITE;
+				outdatedText = ' \n%Outdated ';
 
-					if (PolymodHandler.outdatedMods.contains(curModId))
-					{
-						// Commented out code is from Dreamland
+				/*
+					if (old_player_results_version)
+						outdatedText += '\n$* Custom player results assets won\'t work$';
+					if (old_level_system_version)
+						outdatedText += '\n$* Any new levels added won\'t work$';
+				 */
 
-						/*
-							var old_level_system_version = ModList.modMetadatas.get(curModId).apiVersion.lessThan(Version.arrayToVersion([0, 9, 0]));
-							var old_player_results_version = !ModList.modMetadatas.get(curModId).apiVersion.lessThan(Version.arrayToVersion([1, 0, 0]));
-						 */
-
-						outdatedText = ' \n%Outdated ';
-
-						/*
-							if (old_player_results_version)
-								outdatedText += '\n$* Custom player results assets won\'t work$';
-							if (old_level_system_version)
-								outdatedText += '\n$* Any new levels added won\'t work$';
-						 */
-
-						outdatedText += '%';
-					}
-
-					descriptionText.text = ModList.modMetadatas.get(curModId).description + '\nContributors:\n';
-
-					var i = 0;
-					var len = ModList.modMetadatas.get(curModId).contributors.length - 1;
-					for (contributor in ModList.modMetadatas.get(curModId).contributors)
-					{
-						i++;
-						descriptionText.text += '  *  ' + contributor.name + '(' + contributor.role + ')';
-					}
-
-					descriptionText.text += '\nAPI Version: ' + ModList.modMetadatas.get(curModId).apiVersion + outdatedText + '\nMod Version: '
-						+ ModList.modMetadatas.get(curModId).modVersion + '\n';
-					descriptionText.applyMarkup(descriptionText.text, [
-						new FlxTextFormatMarkerPair(new FlxTextFormat(FlxColor.YELLOW, true, true), '%'),
-						new FlxTextFormatMarkerPair(new FlxTextFormat(FlxColor.ORANGE, true, true), '$')
-					]);
-				}
-
-				bruh++;
+				outdatedText += '%';
 			}
+
+			descriptionText.text = '@' + leftTxt + '@' + ModList.modMetadatas.get(curModId).title + '@' + rightTxt + '@' + '\nid (folder): '
+				+ ModList.modMetadatas.get(curModId).id + '\n\n' + ModList.modMetadatas.get(curModId).description + '\n\nContributors:\n';
+
+			var len = ModList.modMetadatas.get(curModId).contributors.length - 1;
+			for (contributor in ModList.modMetadatas.get(curModId).contributors)
+				descriptionText.text += '  *  ' + contributor.name + ' (' + contributor.role + ')\n';
+
+			descriptionText.text += '\n\nAPI Version: ' + ModList.modMetadatas.get(curModId).apiVersion + outdatedText + '\nMod Version: '
+				+ ModList.modMetadatas.get(curModId).modVersion + '\n';
+			descriptionText.applyMarkup(descriptionText.text, [
+				new FlxTextFormatMarkerPair(new FlxTextFormat(FlxColor.BLACK, true, true), '@'),
+				new FlxTextFormatMarkerPair(new FlxTextFormat(FlxColor.YELLOW, true, true), '%'),
+				new FlxTextFormatMarkerPair(new FlxTextFormat(FlxColor.ORANGE, true, true), '$')
+			]);
+		}
+		else
+		{
+			descriptionText.alpha = 1.0;
+			descriptionText.text = 'No mods';
 		}
 	}
 
 	function updateSel()
 	{
-		descIcon.loadGraphic(Paths.getImagePath('default-mod-icon'));
-
 		if (PolymodHandler.metadataArrays.length < 1)
 			return;
 
 		curModId = PolymodHandler.metadataArrays[curSelected];
 		var modMeta = ModList.modMetadatas.get(curModId);
 
-		if (modMeta.icon != null)
-			descIcon.loadGraphic(BitmapData.fromBytes(modMeta.icon));
+		try
+		{
+			if (modMeta.icon != null)
+				descIcon.loadGraphic(BitmapData.fromBytes(modMeta.icon));
+		}
+		catch (e)
+		{
+			descIcon.loadGraphic(Paths.getImagePath('default-mod-icon'));
+		}
 	}
 }
