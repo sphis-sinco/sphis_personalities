@@ -6,6 +6,7 @@ import polymod.format.ParseRules;
 import polymod.Polymod;
 
 using StringTools;
+using game.utils.MapUtil;
 
 class PolymodHandler
 {
@@ -127,7 +128,7 @@ class PolymodHandler
 			apiVersionRule: '>=' + MINIMUM_MOD_VERSION + ' <' + MAXIMUM_MOD_VERSION
 		});
 
-		for (key => value in ModList.modList)
+		for (key in ModList.modList.keysArray())
 		{
 			trace('Mod loaded: ' + key);
 		}
