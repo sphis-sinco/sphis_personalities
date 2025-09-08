@@ -61,24 +61,16 @@ function onUpdate(event:UpdateEvent)
 			leftArrow.scale.set(.25, .25);
 			rightArrow.scale.set(.25, .25);
 
-			if (!arrowsnotLeaving)
+			if (arrowsnotLeaving)
 			{
 				if (DesktopPlay.instance.curSel >= 0)
-				{
 					leftArrow.alpha = .5;
-				}
 				else
-				{
 					leftArrow.alpha = 1;
-				}
 				if (DesktopPlay.instance.curSel <= DesktopPlay.instance.levels.length - 1)
-				{
 					rightArrow.alpha = .5;
-				}
 				else
-				{
 					rightArrow.alpha = 1;
-				}
 			}
 
 			if (Controls.getControlPressed('ui_left') && arrowsnotLeaving)
