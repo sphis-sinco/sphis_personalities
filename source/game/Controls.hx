@@ -82,7 +82,7 @@ class ControlsSave
 					for (controlKey in Controls.controls.get(grp + key))
 					{
 						var keyElement = Xml.createElement('key');
-						controlElement.set('value', controlKey);
+						keyElement.set('value', controlKey);
 
 						controlElement.addChild(keyElement);
 					}
@@ -129,16 +129,17 @@ class ControlsSave
 			return;
 		}
 
-		var control_groups = [];
 		var controls = [];
 
 		for (grp in xml.elements)
-			if (grp.name == 'control-group')
+			if (grp.name == 'control-group' && grp.has.id)
 			{
-				control_groups.push(grp);
 				for (control in grp.elements)
 					if (control.name == 'control' && control.has.id)
+					{
+						control.att.grp = grp.att.id;
 						controls.push(control);
+					}
 			}
 
 		var controls_map:Map<String, Array<FlxKey>> = [];
@@ -154,22 +155,23 @@ class ControlsSave
 				for (key in control.elements)
 					if (key.name == 'key' && key.has.value)
 					{
-						trace('control(' + control.att.id + ') : ' + key.att.value);
+						trace('control(' + control.att.grp + '_' + control.att.id + ') : ' + key.att.value);
 						current_controls.push(FlxKey.fromString(key.att.value.toUpperCase()));
 					}
 
-				controls_map.set(((control_groups[i].has.id) ? control_groups[i].att.id : '') + ((control_groups[i].has.id) ? '_' : '') + control.att.id,
-					current_controls);
+				if (current_controls.length > 0)
+					controls_map.set(control.att.grp + '_' + control.att.id, current_controls);
 			}
 			catch (e)
 			{
 				trace(e.message);
+
+				trace(control.innerHTML);
 			}
 			i++;
 		}
 
 		Controls.controls = controls_map;
-		trace('Updated Controls!');
 		trace('Updated Controls!');
 	}
 }
