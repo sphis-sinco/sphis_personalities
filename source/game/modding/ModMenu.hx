@@ -8,20 +8,18 @@ import game.desktop.DesktopMain;
 import game.modding.ModList;
 import game.modding.PolymodHandler;
 import openfl.display.BitmapData;
-import thx.semver.Version.SemVer;
 import thx.semver.Version;
 
 class ModMenu extends State
 {
 	public static var savedSelection:Int = 0;
 
-	var curSelected:Int = 0;
+	public var curSelected:Int = 0;
 
 	public static var instance:ModMenu;
 
-	var descriptionText:FlxText;
-	var descBg:FlxSprite;
-	var descIcon:FlxSprite;
+	public var modText:FlxText;
+	public var modIcon:FlxSprite;
 
 	override public function new()
 	{
@@ -32,9 +30,7 @@ class ModMenu extends State
 	{
 		instance = this;
 
-		#if polymod
-		game.modding.PolymodHandler.loadMods();
-		#end
+		PolymodHandler.loadMods();
 
 		curSelected = savedSelection;
 
@@ -52,20 +48,20 @@ class ModMenu extends State
 
 		PolymodHandler.loadModMetadata();
 
-		descIcon = new FlxSprite();
-		descIcon.loadGraphic(Paths.getImagePath('default-mod-icon'));
-		descIcon.scale.set(0.5, 0.5);
-		descIcon.setPosition(FlxG.width - descIcon.width, 325);
-		add(descIcon);
+		modIcon = new FlxSprite();
+		modIcon.loadGraphic(Paths.getImagePath('default-mod-icon'));
+		modIcon.scale.set(0.5, 0.5);
+		modIcon.setPosition(FlxG.width - modIcon.width, 325);
+		add(modIcon);
 
-		descriptionText = new FlxText(0, 0, FlxG.width, 'Template Description', 16);
-		descriptionText.scrollFactor.set();
-		add(descriptionText);
+		modText = new FlxText(0, 0, FlxG.width, 'Template Description', 16);
+		modText.scrollFactor.set();
+		add(modText);
 
 		if (PolymodHandler.metadataArrays.length < 1)
 		{
-			descriptionText.text = 'No mods';
-			descriptionText.alignment = CENTER;
+			modText.text = 'No mods';
+			modText.alignment = CENTER;
 		}
 
 		var leText:String = 'Press ' + Controls.getControlKeys('ui_accept') + ' to enable / disable the currently selected mod.';
@@ -126,42 +122,35 @@ class ModMenu extends State
 
 		if (PolymodHandler.metadataArrays.length >= 1)
 		{
-			descriptionText.alpha = ModList.getModEnabled(curModId) ? 1.0 : 0.6;
+			modText.alpha = ModList.getModEnabled(curModId) ? 1.0 : 0.6;
 
 			var outdatedText:String = '';
-			descriptionText.color = FlxColor.WHITE;
+			modText.color = FlxColor.WHITE;
 
 			if (PolymodHandler.outdatedMods.contains(curModId))
 			{
 				// Commented out code is from Dreamland
 
-				/*
-					var old_level_system_version = ModList.modMetadatas.get(curModId).apiVersion.lessThan(Version.arrayToVersion([0, 9, 0]));
-					var old_player_results_version = !ModList.modMetadatas.get(curModId).apiVersion.lessThan(Version.arrayToVersion([1, 0, 0]));
-				 */
+				var higherVersion = ModList.modMetadatas.get(curModId).apiVersion.greaterThan(PolymodHandler.MAXIMUM_MOD_VERSION);
 
 				outdatedText = ' \n%Outdated ';
 
-				/*
-					if (old_player_results_version)
-						outdatedText += '\n$* Custom player results assets won\'t work$';
-					if (old_level_system_version)
-						outdatedText += '\n$* Any new levels added won\'t work$';
-				 */
+				if (higherVersion)
+					outdatedText += '\n@* Troll@';
 
 				outdatedText += '%';
 			}
 
-			descriptionText.text = '@' + leftTxt + '@' + ModList.modMetadatas.get(curModId).title + '@' + rightTxt + '@' + '\nid (folder): '
+			modText.text = '@' + leftTxt + '@' + ModList.modMetadatas.get(curModId).title + '@' + rightTxt + '@' + '\nid (folder): '
 				+ ModList.modMetadatas.get(curModId).id + '\n\n' + ModList.modMetadatas.get(curModId).description + '\n\nContributors:\n';
 
 			var len = ModList.modMetadatas.get(curModId).contributors.length - 1;
 			for (contributor in ModList.modMetadatas.get(curModId).contributors)
-				descriptionText.text += '  *  ' + contributor.name + ' (' + contributor.role + ')\n';
+				modText.text += '  *  ' + contributor.name + ' (' + contributor.role + ')\n';
 
-			descriptionText.text += '\n\nAPI Version: ' + ModList.modMetadatas.get(curModId).apiVersion + outdatedText + '\nMod Version: '
+			modText.text += '\n\nAPI Version: ' + ModList.modMetadatas.get(curModId).apiVersion + outdatedText + '\nMod Version: '
 				+ ModList.modMetadatas.get(curModId).modVersion + '\n';
-			descriptionText.applyMarkup(descriptionText.text, [
+			modText.applyMarkup(modText.text, [
 				new FlxTextFormatMarkerPair(new FlxTextFormat(FlxColor.BLACK, true, true), '@'),
 				new FlxTextFormatMarkerPair(new FlxTextFormat(FlxColor.YELLOW, true, true), '%'),
 				new FlxTextFormatMarkerPair(new FlxTextFormat(FlxColor.ORANGE, true, true), '$')
@@ -169,8 +158,8 @@ class ModMenu extends State
 		}
 		else
 		{
-			descriptionText.alpha = 1.0;
-			descriptionText.text = 'No mods';
+			modText.alpha = 1.0;
+			modText.text = 'No mods';
 		}
 	}
 
@@ -185,11 +174,11 @@ class ModMenu extends State
 		try
 		{
 			if (modMeta.icon != null)
-				descIcon.loadGraphic(BitmapData.fromBytes(modMeta.icon));
+				modIcon.loadGraphic(BitmapData.fromBytes(modMeta.icon));
 		}
 		catch (e)
 		{
-			descIcon.loadGraphic(Paths.getImagePath('default-mod-icon'));
+			modIcon.loadGraphic(Paths.getImagePath('default-mod-icon'));
 		}
 	}
 }
