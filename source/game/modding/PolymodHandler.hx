@@ -63,7 +63,6 @@ class PolymodHandler
 			errorCallback: function(error:PolymodError)
 			{
 				#if debug
-				#if BLOCK_SOME_POLYMOD_TRACES
 				var I_dont_wanna_see_that_shit:Array<PolymodErrorCode> = [
 					PARSE_MOD_META,
 					PARSE_MOD_VERSION,
@@ -72,12 +71,13 @@ class PolymodHandler
 					MISSING_META,
 					MISSING_ICON,
 					MOD_LOAD_PREPARE,
-					MOD_LOAD_DONE
+					MOD_LOAD_DONE,
+					FRAMEWORK_INIT,
+					FRAMEWORK_AUTODETECT
 				];
 
 				if (I_dont_wanna_see_that_shit.contains(error.code))
 					return;
-				#end
 				#end
 
 				if (error.code == VERSION_CONFLICT_API)
@@ -94,6 +94,11 @@ class PolymodHandler
 			},
 			apiVersionRule: '>=' + MINIMUM_MOD_VERSION + ' <' + MAXIMUM_MOD_VERSION
 		});
+
+		for (key => value in ModList.modList)
+		{
+			trace('Mod loaded: ' + key);
+		}
 	}
 }
 #end
