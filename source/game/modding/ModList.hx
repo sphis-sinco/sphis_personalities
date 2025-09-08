@@ -60,7 +60,7 @@ class ModList
 				if (modList != null)
 					for (key => value in modList)
 					{
-						trace('Mod(' + Ansi.fg('', WHITE) + key + Ansi.reset('') + ') enabled: ' + value);
+						trace('Mod(' + Ansi.fg('', BLUE) + key + Ansi.reset('') + ') enabled: ' + value);
 					}
 			}
 			else

@@ -25,7 +25,7 @@ class LevelModule
 			if (module.id == levelID)
 			{
 				loadOGlI = false;
-				trace('Another Level(' + Ansi.fg('', WHITE) + module.id + Ansi.reset('') + ') Module loaded, loading Module...');
+				trace('Another Level(' + Ansi.fg('', BLUE) + module.id + Ansi.reset('') + ') Module loaded, loading Module...');
 			}
 		}
 
@@ -35,7 +35,7 @@ class LevelModule
 		}
 		else
 		{
-			trace('Level(' + Ansi.fg('', WHITE) + levelID + Ansi.reset('') + ') Module already loaded');
+			trace('Level(' + Ansi.fg('', BLUE) + levelID + Ansi.reset('') + ') Module already loaded');
 			var module = loadedModules.get(levelID);
 
 			try
@@ -55,7 +55,7 @@ class LevelModule
 
 	public function loadModule(levelID:String)
 	{
-		trace('Initalizing new Level(' + Ansi.fg('', WHITE) + levelID + Ansi.reset('') + ') Module');
+		trace('Initalizing new Level(' + Ansi.fg('', BLUE) + levelID + Ansi.reset('') + ') Module');
 
 		var JSONPath = Paths.getGamePath('levels/data/' + levelID + '.json');
 		var XMLPath = Paths.getGamePath('levels/data/' + levelID + '.xml');
@@ -103,7 +103,7 @@ class LevelModule
 
 	public function parseJSON(data:LevelData, levelID:String)
 	{
-		trace('Level(' + Ansi.fg('', WHITE) + levelID + Ansi.reset('') + ') JSON being parsed');
+		trace('Level(' + Ansi.fg('', BLUE) + levelID + Ansi.reset('') + ') JSON being parsed');
 		displayName = data.displayName;
 		authors = data.authors;
 		unlocked = data.unlocked;
@@ -117,7 +117,7 @@ class LevelModule
 		{
 			try
 			{
-				trace('Level(' + Ansi.fg('', WHITE) + levelID + Ansi.reset('') + ') XML Element(' + Ansi.fg('', WHITE) + element.name + Ansi.reset('')
+				trace('Level(' + Ansi.fg('', BLUE) + levelID + Ansi.reset('') + ') XML Element(' + Ansi.fg('', BLUE) + element.name + Ansi.reset('')
 					+ ') being parsed');
 
 				if (element.name.toLowerCase() == 'displayname')

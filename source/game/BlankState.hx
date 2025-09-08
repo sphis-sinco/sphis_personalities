@@ -7,7 +7,7 @@ class BlankState extends State
 	override public function new(state:String)
 	{
 		super(state);
-		trace('Initalized Blank State with state: ' + Ansi.fg(state, WHITE) + Ansi.reset(''));
+		trace('Initalized Blank State with state: ' + Ansi.fg(state, BLUE) + Ansi.reset(''));
 
 		if (instance != null)
 			instance = null;

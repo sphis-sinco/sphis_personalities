@@ -109,8 +109,8 @@ class ScriptManager
 		{
 			var errMsg = Ansi.fg('missing method(-method) for script(-script.config.name)', RED);
 
-			errMsg = StringTools.replace(errMsg, '-method', Ansi.fg(method, WHITE) + Ansi.fg('', RED));
-			errMsg = StringTools.replace(errMsg, '-script.config.name', Ansi.fg(script.config.name, WHITE) + Ansi.fg('', RED));
+			errMsg = StringTools.replace(errMsg, '-method', Ansi.fg(method, BLUE) + Ansi.fg('', RED));
+			errMsg = StringTools.replace(errMsg, '-script.config.name', Ansi.fg(script.config.name, BLUE) + Ansi.fg('', RED));
 
 			if (!SCRIPTS_ERRS.exists('missing_method(' + method + ')_' + script.config.name))
 			{
@@ -132,10 +132,10 @@ class ScriptManager
 		}
 		catch (e)
 		{
-			var errMsg = Ansi.fg('error calling method(-method) for script(-script.config.name): ', RED) + Ansi.fg(e.message, WHITE);
+			var errMsg = Ansi.fg('error calling method(-method) for script(-script.config.name): ', RED) + Ansi.fg(e.message, BLUE);
 
-			errMsg = StringTools.replace(errMsg, '-method', Ansi.fg(method, WHITE) + Ansi.fg('', RED));
-			errMsg = StringTools.replace(errMsg, '-script.config.name', Ansi.fg(script.config.name, WHITE) + Ansi.fg('', RED));
+			errMsg = StringTools.replace(errMsg, '-method', Ansi.fg(method, BLUE) + Ansi.fg('', RED));
+			errMsg = StringTools.replace(errMsg, '-script.config.name', Ansi.fg(script.config.name, BLUE) + Ansi.fg('', RED));
 
 			if (!SCRIPTS_ERRS.exists('method(' + method + ')_error_' + script.config.name))
 			{
@@ -264,13 +264,7 @@ class ScriptManager
 		{
 			newScript = null;
 			if (Defines.get('scripts_loadedScriptMSG'))
-				trace(Ansi.fg('', RED)
-					+ 'Error loading script('
-					+ Ansi.fg(path, WHITE)
-					+ Ansi.fg('', RED)
-					+ '): '
-					+ e.message
-					+ Ansi.reset(''));
+				trace(Ansi.fg('', RED) + 'Error loading script(' + Ansi.fg(path, BLUE) + Ansi.fg('', RED) + '): ' + e.message + Ansi.reset(''));
 			Application.current.window.alert('Error loading script(' + path + '): ' + e.message + '\n\n' + e.details, 'Error loading script');
 		}
 
@@ -279,7 +273,7 @@ class ScriptManager
 			initalizeScriptVariables(newScript);
 
 			if (Defines.get('scripts_loadedScriptMSG'))
-				trace('Loaded script(' + Ansi.fg(path, WHITE) + Ansi.reset('') + ')');
+				trace('Loaded script(' + Ansi.fg(path, BLUE) + Ansi.reset('') + ')');
 
 			SCRIPTS.push(newScript);
 
@@ -415,7 +409,7 @@ class ScriptManager
 			{
 				final ogFile = ogFiles[i];
 
-				addition = Ansi.fg('(loaded)', WHITE);
+				addition = Ansi.fg('(loaded)', BLUE);
 				if (!scriptsString.contains(ogFile))
 				{
 					addition = Ansi.fg('(new)', RED);
@@ -439,7 +433,7 @@ class ScriptManager
 				}
 
 				if (Defines.get('typeArray_foundfilesfunc_traces'))
-					trace(' * ' + Ansi.fg(file, WHITE) + ' ' + addition + Ansi.reset(''));
+					trace(' * ' + Ansi.fg(file, BLUE) + ' ' + addition + Ansi.reset(''));
 
 				i++;
 			}
