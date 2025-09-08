@@ -91,15 +91,6 @@ class Paths
 			readDir(path);
 		}
 
-		arr.sort((a, b) ->
-		{
-			a = a.toUpperCase();
-			b = b.toUpperCase();
-
-			// Sort alphabetically. Yes that's how this works.
-			return a == b ? 0 : a > b ? 1 : -1;
-		});
-
 		if (foundFilesFunction != null)
 		{
 			foundFilesFunction(arr, type);
