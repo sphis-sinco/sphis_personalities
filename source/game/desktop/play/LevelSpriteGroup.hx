@@ -75,5 +75,9 @@ class LevelSpriteGroup extends FlxTypedGroup<FlxSprite>
 		levelIcon.updateHitbox();
 		box.updateHitbox();
 		lock.updateHitbox();
+
+		box.visible = levelIcon.visible;
+		if (locked)
+			lock.visible = levelIcon.visible;
 	}
 }
