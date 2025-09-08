@@ -23,7 +23,10 @@ class PolymodHandler
 		{
 			init();
 		}
-		catch (_) {}
+		catch (e)
+		{
+			trace(e.message);
+		}
 
 		ScriptManager.checkForUpdatedScripts();
 	}
