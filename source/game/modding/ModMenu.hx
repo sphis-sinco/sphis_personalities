@@ -69,7 +69,7 @@ class ModMenu extends State
 		descIcon.setPosition(FlxG.width - descIcon.width, 325);
 		add(descIcon);
 
-		descriptionText = new FlxText(descBg.x, descBg.y + 4, FlxG.width, 'Template Description', 16);
+		descriptionText = new FlxText(descBg.x, descBg.y + 4, FlxG.width, 'Template Description', 8);
 		descriptionText.scrollFactor.set();
 		add(descriptionText);
 
@@ -202,7 +202,7 @@ class ModMenu extends State
 					for (contributor in ModList.modMetadatas.get(curModId).contributors)
 					{
 						i++;
-						descriptionText.text += '  *' + contributor.name + '(' + contributor.role + ')';
+						descriptionText.text += '  *  ' + contributor.name + '(' + contributor.role + ')';
 					}
 
 					descriptionText.text += '\nAPI Version: ' + ModList.modMetadatas.get(curModId).apiVersion + outdatedText + '\nMod Version: '
