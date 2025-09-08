@@ -9,7 +9,7 @@ class LevelModule
 {
 	public var displayName:String;
 	public var authors:Array<String>;
-	public var unlocked:Bool;
+	public var unlocked:Null<Bool>;
 
 	public var id:String;
 
