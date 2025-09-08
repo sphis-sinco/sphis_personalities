@@ -35,13 +35,18 @@
 
 	<!-- _____________________________ Path Settings ____________________________ -->
 
-	<set name="BUILD_DIR" value="export/release" unless="debug" />
+	<set name="BUILD_DIR" value="export/release" unless="debug || final" />
 	<set name="BUILD_DIR" value="export/debug" if="debug" />
+	<set name="BUILD_DIR" value="export/final" if="final" />
 
 	<define name="ansiStuff" />
 
 	<source path="source" />
 	<assets path="game" />
+
+	<define name="typeArray_foundfilesfunc_traces" if="final"/>
+	<define name="scripts_loadedScriptMSG" if="final"/>
+	<define name="controls_loadExtraTraces" if="final"/>
 
 	<define name="scripts_disableScripts" if="html5"/>
 
