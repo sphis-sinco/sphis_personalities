@@ -16,6 +16,14 @@ class Mouse
 
 	public static function updateMouseGraphic()
 	{
+		if (state == MouseStates.BLANK)
+		{
+			FlxG.mouse.visible = false;
+			return;
+		}
+		else
+			FlxG.mouse.visible = true;
+
 		var graphic = FlxGraphic.fromAssetKey(Paths.getImagePath('mouse/' + state));
 
 		if (graphic == null)
