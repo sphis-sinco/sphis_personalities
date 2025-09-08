@@ -24,6 +24,8 @@ var tick = 0;
 
 function onCreate(event:CreateEvent)
 {
+	level_paused = false;
+
 	if (event.state == 'level1')
 	{
 		lvl = new LevelModule(event.state);
