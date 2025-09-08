@@ -80,6 +80,8 @@ class ScriptManager
 
 	public static function call(method:String, ?args:Array<Dynamic>)
 	{
+		if (method == null)
+			return;
 		if (SCRIPTS.length < 1)
 			return;
 
@@ -91,6 +93,9 @@ class ScriptManager
 
 	public static function callSingular(script:Iris, method:String, ?args:Array<Dynamic>)
 	{
+		if (method == null)
+			return;
+
 		if (!script.exists(method))
 		{
 			var errMsg = Ansi.fg('missing method(-method) for script(-script.config.name)', RED);
