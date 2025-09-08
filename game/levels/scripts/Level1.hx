@@ -1,5 +1,7 @@
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
 import game.desktop.DesktopPlay;
 import game.desktop.play.LevelModule;
 import game.scripts.events.CreateEvent;
@@ -10,8 +12,10 @@ var level_one:LevelModule;
 var is_level_one:Bool;
 var level_paused:Bool;
 var level_one_bg_sky:FlxSprite;
-var level_one_haxen:FlxSprite;
 var level_one_bg_ground:FlxSprite;
+var level_one_haxen:FlxSprite;
+var level_one_op:FlxSprite;
+var level_one_op_attacking:Bool;
 var pauseBG:FlxSprite;
 
 function onCreate(event:CreateEvent)
@@ -36,14 +40,31 @@ function onCreate(event:CreateEvent)
 		level_one_haxen.screenCenter();
 		level_one_haxen.y += (level_one_haxen.height / 4);
 
+		level_one_op = new FlxSprite();
+		level_one_op.loadGraphic(level_one.getGeneralAsset('op'));
+		level_one_op.screenCenter();
+		level_one_op.y -= level_one_op.height / 10;
+		var op_resting_YPos = level_one_op.getPosition().y;
+		level_one_op.y = FlxG.height * 2;
+
 		pauseBG = new FlxSprite();
 		pauseBG.makeGraphic(FlxG.width, FlxG.height, FlxScriptedColor.BLACK);
 		pauseBG.screenCenter();
 
 		BlankState.instance.add(level_one_bg_sky);
+		BlankState.instance.add(level_one_op);
 		BlankState.instance.add(level_one_bg_ground);
 		BlankState.instance.add(level_one_haxen);
 		BlankState.instance.add(pauseBG);
+
+		level_one_op_attacking = false;
+		FlxTween.tween(level_one_op, {y: op_resting_YPos}, 2, {
+			ease: FlxEase.sineOut,
+			onComplete: twn ->
+			{
+				level_one_op_attacking = true;
+			}
+		});
 	}
 }
 
