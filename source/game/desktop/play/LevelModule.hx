@@ -3,13 +3,12 @@ package game.desktop.play;
 import crowplexus.iris.Iris;
 import game.desktop.play.LevelData.AssetFolders;
 import haxe.Json;
-import haxe.xml.Access;
 
 class LevelModule
 {
 	public var displayName:String;
 	public var authors:Array<String>;
-	public var unlocked:Null<Bool>;
+	public var unlocked:Bool;
 
 	public var id:String;
 
@@ -17,34 +16,17 @@ class LevelModule
 
 	public function new(dataFileid:String)
 	{
-		final path = Paths.getGamePath('levels/data/' + dataFileid + '.xml');
-
-		authors = [];
-		assetFolders.haxen = 'general';
-		assetFolders.hand = 'general';
-		assetFolders.general = 'one';
-
-		displayName = null;
-		unlocked = null;
-		id = dataFileid;
-
-		trace(path);
+		final path = Paths.getGamePath('levels/data/' + dataFileid + '.json');
 
 		try
 		{
-			var xmlData = new Access(Xml.parse(Paths.getText(path)).firstElement());
-			trace(xmlData.innerHTML);
+			final jsonData:LevelData = Json.parse(Paths.getText(path));
 
-			for (node in xmlData.elements)
-			{
-				trace(node.innerHTML);
-			}
-
-			/*
-				displayName = xmlData.elements.displayName.innerData;
-				unlocked = (xmlData.elements.unlocked.att.value.toLowerCase() == 'true'
-					|| xmlData.elements.unlocked.att.value.toLowerCase() == '1');
-				id = (xmlData.att.id ?? dataFileid); */
+			displayName = jsonData.displayName;
+			authors = jsonData.authors;
+			unlocked = jsonData.unlocked;
+			id = (jsonData.id ?? dataFileid);
+			assetFolders = jsonData.assetFolders;
 		}
 		catch (e)
 		{
