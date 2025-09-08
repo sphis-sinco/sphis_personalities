@@ -19,7 +19,7 @@ function onCreate(event:UpdateEvent)
 
 function onUpdate(event:UpdateEvent)
 {
-	if (!transitioning && (FlxG.keys.justReleased.F1 || (FlxG.keys.pressed.SHIFT && FlxG.keys.justReleased.ONE)))
+	if (!transitioning && (Controls.getControlJustReleased('general_openEasterEggMenu')))
 	{
 		if (event.state != 'z-easter-egg')
 		{

@@ -4,7 +4,7 @@ import game.scripts.events.UpdateEvent;
 
 function onUpdate(event:UpdateEvent)
 {
-	if (FlxG.keys.justReleased.F4 || (FlxG.keys.pressed.SHIFT && FlxG.keys.justReleased.FOUR))
+	if (Controls.getControlJustReleased('general_openModMenu'))
 		if (event.state == 'desktop-main' || event.state == 'desktop-play')
 			FlxG.switchState(() -> new ModMenu());
 }

@@ -18,7 +18,7 @@ function onCreate(event:CreateEvent)
 
 function onUpdate(event:UpdateEvent)
 {
-	if (FlxG.keys.justReleased.ESCAPE && event.state == 'z-easter-egg')
+	if (Controls.getControlJustReleased('ui_leave') && event.state == 'z-easter-egg')
 	{
 		FlxG.switchState(() -> new DesktopMain());
 	}

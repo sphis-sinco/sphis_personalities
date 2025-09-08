@@ -4,7 +4,7 @@ import game.scripts.events.UpdateEvent;
 
 function onUpdate(event:UpdateEvent)
 {
-	if (FlxG.keys.justReleased.R)
+	if (Controls.getControlJustReleased('general_reload'))
 	{
 		ScriptManager.checkForUpdatedScripts();
 	}

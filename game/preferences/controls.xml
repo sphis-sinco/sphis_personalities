@@ -13,6 +13,7 @@
                         <key value="SPACE" />
                 </control>
         </control-group>
+
         <control-group id="ui">
                 <control id="left">
                         <key value="LEFT" />
@@ -35,6 +36,20 @@
                 </control>
                 <control id="leave">
                         <key value="ESCAPE" />
+                </control>
+        </control-group>
+
+        <control-group id="general">
+                <control id="reload">
+                        <key value="R" />
+                </control>
+                <control id="openEasterEggMenu">
+                        <key value="F1" />
+                        <key value="ONE" />
+                </control>
+                <control id="openModMenu">
+                        <key value="F4" />
+                        <key value="FOUR" />
                 </control>
         </control-group>
 </controls>

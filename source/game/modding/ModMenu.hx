@@ -94,7 +94,7 @@ class ModMenu extends State
 			FlxG.switchState(() -> new DesktopMain());
 		}
 
-		if (FlxG.keys.justReleased.R)
+		if (Controls.getControlJustReleased('general_reload'))
 		{
 			PolymodHandler.loadMods();
 		}
