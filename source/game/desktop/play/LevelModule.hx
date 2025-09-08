@@ -3,6 +3,7 @@ package game.desktop.play;
 import crowplexus.iris.Iris;
 import game.desktop.play.LevelData.AssetFolders;
 import haxe.Json;
+import haxe.xml.Access;
 
 class LevelModule
 {
@@ -16,11 +17,14 @@ class LevelModule
 
 	public function new(dataFileid:String)
 	{
-		final path = Paths.getGamePath('levels/data/' + dataFileid + '.json');
+		final JSONPath = Paths.getGamePath('levels/data/' + dataFileid + '.json');
+		final XMLPath = Paths.getGamePath('levels/data/' + dataFileid + '.xml');
 
 		try
 		{
-			final jsonData:LevelData = Json.parse(Paths.getText(path));
+			final jsonData:LevelData = Json.parse(Paths.getText(JSONPath));
+			final xmlData = new Access(Xml.parse(Paths.getText(XMLPath)));
+			trace(xmlData);
 
 			displayName = jsonData.displayName;
 			authors = jsonData.authors;
