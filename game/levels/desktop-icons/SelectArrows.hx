@@ -2,6 +2,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import game.Paths;
 import game.desktop.DesktopPlay;
 import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;

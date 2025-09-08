@@ -1,5 +1,6 @@
 import flixel.FlxG;
 import flixel.FlxSprite;
+import game.Paths;
 import game.desktop.DesktopMain;
 import game.desktop.DesktopPlay;
 import game.scripts.events.CreateEvent;
