@@ -43,9 +43,6 @@ class Defines
 			set('controls_loadExtraTraces', Compiler.getDefine('controls_loadExtraTraces') == '1');
 
 			set('typeArray_foundfilesfunc_traces', Compiler.getDefine('typeArray_foundfilesfunc_traces') == '1');
-
-			set('experiment_polymodSupport', Compiler.getDefine('experiment_polymodSupport') == '1');
-			set('polymodSupport', Compiler.getDefine('polymodSupport') == '1');
 		}
 		catch (_) {}
 

@@ -1,7 +1,10 @@
-package modding;
+package game.modding;
 
+import game.scripts.ScriptManager;
 #if polymod
 import polymod.Polymod;
+
+using StringTools;
 
 class PolymodHandler
 {
@@ -16,12 +19,13 @@ class PolymodHandler
 		ModList.load();
 		loadModMetadata();
 
-		TryCatch.tryCatch(() ->
+		try
 		{
 			init();
-		});
+		}
+		catch (_) {}
 
-		ScriptManager.loadScripts();
+		ScriptManager.checkForUpdatedScripts();
 	}
 
 	public static function loadModMetadata()

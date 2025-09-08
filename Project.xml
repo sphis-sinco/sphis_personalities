@@ -44,13 +44,11 @@
 	<source path="source" />
 	<assets path="game" />
 
-	<define name="typeArray_foundfilesfunc_traces" if="final"/>
-	<define name="scripts_loadedScriptMSG" if="final"/>
-	<define name="controls_loadExtraTraces" if="final"/>
+	<define name="typeArray_foundfilesfunc_traces" if="final" />
+	<define name="scripts_loadedScriptMSG" if="final" />
+	<define name="controls_loadExtraTraces" if="final" />
 
-	<define name="scripts_disableScripts" if="html5"/>
-
-	<define name="polymodSupport" if="experiment_polymodSupport"/>
+	<define name="scripts_disableScripts" if="html5" />
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
@@ -59,10 +57,14 @@
 	<haxelib name="lime" />
 	<haxelib name="openfl" />
 
-	<haxelib name="polymod" if="polymodSupport"/>
+	<section unless="disable_polymodSupport">
+		<haxelib name="polymod" />
+		<assets path="mods" />
+		<assets path="mods-debug" rename="mods" if="debug"/>
+	</section>
 
-	<haxelib name="hscript" unless="scripts_disableScripts"/>
-	<haxelib name="hscript-iris" unless="scripts_disableScripts"/>
+	<haxelib name="hscript" unless="scripts_disableScripts" />
+	<haxelib name="hscript-iris" unless="scripts_disableScripts" />
 	<define name="hscriptPos" />
 
 	<!-- ______________________________ Haxedefines _____________________________ -->

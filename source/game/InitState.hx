@@ -56,6 +56,10 @@ class InitState extends FlxState
 
 		Defines.getDefines();
 
+		#if polymod
+		game.modding.PolymodHandler.loadMods();
+		#end
+
 		#if hscript
 		ConsoleUtil.registerObject('InitState', InitState);
 		ConsoleUtil.registerObject('Controls', Controls);

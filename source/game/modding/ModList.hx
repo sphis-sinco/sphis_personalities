@@ -1,5 +1,6 @@
 package game.modding;
 
+import flixel.FlxG;
 #if polymod
 import polymod.Polymod;
 
@@ -12,8 +13,8 @@ class ModList
 	public static function setModEnabled(mod:String, enabled:Bool):Void
 	{
 		modList.set(mod, enabled);
-		Save.save.data.modList = modList;
-		Save.flushData();
+		if (FlxG.save != null)
+			FlxG.save.data.modList = modList;
 	}
 
 	public static function getModEnabled(mod:String):Bool
@@ -39,9 +40,9 @@ class ModList
 
 	public static function load():Void
 	{
-		if (Save.save.data.modList != null)
+		if (FlxG.save != null)
 		{
-			modList = Save.save.data.modList;
+			modList = FlxG.save.data.modList;
 			trace(modList);
 		}
 	}
