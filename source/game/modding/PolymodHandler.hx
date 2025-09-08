@@ -19,14 +19,7 @@ class PolymodHandler
 		ModList.load();
 		loadModMetadata();
 
-		try
-		{
-			init();
-		}
-		catch (e)
-		{
-			trace(e.message);
-		}
+		init();
 
 		ScriptManager.checkForUpdatedScripts();
 	}
