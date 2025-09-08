@@ -40,8 +40,7 @@ class InitState extends FlxState
 			final fileName = infos.fileName;
 			final methodName = (infos.methodName == null) ? null : infos.methodName;
 
-			var ln = '[' + fileName.split('/')[fileName.split('/')
-				.length - 1] + ((methodName != null) ? ':' + methodName : '') + ':' + infos.lineNumber + '] ';
+			var ln = '[' + fileName.split('/')[fileName.split('/').length - 1] + ':' + infos.lineNumber + '] ';
 
 			ln += v;
 			Sys.println(ln);
