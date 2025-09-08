@@ -51,7 +51,7 @@ class PolymodHandler
 			metadataArrays.push(metadata.id);
 			ModList.modMetadatas.set(metadata.id, metadata);
 
-			if (!metadata.apiVersion.satisfies('>=${MINIMUM_MOD_VERSION} <${MAXIMUM_MOD_VERSION}'))
+			if (!metadata.apiVersion.satisfies('>=' + MINIMUM_MOD_VERSION + ' <' + MAXIMUM_MOD_VERSION))
 				outdatedMods.push(metadata.id);
 		}
 		trace('metadataArrays: ' + metadataArrays.toString());
@@ -89,14 +89,14 @@ class PolymodHandler
 					var msgList = error.message.split('"');
 					var mod = ModList.modMetadatas.get(msgList[1]);
 
-					trace('${mod.title} uses an outdated API (${mod.apiVersion}). Expected API minimum of ${MINIMUM_MOD_VERSION}.');
+					trace('' + mod.title + ' uses an outdated API (' + mod.apiVersion + '). Expected API minimum of ' + MINIMUM_MOD_VERSION + '.');
 
 					return;
 				}
 
-				trace('[${error.severity}] ' + error.message.replace('mod mods/', 'mod: '));
+				trace('[' + error.severity + '] ' + error.message.replace('mod mods/', 'mod: '));
 			},
-			apiVersionRule: '>=${MINIMUM_MOD_VERSION} <${MAXIMUM_MOD_VERSION}'
+			apiVersionRule: '>=' + MINIMUM_MOD_VERSION + ' <' + MAXIMUM_MOD_VERSION
 		});
 	}
 }
