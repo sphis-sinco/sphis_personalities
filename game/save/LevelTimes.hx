@@ -30,9 +30,9 @@ function onCreate(event:CreateEvent)
 		{
 			levelTime += 1;
 
-			if (FlxG.save.data.levelTimes != null)
+			if (FlxG.save.data.levelTimes.level1 != null)
 			{
-				FlxG.save.data.levelTimes.set('level1', levelTime);
+				FlxG.save.data.levelTimes.level1 = levelTime;
 			}
 		}, 0);
 
