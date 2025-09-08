@@ -26,6 +26,9 @@ function onCreate(event:CreateEvent)
 {
 	level_paused = false;
 
+	FlxTimer.globalManager.active = !level_paused;
+	FlxTween.globalManager.active = !level_paused;
+
 	if (event.state == 'level1')
 	{
 		lvl = new LevelModule(event.state);
@@ -205,6 +208,9 @@ function onUpdate(event:UpdateEvent)
 		if (Controls.getControlJustReleased('game_pause'))
 		{
 			level_paused = !level_paused;
+
+			FlxTimer.globalManager.active = !level_paused;
+			FlxTween.globalManager.active = !level_paused;
 		}
 	}
 }
