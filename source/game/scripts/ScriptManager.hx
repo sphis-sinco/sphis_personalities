@@ -26,7 +26,13 @@ class ScriptManager
 
 	public static var SCRIPT_EXTS:Array<String> = ['hx'];
 
-	public static var SCRIPT_FOLDERS:Array<String> = [Paths.getGamePath('game/'), 'game/'];
+	public static var SCRIPT_FOLDERS:Array<String> = [
+		#if !disable_polymodSupport
+		'mods/',
+		#end
+		Paths.getGamePath('game/'),
+		'game/'
+	];
 
 	public static var SCRIPTS:Array<Iris> = [];
 	public static var SCRIPTS_ERRS:Map<String, Dynamic> = [];
