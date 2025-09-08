@@ -14,7 +14,10 @@ class LevelSpriteGroup extends FlxTypedGroup<FlxSprite>
 	function set_locked(value:Bool):Bool
 	{
 		if (lock != null)
+		{
+			targAlpha = (value) ? 0.5 : 1;
 			lock.visible = value;
+		}
 
 		return value;
 	}
@@ -24,6 +27,8 @@ class LevelSpriteGroup extends FlxTypedGroup<FlxSprite>
 	public var box:FlxSprite;
 	public var lock:FlxSprite;
 	public var levelIcon:FlxSprite;
+
+	public var targAlpha:Float = 1.0;
 
 	override public function new(id:String = 'unknown')
 	{

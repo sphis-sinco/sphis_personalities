@@ -21,15 +21,6 @@ function onUpdate(event:UpdateEvent)
 			}
 
 			DesktopPlay.instance.levelsTextGrp.members[levelGrp.ID].color = levelGrp.levelIcon.color;
-
-			if (levelGrp.locked)
-			{
-				levelGrp.levelIcon.alpha = 0.5;
-			}
-			else
-			{
-				levelGrp.levelIcon.alpha = 1;
-			}
 		}
 	}
 }

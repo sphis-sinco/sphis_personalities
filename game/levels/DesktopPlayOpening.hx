@@ -12,7 +12,7 @@ function onCreate(event:CreateEvent)
 			for (obj in levelsGrp.members)
 			{
 				obj.levelIcon.alpha = 0;
-				FlxTween.tween(obj.levelIcon, {alpha: (!obj.locked) ? 1 : .5}, 1, {
+				FlxTween.tween(obj.levelIcon, {alpha: obj.targAlpha}, 1, {
 					ease: FlxEase.sineInOut
 				});
 				obj.lock.alpha = 0;
