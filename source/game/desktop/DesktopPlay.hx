@@ -5,9 +5,9 @@ import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
-import game.desktop.play.LevelData;
-import game.desktop.play.LevelModule;
-import game.desktop.play.LevelSpriteGroup;
+import game.levels.LevelData;
+import game.levels.LevelModule;
+import game.levels.LevelSpriteGroup;
 #if sys
 import sys.FileSystem;
 #end

@@ -1,4 +1,4 @@
-package game.desktop.play;
+package game.levels;
 
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;

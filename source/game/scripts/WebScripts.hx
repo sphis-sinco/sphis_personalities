@@ -18,7 +18,7 @@ import game.desktop.DesktopMain;
 import game.desktop.DesktopMain;
 import game.desktop.DesktopPlay;
 import game.desktop.DesktopPlay;
-import game.desktop.play.LevelModule;
+import game.levels.LevelModule;
 import game.scripts.ScriptManager;
 import game.scripts.ScriptManager;
 import game.scripts.events.AddedEvent;

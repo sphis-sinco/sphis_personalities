@@ -5,7 +5,7 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 import game.desktop.DesktopPlay;
-import game.desktop.play.LevelModule;
+import game.levels.LevelModule;
 import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
 import game.scripts.imports.FlxScriptedColor;

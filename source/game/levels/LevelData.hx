@@ -1,4 +1,4 @@
-package game.desktop.play;
+package game.levels;
 
 typedef LevelData =
 {

@@ -1,7 +1,7 @@
-package game.desktop.play;
+package game.levels;
 
 import crowplexus.iris.Iris;
-import game.desktop.play.LevelData.AssetFolders;
+import game.levels.LevelData.AssetFolders;
 import haxe.Json;
 import haxe.xml.Access;
 
