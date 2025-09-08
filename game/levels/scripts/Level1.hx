@@ -10,130 +10,186 @@ import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
 import game.scripts.imports.FlxScriptedColor;
 
-var level_one:LevelModule;
-var is_level_one:Bool;
+var lvl:LevelModule;
 var level_paused:Bool;
-var level_one_bg_sky:FlxSprite;
-var level_one_bg_ground:FlxSprite;
-var level_one_haxen:FlxSprite;
-var level_one_op:FlxSprite;
-var level_one_op_attacking:Bool;
-var level_one_hands:FlxTypedGroup<FlxSprite>;
+var lvl1_bg_sky:FlxSprite;
+var lvl1_bg_ground:FlxSprite;
+var haxen:FlxSprite;
+var haxen_pos:Int;
+var op:FlxSprite;
+var op_attacking:Bool;
+var hands:FlxTypedGroup<FlxSprite>;
 var pauseBG:FlxSprite;
-var level_one_tick = 0;
+var tick = 0;
 
 function onCreate(event:CreateEvent)
 {
-	is_level_one = (event.state == 'level1');
-	level_paused = false;
-	if (is_level_one)
+	if (event.state == 'level1')
 	{
-		level_one = new LevelModule(event.state);
+		lvl = new LevelModule(event.state);
 		FlxG.camera.fade(FlxScriptedColor.BLACK, 1, true, () -> {});
 
-		level_one_bg_sky = new FlxSprite();
-		level_one_bg_sky.loadGraphic(level_one.getGeneralAsset('sky'));
-		level_one_bg_sky.screenCenter();
+		lvl1_bg_sky = new FlxSprite();
+		lvl1_bg_sky.loadGraphic(lvl.getGeneralAsset('sky'));
+		lvl1_bg_sky.screenCenter();
 
-		level_one_bg_ground = new FlxSprite();
-		level_one_bg_ground.loadGraphic(level_one.getGeneralAsset('ground'));
-		level_one_bg_ground.screenCenter();
+		lvl1_bg_ground = new FlxSprite();
+		lvl1_bg_ground.loadGraphic(lvl.getGeneralAsset('ground'));
+		lvl1_bg_ground.screenCenter();
 
-		level_one_haxen = new FlxSprite();
-		level_one_haxen.loadGraphic(level_one.getHaxenAsset('idle'));
-		level_one_haxen.screenCenter();
-		level_one_haxen.y += (level_one_haxen.height / 4);
+		haxen = new FlxSprite();
+		haxen.loadGraphic(lvl.getHaxenAsset('idle'));
+		haxen.screenCenter();
+		haxen.y += (haxen.height / 4);
 
-		level_one_op = new FlxSprite();
-		level_one_op.loadGraphic(level_one.getGeneralAsset('op'));
-		level_one_op.screenCenter();
-		level_one_op.y -= level_one_op.height / 10;
-		var op_resting_YPos = level_one_op.getPosition().y;
-		level_one_op.y = FlxG.height * 2;
+		op = new FlxSprite();
+		op.loadGraphic(lvl.getGeneralAsset('op'));
+		op.screenCenter();
+		op.y -= op.height / 10;
+		var op_resting_YPos = op.getPosition().y;
+		op.y = FlxG.height * 2;
 
-		level_one_hands = new FlxTypedGroup();
+		hands = new FlxTypedGroup();
 
 		pauseBG = new FlxSprite();
 		pauseBG.makeGraphic(FlxG.width, FlxG.height, FlxScriptedColor.BLACK);
 		pauseBG.screenCenter();
 
-		BlankState.instance.add(level_one_bg_sky);
+		BlankState.instance.add(lvl1_bg_sky);
 
-		BlankState.instance.add(level_one_op);
+		BlankState.instance.add(op);
 
-		BlankState.instance.add(level_one_bg_ground);
+		BlankState.instance.add(lvl1_bg_ground);
 
-		BlankState.instance.add(level_one_haxen);
-		BlankState.instance.add(level_one_hands);
+		BlankState.instance.add(haxen);
+		BlankState.instance.add(hands);
 
 		BlankState.instance.add(pauseBG);
 
-		level_one_op_attacking = false;
-		FlxTween.tween(level_one_op, {y: op_resting_YPos}, 2, {
+		op_attacking = false;
+		FlxTween.tween(op, {y: op_resting_YPos}, 2, {
 			ease: FlxEase.sineOut,
 			onComplete: twn ->
 			{
-				if (level_one_tick < 175)
-					level_one_tick = FlxG.random.int(175, 200);
-				level_one_op_attacking = true;
+				if (tick < 175)
+					tick = FlxG.random.int(175, 200);
+				op_attacking = true;
 			}
 		});
+
+		haxen_pos = 0;
 	}
 }
 
 function onUpdate(event:UpdateEvent)
 {
-	if (level_one_tick == null)
-		level_one_tick = -1;
-	level_one_tick += 1;
+	if (tick == null)
+		tick = -1;
+	tick += 1;
 
-	FlxG.watch.addQuick('level_one_tick', level_one_tick);
+	FlxG.watch.addQuick('tick', tick);
 
-	if (is_level_one)
+	if (event.state == 'level1')
 	{
-		level_one_haxen.screenCenter();
-		level_one_haxen.y += (level_one_haxen.height / 2);
+		haxen.screenCenter();
+		haxen.y += (haxen.height / 2);
+		switch (haxen_pos)
+		{
+			case 1:
+				haxen.x += haxen.width;
+			case -1:
+				haxen.x -= haxen.width;
+		}
+
+		if (Controls.getControlPressed('game_left') && !level_paused)
+		{
+			haxen.loadGraphic(lvl.getHaxenAsset('left'));
+		}
+
+		if (Controls.getControlPressed('game_right') && !level_paused)
+		{
+			haxen.loadGraphic(lvl.getHaxenAsset('right'));
+		}
+
+		if (Controls.getControlJustReleased('game_left') && !level_paused)
+		{
+			haxen_pos -= 1;
+			haxen_pos = (haxen_pos < -1) ? -1 : haxen_pos;
+
+			haxen.loadGraphic(lvl.getHaxenAsset('idle'));
+		}
+
+		if (Controls.getControlJustReleased('game_right') && !level_paused)
+		{
+			haxen_pos += 1;
+			haxen_pos = (haxen_pos > 1) ? 1 : haxen_pos;
+
+			haxen.loadGraphic(lvl.getHaxenAsset('idle'));
+		}
 
 		pauseBG.alpha = (level_paused) ? 0.5 : 0.0;
 
-		if (level_one_op_attacking && !level_paused)
+		if (op_attacking && !level_paused)
 		{
-			if ((level_one_tick >= 200 && !FlxG.random.bool(FlxG.random.float(0, 10))) && level_one_hands.members.length < 3)
+			if ((tick >= 200 && !FlxG.random.bool(FlxG.random.float(0, 10))) && hands.members.length < 3)
 			{
-				level_one_tick = FlxG.random.int(0, 200);
+				var newTickMin = 0;
+
+				switch (hands.members.length)
+				{
+					case 3:
+						newTickMin = 0;
+					case 2:
+						newTickMin = 50;
+					case 1:
+						newTickMin = 125;
+					case 0:
+						newTickMin = 175;
+				}
+
+				tick = FlxG.random.int(newTickMin, 300);
 				trace('spawn lvl 1 hand');
 
 				var hand = new FlxSprite();
-				hand.loadGraphic(level_one.getHandAsset('clench'));
-				hand.setPosition(level_one_haxen.x, level_one_haxen.y);
+				hand.loadGraphic(lvl.getHandAsset('clench'));
+				hand.setPosition(haxen.x, haxen.y);
 				hand.alpha = 0;
 
-				FlxTween.tween(hand, {alpha: 1, y: hand.y - (hand.height * 2)}, 1, {
+				FlxTween.tween(hand, {alpha: 1, y: hand.y - (hand.height * 2)}, .25, {
+					ease: FlxEase.sineOut,
 					onComplete: twn ->
 					{
-						new FlxTimer().start(1, tmr ->
+						new FlxTimer().start(.25, tmr ->
 						{
-							FlxTween.tween(hand, {y: level_one_haxen.y}, 1, {
-								ease: FlxEase.sineInOut,
+							FlxTween.tween(hand, {y: haxen.y}, .25, {
+								ease: FlxEase.sineIn,
 								onComplete: twn ->
 								{
-									new FlxTimer().start(1, tmr ->
+									new FlxTimer().start(.25, tmr ->
 									{
-										FlxTween.tween(hand, {alpha: 0}, 1, {
+										FlxTween.tween(hand, {alpha: 0}, .25, {
+											ease: FlxEase.sineOut,
 											onComplete: twn ->
 											{
 												hand.destroy();
-												level_one_hands.members.remove(hand);
+												hands.members.remove(hand);
 											}
 										});
 									});
+								},
+								onUpdate: twn ->
+								{
+									if (hand.overlaps(haxen))
+									{
+										FlxG.switchState(() -> new DesktopPlay());
+									}
 								}
 							});
 						});
 					}
 				});
 
-				level_one_hands.add(hand);
+				hands.add(hand);
 			}
 		}
 

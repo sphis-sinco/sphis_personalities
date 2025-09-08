@@ -44,7 +44,7 @@ class WebScripts
 	static var leftArrow:FlxSprite;
 	static var rightArrow:FlxSprite;
 	static var arrowsnotLeaving:Bool;
-	static var savedSelection:Int;
+	static var savedSelection:Null<Int>;
 	static var level_one:LevelModule;
 	static var is_level_one:Bool;
 

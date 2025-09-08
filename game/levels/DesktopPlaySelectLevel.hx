@@ -4,7 +4,7 @@ import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
 import game.scripts.imports.FlxScriptedColor;
 
-var savedSelection:Int;
+var savedSelection:Null<Int>;
 
 function onCreate(event:CreateEvent)
 {

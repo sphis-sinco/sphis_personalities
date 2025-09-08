@@ -6,7 +6,7 @@ import game.desktop.DesktopMain;
 import game.desktop.DesktopPlay;
 import game.scripts.events.UpdateEvent;
 
-var savedSelection:Int;
+var savedSelection:Null<Int>;
 
 function onUpdate(event:UpdateEvent)
 {
