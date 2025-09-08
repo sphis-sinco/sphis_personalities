@@ -13,6 +13,8 @@ function onAdded(event:AddedEvent)
 		}
 	}
 
+	trace('Save dump: ' + FlxG.save.data);
+
 	Application.current.onExit.add(l ->
 	{
 		FlxG.save.flush();
