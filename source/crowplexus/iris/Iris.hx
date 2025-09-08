@@ -167,12 +167,12 @@ class Iris
 
 		switch (level)
 		{
-			case WARN, ERROR, FATAL:
+			case ERROR, FATAL:
 				Application.current.window.alert(out.stripColor(), posPrefix.stripColor().replace('[', ' ').replace(']
 		', '
 		'));
 			default:
-				// kill me
+				// nothin
 		}
 	}
 

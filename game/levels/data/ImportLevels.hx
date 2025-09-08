@@ -5,7 +5,11 @@ function onCreate(event:CreateEvent)
 {
 	if (event.state == 'desktop-play')
 	{
-		DesktopPlay.instance.levels.push('level1');
-		DesktopPlay.instance.levels.push('level2');
+		var sysLoad = DesktopPlay.instance.sysLoadLevels('game/levels/data');
+
+		if (!sysLoad)
+		{
+			DesktopPlay.instance.levels = ['level1', 'level2'];
+		}
 	}
 }

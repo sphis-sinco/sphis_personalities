@@ -47,11 +47,20 @@ class LevelModule
 	{
 		trace('Initalizing new Level(' + levelID + ') Module');
 
-		final JSONPath = Paths.getGamePath('levels/data/' + levelID + '.json');
-		final XMLPath = Paths.getGamePath('levels/data/' + levelID + '.xml');
+		var JSONPath = Paths.getGamePath('levels/data/' + levelID + '.json');
+		var XMLPath = Paths.getGamePath('levels/data/' + levelID + '.xml');
 
-		final jsonData:LevelData = Json.parse(Paths.getText(JSONPath));
-		final xmlData = new Access(Xml.parse(Paths.getText(XMLPath)).firstElement());
+		var jsonData:LevelData;
+		var xmlData:Access;
+
+		if (!Paths.pathExists(JSONPath))
+		{
+			#if !html5 Iris.warn #else trace #end ('Nonexistant level data file (JSON): ' + levelID);
+		}
+		if (!Paths.pathExists(XMLPath))
+		{
+			#if !html5 Iris.warn #else trace #end ('Nonexistant level data file (XML): ' + levelID);
+		}
 
 		assetFolders = {
 			haxen: 'general',
@@ -61,6 +70,7 @@ class LevelModule
 
 		try
 		{
+			xmlData = new Access(Xml.parse(Paths.getText(XMLPath)).firstElement());
 			parseXML(xmlData, levelID);
 		}
 		catch (e)
@@ -69,6 +79,7 @@ class LevelModule
 
 			try
 			{
+				jsonData = Json.parse(Paths.getText(JSONPath));
 				parseJSON(jsonData, levelID);
 			}
 			catch (e)

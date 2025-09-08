@@ -8,6 +8,9 @@ import flixel.text.FlxText;
 import game.desktop.play.LevelData;
 import game.desktop.play.LevelModule;
 import game.desktop.play.LevelSpriteGroup;
+#if sys
+import sys.FileSystem;
+#end
 
 class DesktopPlay extends State
 {
@@ -132,5 +135,21 @@ class DesktopPlay extends State
 
 		if (onComplete != null)
 			onComplete(levelsGrp, levelsTextGrp);
+	}
+
+	public function sysLoadLevels(dir:String):Bool
+	{
+		levels = [];
+
+		#if sys
+		for (level in FileSystem.readDirectory(dir))
+		{
+			if (StringTools.endsWith(level, '.json') || StringTools.endsWith(level, '.xml'))
+				levels.push(StringTools.replace(StringTools.replace(level, '.xml', ''), '.json', ''));
+		}
+		return true;
+		#else
+		return false;
+		#end
 	}
 }
