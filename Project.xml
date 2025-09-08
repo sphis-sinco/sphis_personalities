@@ -44,6 +44,7 @@
 	<source path="source" />
 	<assets path="game" />
 
+	<define name="typeArray_dupeFilePrevention" unless="typeArray_disable_dupeFilePrevention" />
 	<define name="typeArray_foundfilesfunc_traces" if="final" />
 	<define name="scripts_loadedScriptMSG" if="final" />
 	<define name="controls_loadExtraTraces" if="final" />
