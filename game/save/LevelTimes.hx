@@ -3,6 +3,7 @@ import flixel.text.FlxText;
 import flixel.util.FlxTimer;
 import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
+import game.scripts.imports.FlxScriptedAxes;
 
 var levelTime = 0;
 var levelTimer:FlxTimer;
@@ -15,7 +16,7 @@ function onCreate(event:CreateEvent)
 
 	levelTimerText = new FlxText();
 	levelTimerText.size = 16;
-	levelTimerText.screenCenter(X);
+	levelTimerText.screenCenter(FlxScriptedAxes.X);
 	levelTimerText.y = 32;
 	levelTimerText.alpha = 0.75;
 
