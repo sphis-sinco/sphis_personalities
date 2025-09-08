@@ -110,6 +110,7 @@ class DesktopPlay extends State
 	{
 		var lvls = [];
 
+		#if !html5
 		for (level in FileSystem.readDirectory(dir))
 		{
 			if (StringTools.endsWith(level, '.json') || StringTools.endsWith(level, '.xml'))
@@ -120,6 +121,7 @@ class DesktopPlay extends State
 					lvls.push(trimmed);
 			}
 		}
+		#end
 
 		for (lvl in lvls)
 			var module = new LevelModule(lvl);

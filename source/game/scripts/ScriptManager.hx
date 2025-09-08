@@ -1,9 +1,6 @@
 package game.scripts;
 
-import game.modding.ModList;
-import game.modding.ModMenu;
-import game.modding.PolymodHandler;
-import game.scripts.imports.FlxTextScriptedBorderStyle;
+import game.scripts.events.AddedEvent;
 #if !html5
 import crowplexus.iris.Iris;
 import crowplexus.iris.IrisConfig;
@@ -11,13 +8,16 @@ import game.desktop.DesktopMain;
 import game.desktop.DesktopPlay;
 import game.levels.LevelModule;
 import game.levels.LevelSpriteGroup;
-import game.scripts.events.AddedEvent;
+import game.modding.ModList;
+import game.modding.ModMenu;
+import game.modding.PolymodHandler;
 import game.scripts.events.BaseEvent;
 import game.scripts.events.BaseStateEvent;
 import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
 import game.scripts.imports.FlxScriptedAxes;
 import game.scripts.imports.FlxScriptedColor;
+import game.scripts.imports.FlxTextScriptedBorderStyle;
 import lime.app.Application;
 import lime.system.Clipboard;
 
@@ -463,6 +463,8 @@ class ScriptManager
 class ScriptManager
 {
 	public static var isWeb(default, null):Bool = true;
+
+	public static var SCRIPT_EXTS:Array<String> = ['hx'];
 
 	public static function call(method:String, ?args:Array<Dynamic>)
 	{

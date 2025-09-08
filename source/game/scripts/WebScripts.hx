@@ -414,8 +414,6 @@ class WebScripts
 			{
 				DesktopMain.instance.haxen.alpha = 1;
 
-				if (Mouse.pressed)
-					Mouse.setMouseState(MouseStates.SELECTED);
 				if (Mouse.justReleased && haxenIdleStates.contains(DesktopMain.instance.haxen.graphic.key))
 				{
 					DesktopMain.instance.haxen_changeState('boop');
@@ -700,7 +698,7 @@ class WebScripts
 		}
 
 		if (Controls.getControlJustReleased('general_openModMenu'))
-			if (event.state == 'desktop-main' || event.state == 'desktop-play')
+			if (event.state == 'desktop-main' || event.state == 'desktop-play' && !ScriptManager.isWeb)
 				FlxG.switchState(() -> new ModMenu());
 
 		Mouse.setMouseState(MouseStates.IDLE);

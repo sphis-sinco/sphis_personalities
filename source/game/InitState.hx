@@ -101,6 +101,9 @@ class InitState extends FlxState
 		Sys.exit(0);
 		#end
 		#else
+		#if html5
+		ScriptManager.checkForUpdatedScripts();
+		#end
 		PolymodHandler.loadMods();
 
 		FlxSprite.defaultAntialiasing = true;
@@ -110,7 +113,9 @@ class InitState extends FlxState
 
 		Mouse.setMouseState(MouseStates.IDLE);
 
+		#if !html5
 		ScriptManager.checkForUpdatedScripts();
+		#end
 
 		if (Defines.get('StartingState') != null)
 		{

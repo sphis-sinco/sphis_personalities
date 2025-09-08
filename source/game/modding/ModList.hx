@@ -48,20 +48,27 @@ class ModList
 
 	public static function load():Void
 	{
-		if (FlxG.save != null)
+		try
 		{
-			modList = FlxG.save.data.modList;
+			if (FlxG.save != null)
+			{
+				modList = FlxG.save.data.modList;
 
-			if (modList == null)
+				if (modList == null)
+					modList = [];
+
+				if (modList != null)
+					for (key => value in modList)
+					{
+						trace('Mod(' + Ansi.fg('', WHITE) + key + Ansi.reset('') + ') enabled: ' + value);
+					}
+			}
+			else
+			{
 				modList = [];
-
-			if (modList != null)
-				for (key => value in modList)
-				{
-					trace('Mod(' + Ansi.fg('', WHITE) + key + Ansi.reset('') + ') enabled: ' + value);
-				}
+			}
 		}
-		else
+		catch (e)
 		{
 			modList = [];
 		}
