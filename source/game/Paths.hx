@@ -28,7 +28,9 @@ class Paths
 			}
 		}
 
-		var retpath = ((StringTools.startsWith(path, 'game/') || startsWithDir) ? '' : 'game/') + path;
+		var retpath = ((StringTools.startsWith(path, 'game/')
+			|| StringTools.startsWith(path, 'mods/')
+			|| startsWithDir) ? '' : 'game/') + path;
 
 		return retpath;
 	}
