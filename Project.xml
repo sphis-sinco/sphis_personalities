@@ -49,6 +49,8 @@
 	<define name="controls_loadExtraTraces" if="final"/>
 
 	<define name="scripts_disableScripts" if="html5"/>
+	
+	<define name="polymodSupport" if="experiment_polymodSupport"/>
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
@@ -56,6 +58,8 @@
 
 	<haxelib name="lime" />
 	<haxelib name="openfl" />
+
+	<haxelib name="polymod" if="polymodSupport"/>
 
 	<haxelib name="hscript" unless="scripts_disableScripts"/>
 	<haxelib name="hscript-iris" unless="scripts_disableScripts"/>
