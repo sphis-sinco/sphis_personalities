@@ -1,5 +1,6 @@
 import flixel.FlxG;
 import game.scripts.events.AddedEvent;
+import lime.app.Application;
 
 function onAdded(event:AddedEvent)
 {
@@ -11,4 +12,9 @@ function onAdded(event:AddedEvent)
 			level1: 0
 		}
 	}
+
+	Application.current.onExit.add(l ->
+	{
+		FlxG.save.flush();
+	});
 }

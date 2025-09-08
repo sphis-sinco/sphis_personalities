@@ -10,9 +10,11 @@ import game.scripts.imports.FlxTextScriptedBorderStyle;
 var levelTime = 0;
 var levelTimer:FlxTimer;
 var levelTimerText:FlxText;
+var level_paused:Bool;
 
 function onCreate(event:CreateEvent)
 {
+	level_paused = false;
 	levelTime = 0;
 	levelTimer = new FlxTimer();
 
@@ -43,4 +45,16 @@ function onCreate(event:CreateEvent)
 function onUpdate(event:UpdateEvent)
 {
 	levelTimerText.text = '' + levelTime;
+
+	if (levelTimer.active)
+	{
+		if (Controls.getControlJustReleased('ui_leave') && level_paused)
+		{
+			FlxG.save.flush();
+		}
+		if (Controls.getControlJustReleased('game_pause'))
+		{
+			level_paused = !level_paused;
+		}
+	}
 }
