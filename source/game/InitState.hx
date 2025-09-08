@@ -56,10 +56,6 @@ class InitState extends FlxState
 
 		Defines.getDefines();
 
-		#if polymod
-		game.modding.PolymodHandler.loadMods();
-		#end
-
 		#if hscript
 		ConsoleUtil.registerObject('InitState', InitState);
 		ConsoleUtil.registerObject('Controls', Controls);
@@ -104,6 +100,10 @@ class InitState extends FlxState
 		Mouse.setMouseState(MouseStates.IDLE);
 
 		ScriptManager.checkForUpdatedScripts();
+
+		#if polymod
+		game.modding.PolymodHandler.loadMods();
+		#end
 
 		if (Defines.get('StartingState') != null)
 		{
