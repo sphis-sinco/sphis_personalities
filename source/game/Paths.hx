@@ -76,7 +76,6 @@ class Paths
 						{
 							if (!arr.contains(getGamePath(path)))
 							{
-								arr_rawFileNames.push(file);
 								arr.push(getGamePath(path));
 							}
 						}
