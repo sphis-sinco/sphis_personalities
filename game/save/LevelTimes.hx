@@ -20,7 +20,6 @@ function onCreate(event:CreateEvent)
 
 	levelTimerText = new FlxText();
 	levelTimerText.size = 16;
-	levelTimerText.screenCenter(FlxScriptedAxes.X);
 	levelTimerText.y = 32;
 	levelTimerText.color = FlxScriptedColor.WHITE;
 	levelTimerText.setBorderStyle(FlxTextScriptedBorderStyle.OUTLINE, FlxScriptedColor.BLACK, 2);
@@ -34,7 +33,8 @@ function onCreate(event:CreateEvent)
 
 			if (FlxG.save.data.levelTimes.level1 != null)
 			{
-				FlxG.save.data.levelTimes.level1 = levelTime;
+				if (levelTime > FlxG.save.data.levelTimes.level1)
+					FlxG.save.data.levelTimes.level1 = levelTime;
 			}
 		}, 0);
 
@@ -45,9 +45,18 @@ function onCreate(event:CreateEvent)
 function onUpdate(event:UpdateEvent)
 {
 	levelTimerText.text = '' + levelTime;
+	levelTimerText.screenCenter(FlxScriptedAxes.X);
 
 	if (levelTimer.active)
 	{
+		if (event.state == 'level1')
+		{
+			if (FlxG.save.data.levelTimes.level1 != null)
+			{
+				levelTimerText.text += ' (best: ' + FlxG.save.data.levelTimes.level1 + ')';
+			}
+		}
+
 		if (Controls.getControlJustReleased('ui_leave') && level_paused)
 		{
 			FlxG.save.flush();
