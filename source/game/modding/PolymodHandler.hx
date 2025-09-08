@@ -54,8 +54,8 @@ class PolymodHandler
 			if (!metadata.apiVersion.satisfies('>=${MINIMUM_MOD_VERSION} <${MAXIMUM_MOD_VERSION}'))
 				outdatedMods.push(metadata.id);
 		}
-		trace(metadataArrays);
-		trace(outdatedMods);
+		trace('metadataArrays: ' + metadataArrays.toString());
+		trace('outdatedMods: ': + outdatedMods.toString());
 	}
 
 	static function init()

@@ -44,7 +44,10 @@ class ModList
 		{
 			modList = FlxG.save.data.modList;
 			if (modList != null)
-				trace(modList.toString());
+				for (key => value in modList)
+				{
+					trace('Mod(' + key + ') enabled: ' + value);
+				}
 		}
 	}
 }
