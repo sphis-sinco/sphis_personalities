@@ -117,7 +117,8 @@ class LevelModule
 		{
 			try
 			{
-				trace('Level(' + Ansi.fg('', WHITE) + levelID + Ansi.reset('') + ') XML Element(' + element.name + ') being parsed');
+				trace('Level(' + Ansi.fg('', WHITE) + levelID + Ansi.reset('') + ') XML Element(' + Ansi.fg('', WHITE) + element.name + Ansi.reset('')
+					+ ') being parsed');
 
 				if (element.name.toLowerCase() == 'displayname')
 				{
