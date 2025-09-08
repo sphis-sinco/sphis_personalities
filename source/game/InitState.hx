@@ -32,8 +32,6 @@ class InitState extends FlxState
 	{
 		super.create();
 
-		Defines.getDefines();
-
 		oldTrace = haxe.Log.trace;
 		#if trimmedTrace
 		haxe.Log.trace = function(v, ?infos)
@@ -56,6 +54,8 @@ class InitState extends FlxState
 		haxe.Log.trace = Iris.print;
 		#end
 		#end
+
+		Defines.getDefines();
 
 		#if hscript
 		ConsoleUtil.registerObject('InitState', InitState);
