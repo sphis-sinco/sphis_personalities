@@ -17,69 +17,31 @@ class LevelModule
 
 	public function new(dataFileid:String)
 	{
-		final path = Paths.getGamePath('levels/data/' + dataFileid + '.json');
+		final path = Paths.getGamePath('levels/data/' + dataFileid + '.xml');
+
+		authors = [];
+		assetFolders.haxen = 'general';
+		assetFolders.hand = 'general';
+		assetFolders.general = 'one';
+
+		displayName = null;
+		unlocked = null;
+		id = dataFileid;
 
 		try
 		{
 			var xmlData = new Access(Xml.parse(Paths.getText(path)).firstElement());
 
-			authors = [];
-			assetFolders.haxen = 'general';
-			assetFolders.hand = 'general';
-			assetFolders.general = 'one';
-
-			displayName = null;
-			unlocked = null;
-			id = dataFileid;
-
-			if (!xmlData.hasNode.displayName)
+			for (node in xmlData.elements)
 			{
-				trace('Missing XML Node: displayName');
-				return;
-			}
-			if (!xmlData.hasNode.authors)
-			{
-				trace('Missing XML Node: authors');
-			}
-			else {}
-			if (!xmlData.hasNode.unlocked)
-			{
-				trace('Missing XML Node: unlocked');
-				return;
-			}
-			if (!xmlData.hasNode.id)
-			{
-				trace('Missing XML Node: id');
-			}
-			if (!xmlData.hasNode.assetFolders)
-			{
-				trace('Missing XML Node: assetFolders');
-				return;
-			}
-			else
-			{
-				var assetFoldersNode = xmlData.node.assetFolders;
-
-				if (!assetFoldersNode.hasNode.haxen)
-				{
-					trace('Missing XML "assetFolders" Node: haxen');
-					return;
-				}
-				if (!assetFoldersNode.hasNode.hand)
-				{
-					trace('Missing XML "assetFolders" Node: hand');
-					return;
-				}
-				if (!assetFoldersNode.hasNode.general)
-				{
-					trace('Missing XML "assetFolders" Node: general');
-					return;
-				}
+				trace(node.innerHTML);
 			}
 
-			displayName = xmlData.node.displayName.innerData;
-			unlocked = (xmlData.node.unlocked.att.value.toLowerCase() == 'true' || xmlData.node.unlocked.att.value.toLowerCase() == '1');
-			id = (xmlData.att.id ?? dataFileid);
+			/*
+				displayName = xmlData.elements.displayName.innerData;
+				unlocked = (xmlData.elements.unlocked.att.value.toLowerCase() == 'true'
+					|| xmlData.elements.unlocked.att.value.toLowerCase() == '1');
+				id = (xmlData.att.id ?? dataFileid); */
 		}
 		catch (e)
 		{

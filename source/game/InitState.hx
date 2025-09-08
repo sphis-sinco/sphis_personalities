@@ -100,12 +100,16 @@ class InitState extends FlxState
 
 		ScriptManager.checkForUpdatedScripts();
 
-		var startingState = Compiler.getDefine('StartingState');
-		if (startingState != null)
-			startingState = startingState.split('=')[0];
-		trace(Std.string(startingState).toLowerCase());
+		var startingState = null;
+		try
+		{
+			startingState = Compiler.getDefine('StartingState');
+			if (startingState != null)
+				startingState = startingState.split('=')[0];
+			trace(Std.string(startingState).toLowerCase());
+		}
+		catch (if (startingState != null)
 
-		if (startingState != null)
 		{
 			if (startingState.length >= 1)
 			{
@@ -126,8 +130,7 @@ class InitState extends FlxState
 				}
 			}
 		}
-		else
-			FlxG.switchState(() -> new game.desktop.DesktopMain());
+		else FlxG.switchState(() -> new game.desktop.DesktopMain());
 		#end
 	}
 }
