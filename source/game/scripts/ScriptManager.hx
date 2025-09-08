@@ -477,6 +477,9 @@ class ScriptManager
 		}
 	}
 
-	public static function checkForUpdatedScripts() {}
+	public static function checkForUpdatedScripts()
+	{
+		call('onAdded', [new AddedEvent('WebScript')]);
+	}
 }
 #end

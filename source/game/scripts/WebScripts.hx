@@ -4,6 +4,8 @@ import flixel.FlxG;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxSprite;
+import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -19,7 +21,8 @@ import game.desktop.DesktopMain;
 import game.desktop.DesktopPlay;
 import game.desktop.DesktopPlay;
 import game.levels.LevelModule;
-import game.scripts.ScriptManager;
+import game.modding.ModList;
+import game.modding.ModMenu;
 import game.scripts.ScriptManager;
 import game.scripts.events.AddedEvent;
 import game.scripts.events.AddedEvent;
@@ -30,6 +33,8 @@ import game.scripts.events.UpdateEvent;
 import game.scripts.imports.FlxScriptedAxes;
 import game.scripts.imports.FlxScriptedColor;
 import game.scripts.imports.FlxScriptedColor;
+import game.scripts.imports.FlxTextScriptedBorderStyle;
+import lime.app.Application;
 
 class WebScripts
 {
@@ -45,8 +50,50 @@ class WebScripts
 	static var rightArrow:FlxSprite;
 	static var arrowsnotLeaving:Bool;
 	static var savedSelection:Null<Int>;
-	static var level_one:LevelModule;
-	static var is_level_one:Bool;
+	static var lvl:LevelModule;
+	static var level_paused:Bool;
+	static var lvl1_bg_sky:FlxSprite;
+	static var lvl1_bg_ground:FlxSprite;
+	static var haxen:FlxSprite;
+	static var haxen_pos:Int;
+	static var op:FlxSprite;
+	static var op_attacking:Bool;
+	static var hands:FlxTypedGroup<FlxSprite>;
+	static var pauseBG:FlxSprite;
+	static var tick = 0;
+	static var levelTime = 0;
+	static var levelTimer:FlxTimer;
+	static var levelTimerText:FlxText;
+
+	public static function onAdded(event:AddedEvent)
+	{
+		haxenIdleStates.push(Paths.getImagePath('desktop/haxen/idle-left'));
+		haxenIdleStates.push(Paths.getImagePath('desktop/haxen/idle-right'));
+
+		trace('Initalizing all level modules');
+		DesktopPlay.initalizeLevelModules('game/levels/data');
+
+		FlxG.save.bind('PersonalitiesHAXEN', 'Sphis');
+
+		if (FlxG.save.data.levelTimes == null)
+		{
+			FlxG.save.data.levelTimes = {
+				level1: 0
+			}
+		}
+		if (FlxG.save.data.modList == null)
+		{
+			FlxG.save.data.modList = [];
+		}
+		ModList.load();
+
+		trace('Save dump: ' + {modList: FlxG.save.data.modList, levelTimes: FlxG.save.data.levelTimes, volume: FlxG.save.data.volume});
+
+		Application.current.onExit.add(l ->
+		{
+			FlxG.save.flush();
+		});
+	}
 
 	public static function onCreate(event:CreateEvent)
 	{
@@ -84,17 +131,21 @@ class WebScripts
 				ease: FlxEase.sineInOut
 			});
 		}
+
 		if (event.state == 'z-easter-egg')
 		{
 			hisHead = new FlxSprite();
 			hisHead.loadGraphic(Paths.getImagePath('desktop/easterEgg/hisHead'));
 			FlxG.state.add(hisHead);
 		}
+
 		transitioning = false;
+
 		if (event.state == 'z-easter-egg')
 		{
 			FlxG.camera.fade(FlxScriptedColor.BLACK, 1, true, null);
 		}
+
 		scanlineLayerOne = new FlxSprite();
 		scanlineLayerOne.loadGraphic(Paths.getImagePath('LCD/scanlines'));
 		scanlineLayerOne.screenCenter();
@@ -117,38 +168,39 @@ class WebScripts
 					DesktopPlay.instance.scanlineLayer.add(scanlineLayerTwo);
 			}
 		}
+
 		if (event.state == 'desktop-play')
 		{
-			DesktopPlay.instance.levels.push('level1');
-			DesktopPlay.instance.levels.push('level2');
+			var sysLoad = DesktopPlay.instance.sysLoadLevels('game/levels/data');
+
+			if (!sysLoad)
+			{
+				DesktopPlay.instance.levels = ['level1'];
+			}
 		}
+
 		if (event.state == 'desktop-play')
 		{
 			arrowsnotLeaving = true;
-			if (leftArrow == null)
-			{
-				leftArrow = new FlxSprite();
-				leftArrow.loadGraphic(Paths.getImagePath('levels/desktop-icons/select-arrow'));
-				leftArrow.flipX = true;
+			leftArrow = new FlxSprite();
+			leftArrow.loadGraphic(Paths.getImagePath('levels/desktop-icons/select-arrow'));
+			leftArrow.flipX = true;
 
-				leftArrow.scale.set(.25, .25);
-				leftArrow.updateHitbox();
+			leftArrow.scale.set(.25, .25);
+			leftArrow.updateHitbox();
 
-				leftArrow.screenCenter(FlxScriptedAxes.Y);
-				leftArrow.x = 32;
+			leftArrow.screenCenter(FlxScriptedAxes.Y);
+			leftArrow.x = 32;
 
-				leftArrow.scrollFactor.set(0, 0);
-			}
-			if (rightArrow == null)
-			{
-				rightArrow = new FlxSprite();
-				rightArrow.loadGraphic(Paths.getImagePath('levels/desktop-icons/select-arrow'));
+			leftArrow.scrollFactor.set(0, 0);
 
-				rightArrow.scale.set(.25, .25);
-				rightArrow.updateHitbox();
+			rightArrow = new FlxSprite();
+			rightArrow.loadGraphic(Paths.getImagePath('levels/desktop-icons/select-arrow'));
 
-				rightArrow.scrollFactor.set(0, 0);
-			}
+			rightArrow.scale.set(.25, .25);
+			rightArrow.updateHitbox();
+
+			rightArrow.scrollFactor.set(0, 0);
 
 			leftArrow.alpha = 0;
 			rightArrow.alpha = 0;
@@ -163,6 +215,7 @@ class WebScripts
 			FlxG.state.add(leftArrow);
 			FlxG.state.add(rightArrow);
 		}
+
 		if (event.state == 'desktop-play')
 		{
 			DesktopPlay.instance.reloadLevels((levelsGrp, levelsTextGrp) ->
@@ -170,11 +223,7 @@ class WebScripts
 				for (obj in levelsGrp.members)
 				{
 					obj.levelIcon.alpha = 0;
-					FlxTween.tween(obj.levelIcon, {alpha: 1}, 1, {
-						ease: FlxEase.sineInOut
-					});
-					obj.box.alpha = 0;
-					FlxTween.tween(obj.box, {alpha: 1}, 1, {
+					FlxTween.tween(obj.levelIcon, {alpha: obj.targAlpha}, 1, {
 						ease: FlxEase.sineInOut
 					});
 					obj.lock.alpha = 0;
@@ -191,16 +240,93 @@ class WebScripts
 				}
 			});
 		}
-		is_level_one = (event.state == 'level1');
-		if (is_level_one)
-		{
-			level_one = new LevelModule(event.state);
-			FlxG.camera.fade(FlxScriptedColor.BLACK, 1, true, () -> {});
-		}
-	}
 
-	public static function onUpdate(event:UpdateEvent)
-	{
+		if (event.state == 'desktop-play')
+			savedSelection = null;
+
+		if (event.state == 'level1')
+		{
+			lvl = new LevelModule(event.state);
+			FlxG.camera.fade(FlxScriptedColor.BLACK, 1, true, () -> {});
+
+			lvl1_bg_sky = new FlxSprite();
+			lvl1_bg_sky.loadGraphic(lvl.getGeneralAsset('sky'));
+			lvl1_bg_sky.screenCenter();
+
+			lvl1_bg_ground = new FlxSprite();
+			lvl1_bg_ground.loadGraphic(lvl.getGeneralAsset('ground'));
+			lvl1_bg_ground.screenCenter();
+
+			haxen = new FlxSprite();
+			haxen.loadGraphic(lvl.getHaxenAsset('idle'));
+			haxen.screenCenter();
+			haxen.y += (haxen.height / 4);
+
+			op = new FlxSprite();
+			op.loadGraphic(lvl.getGeneralAsset('op'));
+			op.screenCenter();
+			op.y -= op.height / 10;
+			var op_resting_YPos = op.getPosition().y;
+			op.y = FlxG.height * 2;
+
+			hands = new FlxTypedGroup();
+
+			pauseBG = new FlxSprite();
+			pauseBG.makeGraphic(FlxG.width, FlxG.height, FlxScriptedColor.BLACK);
+			pauseBG.screenCenter();
+
+			BlankState.instance.add(lvl1_bg_sky);
+
+			BlankState.instance.add(op);
+
+			BlankState.instance.add(lvl1_bg_ground);
+
+			BlankState.instance.add(haxen);
+			BlankState.instance.add(hands);
+
+			BlankState.instance.add(pauseBG);
+
+			op_attacking = false;
+			FlxTween.tween(op, {y: op_resting_YPos}, 2, {
+				ease: FlxEase.sineOut,
+				onComplete: twn ->
+				{
+					if (tick < 175)
+						tick = FlxG.random.int(175, 200);
+					op_attacking = true;
+				}
+			});
+
+			haxen_pos = 0;
+		}
+
+		level_paused = false;
+		levelTime = 0;
+		levelTimer = new FlxTimer();
+
+		levelTimerText = new FlxText();
+		levelTimerText.size = 16;
+		levelTimerText.y = 32;
+		levelTimerText.color = FlxScriptedColor.WHITE;
+		levelTimerText.setBorderStyle(FlxTextScriptedBorderStyle.OUTLINE, FlxScriptedColor.BLACK, 2);
+		levelTimerText.alpha = 0.75;
+
+		if (event.state == 'level1')
+		{
+			levelTimer.start(1, tmr ->
+			{
+				levelTime += 1;
+
+				if (FlxG.save.data.levelTimes.level1 != null)
+				{
+					if (levelTime > FlxG.save.data.levelTimes.level1)
+						FlxG.save.data.levelTimes.level1 = levelTime;
+				}
+			}, 0);
+
+			FlxG.state.add(levelTimerText);
+		}
+
 		if (event.state == 'desktop-main')
 		{
 			if (!moving)
@@ -253,11 +379,16 @@ class WebScripts
 				}
 			}
 		}
-		if (FlxG.keys.justReleased.ESCAPE && event.state == 'z-easter-egg')
+	}
+
+	public static function onUpdate(event:UpdateEvent)
+	{
+		if (Controls.getControlJustReleased('ui_leave') && event.state == 'z-easter-egg')
 		{
 			FlxG.switchState(() -> new DesktopMain());
 		}
-		if (!transitioning && (FlxG.keys.justReleased.F1 || (FlxG.keys.pressed.SHIFT && FlxG.keys.justReleased.ONE)))
+
+		if (!transitioning && (Controls.getControlJustReleased('general_openEasterEggMenu')))
 		{
 			if (event.state != 'z-easter-egg')
 			{
@@ -274,6 +405,7 @@ class WebScripts
 					FlxG.switchState(() -> new BlankState('z-easter-egg'));
 			}
 		}
+
 		if (event.state == 'desktop-main')
 		{
 			if (DesktopMain.instance.haxen.y == DesktopMain.instance.haxenStartingYPosition)
@@ -294,6 +426,7 @@ class WebScripts
 				}
 			}
 		}
+
 		if (scanlineLayerOne != null)
 		{
 			scanlineAngle += (1 / FlxG.random.int(10, 100));
@@ -302,63 +435,73 @@ class WebScripts
 			scanlineLayerTwo.angle = scanlineAngle + 90;
 			scanlineLayerTwo.alpha = scanlineLayerOne.alpha;
 		}
+
 		if (event.state == 'desktop-play')
 		{
-			leftArrow.scale.set(.25, .25);
-			rightArrow.scale.set(.25, .25);
+			if (leftArrow != null && rightArrow != null)
+			{
+				leftArrow.scale.set(.25, .25);
+				rightArrow.scale.set(.25, .25);
 
-			if (Controls.getControlPressed('ui_left') && arrowsnotLeaving)
-			{
-				if (DesktopPlay.instance.curSel > 0)
-					leftArrow.scale.set(.3, .15);
-				else
-					leftArrow.scale.set(.15, .3);
-			}
-			if (Controls.getControlPressed('ui_right') && arrowsnotLeaving)
-			{
-				if (DesktopPlay.instance.curSel < DesktopPlay.instance.levels.length - 1)
-					rightArrow.scale.set(.3, .15);
-				else
-					rightArrow.scale.set(.15, .3);
-			}
-			if (arrowsnotLeaving && Controls.getControlJustReleased('ui_leave'))
-			{
-				arrowsnotLeaving = false;
+				if (arrowsnotLeaving)
+				{
+					if (DesktopPlay.instance.curSel >= 0)
+						leftArrow.alpha = .5;
+					else
+						leftArrow.alpha = 1;
+					if (DesktopPlay.instance.curSel <= DesktopPlay.instance.levels.length - 1)
+						rightArrow.alpha = .5;
+					else
+						rightArrow.alpha = 1;
+				}
 
-				FlxTween.tween(leftArrow, {alpha: 0}, 1, {
-					ease: FlxEase.sineInOut
-				});
-				FlxTween.tween(rightArrow, {alpha: 0}, 1, {
-					ease: FlxEase.sineInOut
-				});
-			}
-			if (arrowsnotLeaving)
-			{
-				rightArrow.screenCenter(FlxScriptedAxes.Y);
-				rightArrow.x = FlxG.width - rightArrow.width - 32;
+				if (Controls.getControlPressed('ui_left') && arrowsnotLeaving)
+				{
+					if (DesktopPlay.instance.curSel > 0)
+						leftArrow.scale.set(.3, .15);
+					else
+						leftArrow.scale.set(.15, .3);
+				}
+				if (Controls.getControlPressed('ui_right') && arrowsnotLeaving)
+				{
+					if (DesktopPlay.instance.curSel < DesktopPlay.instance.levels.length - 1)
+						rightArrow.scale.set(.3, .15);
+					else
+						rightArrow.scale.set(.15, .3);
+				}
+				if (arrowsnotLeaving && Controls.getControlJustReleased('ui_leave'))
+				{
+					arrowsnotLeaving = false;
+
+					FlxTween.tween(leftArrow, {alpha: 0}, 1, {
+						ease: FlxEase.sineInOut
+					});
+					FlxTween.tween(rightArrow, {alpha: 0}, 1, {
+						ease: FlxEase.sineInOut
+					});
+				}
+				if (arrowsnotLeaving)
+				{
+					rightArrow.screenCenter(FlxScriptedAxes.Y);
+					rightArrow.x = FlxG.width - rightArrow.width - 32;
+				}
 			}
 		}
+
 		if ((savedSelection == null) && event.state == 'desktop-play' && Controls.getControlJustReleased('ui_leave'))
 		{
 			savedSelection = DesktopPlay.instance.curSel;
 			for (obj in DesktopPlay.instance.levelsGrp.members)
 			{
-				obj.levelIcon.alpha = 1;
 				FlxTween.tween(obj.levelIcon, {alpha: 0}, 1, {
 					ease: FlxEase.sineInOut
 				});
-				obj.box.alpha = 1;
-				FlxTween.tween(obj.box, {alpha: 0}, 1, {
-					ease: FlxEase.sineInOut
-				});
-				obj.lock.alpha = 1;
 				FlxTween.tween(obj.lock, {alpha: 0}, 1, {
 					ease: FlxEase.sineInOut
 				});
 			}
 			for (obj in DesktopPlay.instance.levelsTextGrp.members)
 			{
-				obj.alpha = 1;
 				FlxTween.tween(obj, {alpha: 0}, 1, {
 					ease: FlxEase.sineInOut
 				});
@@ -370,29 +513,196 @@ class WebScripts
 				FlxG.switchState(() -> new DesktopMain());
 			});
 		}
+
 		if (savedSelection != null && DesktopPlay.instance.curSel != savedSelection)
 			DesktopPlay.instance.curSel = savedSelection;
-		if (savedSelection != null && DesktopPlay.instance.curSel != savedSelection)
+
+		if (event.state == 'desktop-play')
+		{
+			if (Controls.getControlJustReleased('ui_left'))
+				DesktopPlay.instance.curSel--;
+			if (Controls.getControlJustReleased('ui_right'))
+				DesktopPlay.instance.curSel++;
+
+			if (DesktopPlay.instance.curSel < 0)
+				DesktopPlay.instance.curSel = 0;
+			if (DesktopPlay.instance.curSel >= DesktopPlay.instance.levels.length)
+				DesktopPlay.instance.curSel = DesktopPlay.instance.levels.length - 1;
+		}
+
+		if (event.state == 'desktop-play')
+		{
+			for (levelGrp in DesktopPlay.instance.levelsGrp.members)
+			{
+				levelGrp.levelIcon.screenCenter(FlxScriptedAxes.Y);
+				DesktopPlay.instance.levelsTextGrp.members[levelGrp.ID].y = levelGrp.levelIcon.y
+					- DesktopPlay.instance.levelsTextGrp.members[levelGrp.ID].height;
+
+				levelGrp.update(event.elapsed);
+
+				levelGrp.levelIcon.color = 0xFFFFFF;
+				if (DesktopPlay.instance.curSel == levelGrp.ID)
+				{
+					DesktopPlay.instance.camFollow.x = levelGrp.levelIcon.getGraphicMidpoint().x;
+					levelGrp.levelIcon.color = 0xFFFF00;
+				}
+
+				DesktopPlay.instance.levelsTextGrp.members[levelGrp.ID].color = levelGrp.levelIcon.color;
+			}
+		}
+
+		if (savedSelection != null && DesktopPlay.instance.curSel != savedSelection && event.state == 'desktop-play')
 			DesktopPlay.instance.curSel = savedSelection;
 
 		if ((savedSelection == null) && event.state == 'desktop-play')
 		{
 			if (Controls.getControlJustReleased('ui_accept'))
 			{
-				savedSelection = DesktopPlay.instance.curSel;
-
-				var id = '';
-				if (DesktopPlay.instance.levelMetas[savedSelection].id != null)
-					id = DesktopPlay.instance.levelMetas[savedSelection].id;
-				else
-					id = DesktopPlay.instance.levels[savedSelection];
-
-				FlxG.camera.fade(FlxScriptedColor.BLACK, 1, false, () ->
+				if (DesktopPlay.instance.levelMetas[DesktopPlay.instance.curSel].unlocked)
 				{
-					FlxG.switchState(() -> new BlankState(id));
-				});
+					savedSelection = DesktopPlay.instance.curSel;
+
+					var id = '';
+					if (DesktopPlay.instance.levelMetas[savedSelection].id != null)
+						id = DesktopPlay.instance.levelMetas[savedSelection].id;
+					else
+						id = DesktopPlay.instance.levels[savedSelection];
+
+					FlxG.camera.fade(FlxScriptedColor.BLACK, 1, false, () ->
+					{
+						FlxG.switchState(() -> new BlankState(id));
+					});
+				}
 			}
 		}
+
+		if (tick == null)
+			tick = -1;
+		tick += 1;
+
+		FlxG.watch.addQuick('tick', tick);
+
+		if (event.state == 'level1')
+		{
+			haxen.screenCenter();
+			haxen.y += (haxen.height / 2);
+			switch (haxen_pos)
+			{
+				case 1:
+					haxen.x += haxen.width;
+				case -1:
+					haxen.x -= haxen.width;
+			}
+
+			if (Controls.getControlPressed('game_left') && !level_paused)
+			{
+				haxen.loadGraphic(lvl.getHaxenAsset('left'));
+			}
+
+			if (Controls.getControlPressed('game_right') && !level_paused)
+			{
+				haxen.loadGraphic(lvl.getHaxenAsset('right'));
+			}
+
+			if (Controls.getControlJustReleased('game_left') && !level_paused)
+			{
+				haxen_pos -= 1;
+				haxen_pos = (haxen_pos < -1) ? -1 : haxen_pos;
+
+				haxen.loadGraphic(lvl.getHaxenAsset('idle'));
+			}
+
+			if (Controls.getControlJustReleased('game_right') && !level_paused)
+			{
+				haxen_pos += 1;
+				haxen_pos = (haxen_pos > 1) ? 1 : haxen_pos;
+
+				haxen.loadGraphic(lvl.getHaxenAsset('idle'));
+			}
+
+			pauseBG.alpha = (level_paused) ? 0.5 : 0.0;
+
+			if (op_attacking && !level_paused)
+			{
+				if ((tick >= 200 && !FlxG.random.bool(FlxG.random.float(0, 10))) && hands.members.length < 3)
+				{
+					var newTickMin = 0;
+
+					switch (hands.members.length)
+					{
+						case 3:
+							newTickMin = 0;
+						case 2:
+							newTickMin = 50;
+						case 1:
+							newTickMin = 125;
+						case 0:
+							newTickMin = 175;
+					}
+
+					tick = FlxG.random.int(newTickMin, 300);
+					trace('spawn lvl 1 hand');
+
+					var hand = new FlxSprite();
+					hand.loadGraphic(lvl.getHandAsset('clench'));
+					hand.setPosition(haxen.x, haxen.y);
+					hand.alpha = 0;
+
+					FlxTween.tween(hand, {alpha: 1, y: hand.y - (hand.height * 2)}, .25, {
+						ease: FlxEase.sineOut,
+						onComplete: twn ->
+						{
+							new FlxTimer().start(.25, tmr ->
+							{
+								FlxTween.tween(hand, {y: haxen.y}, .25, {
+									ease: FlxEase.sineIn,
+									onComplete: twn ->
+									{
+										new FlxTimer().start(.25, tmr ->
+										{
+											FlxTween.tween(hand, {alpha: 0}, .25, {
+												ease: FlxEase.sineOut,
+												onComplete: twn ->
+												{
+													hand.destroy();
+													hands.members.remove(hand);
+												}
+											});
+										});
+									},
+									onUpdate: twn ->
+									{
+										if (hand.overlaps(haxen))
+										{
+											FlxG.switchState(() -> new DesktopPlay());
+										}
+									}
+								});
+							});
+						}
+					});
+
+					hands.add(hand);
+				}
+			}
+
+			if (Controls.getControlJustReleased('ui_leave') && level_paused)
+			{
+				FlxG.camera.fade(FlxScriptedColor.BLACK, 1, false, () ->
+				{
+					FlxG.switchState(() -> new DesktopPlay());
+				});
+			}
+			if (Controls.getControlJustReleased('game_pause'))
+			{
+				level_paused = !level_paused;
+			}
+		}
+
+		if (Controls.getControlJustReleased('general_openModMenu'))
+			if (event.state == 'desktop-main' || event.state == 'desktop-play')
+				FlxG.switchState(() -> new ModMenu());
+
 		Mouse.setMouseState(MouseStates.IDLE);
 
 		if (event.state == 'desktop-main' && DesktopMain.instance.haxen.y == DesktopMain.instance.haxenStartingYPosition)
@@ -405,7 +715,7 @@ class WebScripts
 			if (Mouse.overlaps(DesktopMain.instance.option_options))
 				Mouse.setMouseState(MouseStates.CANT_SELECT);
 		}
-		if (event.state == 'desktop-play')
+		if (event.state == 'desktop-play' || event.state == 'level1' || event.state == 'level2' || event.state == 'modmenu')
 		{
 			Mouse.setMouseState(MouseStates.BLANK);
 		}
@@ -414,15 +724,33 @@ class WebScripts
 		{
 			Mouse.setMouseState(MouseStates.SELECTED);
 		}
-		if (FlxG.keys.justReleased.R)
+
+		if (Controls.getControlJustReleased('general_reload'))
 		{
 			ScriptManager.checkForUpdatedScripts();
 		}
-	}
 
-	public static function onAdded(event:AddedEvent)
-	{
-		haxenIdleStates.push(Paths.getImagePath('desktop/haxen/idle-left'));
-		haxenIdleStates.push(Paths.getImagePath('desktop/haxen/idle-right'));
+		levelTimerText.text = '' + levelTime;
+		levelTimerText.screenCenter(FlxScriptedAxes.X);
+
+		if (levelTimer.active)
+		{
+			if (event.state == 'level1')
+			{
+				if (FlxG.save.data.levelTimes.level1 != null)
+				{
+					levelTimerText.text += ' (best: ' + FlxG.save.data.levelTimes.level1 + ')';
+				}
+			}
+
+			if (Controls.getControlJustReleased('ui_leave') && level_paused)
+			{
+				FlxG.save.flush();
+			}
+			if (Controls.getControlJustReleased('game_pause'))
+			{
+				level_paused = !level_paused;
+			}
+		}
 	}
 }
