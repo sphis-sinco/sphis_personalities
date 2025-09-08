@@ -57,6 +57,7 @@ class InitState extends FlxState
 		Defines.getDefines();
 
 		#if hscript
+		#if debug
 		try
 		{
 			ConsoleUtil.registerObject('InitState', InitState);
@@ -91,6 +92,7 @@ class InitState extends FlxState
 		{
 			trace(e.message);
 		}
+		#end
 		#end
 
 		#if generateWebScript
