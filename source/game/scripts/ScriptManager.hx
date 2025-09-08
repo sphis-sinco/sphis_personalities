@@ -254,13 +254,14 @@ class ScriptManager
 		catch (e)
 		{
 			newScript = null;
-			trace(Ansi.fg('', RED)
-				+ 'Error loading script('
-				+ Ansi.fg(path, WHITE)
-				+ Ansi.fg('', RED)
-				+ '): '
-				+ e.message
-				+ Ansi.reset(''));
+			if (Defines.get('scripts_loadedScriptMSG'))
+				trace(Ansi.fg('', RED)
+					+ 'Error loading script('
+					+ Ansi.fg(path, WHITE)
+					+ Ansi.fg('', RED)
+					+ '): '
+					+ e.message
+					+ Ansi.reset(''));
 			Application.current.window.alert('Error loading script(' + path + '): ' + e.message + '\n\n' + e.details, 'Error loading script');
 		}
 
@@ -268,7 +269,8 @@ class ScriptManager
 		{
 			initalizeScriptVariables(newScript);
 
-			trace('Loaded script(' + Ansi.fg(path, WHITE) + Ansi.reset('') + ')');
+			if (Defines.get('scripts_loadedScriptMSG'))
+				trace('Loaded script(' + Ansi.fg(path, WHITE) + Ansi.reset('') + ')');
 
 			SCRIPTS.push(newScript);
 
@@ -397,7 +399,8 @@ class ScriptManager
 				}
 
 			var newText = ((newCount > 0) ? (Ansi.fg(' (' + newCount + ' new)', GREEN)) : '');
-			trace('Found ' + arr.length + ' ' + type + ' file(s)' + newText + ':');
+			if (Defines.get('typeArray_foundfilesfunc_traces'))
+				trace('Found ' + arr.length + ' ' + type + ' file(s)' + newText + ':');
 
 			var i = 0;
 			for (file in arr)
@@ -427,7 +430,8 @@ class ScriptManager
 					addition = StringTools.replace(addition, ')', '/' + Ansi.fg('modfile', GREEN) + ')');
 				}
 
-				trace(' * ' + Ansi.fg(file, WHITE) + ' ' + addition + Ansi.reset(''));
+				if (Defines.get('typeArray_foundfilesfunc_traces'))
+					trace(' * ' + Ansi.fg(file, WHITE) + ' ' + addition + Ansi.reset(''));
 
 				i++;
 			}

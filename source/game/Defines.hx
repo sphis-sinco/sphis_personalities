@@ -38,16 +38,17 @@ class Defines
 			set('scripts_ignoreMissingMethods', Compiler.getDefine('scripts_ignoreMissingMethods') == '1');
 			set('scripts_ignoreMethodErrors', Compiler.getDefine('scripts_ignoreMethodsErrors') == '1');
 			set('scripts_disableScripts', Compiler.getDefine('scripts_disableScripts') == '1');
+			set('scripts_loadedScriptMSG', Compiler.getDefine('scripts_loadedScriptMSG') == '1');
 
 			set('controls_loadExtraTraces', Compiler.getDefine('controls_loadExtraTraces') == '1');
 
-			set('typeArray_foundfilesfunc', Compiler.getDefine('typeArray_foundfilesfunc') == '1');
+			set('typeArray_foundfilesfunc_traces', Compiler.getDefine('typeArray_foundfilesfunc_traces') == '1');
 		}
 		catch (_) {}
 
 		for (key => value in map)
 		{
-			trace('Define(' + key + '): ' + value);
+			trace('Define(' + Ansi.fg('', WHITE) + key + Ansi.reset('') + '): ' + value);
 		}
 	}
 }
