@@ -9,7 +9,7 @@ function onCreate(event:CreateEvent)
 
 		if (!sysLoad)
 		{
-			DesktopPlay.instance.levels = ['level1', 'level2'];
+			DesktopPlay.instance.levels = ['level1'];
 		}
 	}
 }
