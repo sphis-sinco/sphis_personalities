@@ -62,9 +62,9 @@ class ModMenu extends State
 			modText.alignment = CENTER;
 		}
 
-		var leText:String = 'Press ' + Controls.getControlKeys('ui_accept') + ' to enable / disable the currently selected mod.';
+		var leText:String = 'Press ' + Controls.getControlKeys('ui_accept') + ' to enable / disable the currently selected mod.\nPress [R] to reload mods';
 
-		var text:FlxText = new FlxText(0, FlxG.height - 22, FlxG.width, leText, 16);
+		var text:FlxText = new FlxText(0, FlxG.height - 42, FlxG.width, leText, 16);
 		text.scrollFactor.set();
 		add(text);
 
@@ -92,6 +92,11 @@ class ModMenu extends State
 		if (Controls.getControlJustReleased('ui_leave'))
 		{
 			FlxG.switchState(() -> new DesktopMain());
+		}
+
+		if (FlxG.keys.justReleased.R)
+		{
+			PolymodHandler.loadMods();
 		}
 
 		if (Controls.getControlJustReleased('ui_accept'))
