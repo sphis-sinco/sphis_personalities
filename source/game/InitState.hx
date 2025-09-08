@@ -32,6 +32,8 @@ class InitState extends FlxState
 	{
 		super.create();
 
+		Defines.getDefines();
+
 		oldTrace = haxe.Log.trace;
 		#if trimmedTrace
 		haxe.Log.trace = function(v, ?infos)
@@ -100,32 +102,14 @@ class InitState extends FlxState
 
 		ScriptManager.checkForUpdatedScripts();
 
-		var startingState:Dynamic = null;
-		try
+		if (Defines.get('StartingState') != null)
 		{
-			startingState = Compiler.getDefine('StartingState');
-			if (startingState != null)
-				startingState = startingState.split('=')[0];
-			trace(Std.string(startingState).toLowerCase());
-		}
-		catch (_) {}
-
-		if (startingState != null)
-		{
-			if (startingState.length >= 1)
+			if (Defines.get('StartingState').length >= 1)
 			{
-				switch (Std.string(startingState).toLowerCase())
+				switch (Std.string(Defines.get('StartingState')).toLowerCase())
 				{
 					case 'blankstate':
-						var blankStateID = Compiler.getDefine('BlankStateID');
-						if (blankStateID != null)
-						{
-							blankStateID = blankStateID.split('=')[0];
-							if (blankStateID == '1')
-								blankStateID = null;
-						}
-
-						FlxG.switchState(() -> new BlankState(blankStateID));
+						FlxG.switchState(() -> new BlankState(Defines.get('BlankStateID')));
 					default:
 						FlxG.switchState(() -> new DesktopMain());
 				}

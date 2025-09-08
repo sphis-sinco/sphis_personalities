@@ -106,7 +106,8 @@ class ScriptManager
 			if (!SCRIPTS_ERRS.exists('missing_method(' + method + ')_' + script.config.name))
 			{
 				SCRIPTS_ERRS.set('missing_method(' + method + ')_' + script.config.name, Ansi.stripColor(errMsg));
-				trace(errMsg + Ansi.reset(''));
+				if (!Defines.get('scripts_ignoreMissingMethods'))
+					trace(errMsg + Ansi.reset(''));
 			}
 
 			return;
@@ -130,7 +131,8 @@ class ScriptManager
 			if (!SCRIPTS_ERRS.exists('method(' + method + ')_error_' + script.config.name))
 			{
 				SCRIPTS_ERRS.set('method(' + method + ')_error_' + script.config.name, Ansi.stripColor(errMsg));
-				trace(errMsg + Ansi.reset(''));
+				if (!Defines.get('scripts_ignoreMethodErrors'))
+					trace(errMsg + Ansi.reset(''));
 			}
 		}
 	}
@@ -305,6 +307,8 @@ class ScriptManager
 
 		script.set('LevelModule', LevelModule, false);
 
+		script.set('Defines', Defines, false);
+
 		scriptImports(script);
 	}
 
@@ -332,6 +336,9 @@ class ScriptManager
 
 	public static function checkForUpdatedScripts()
 	{
+		if (Defines.get('scripts_disableScripts'))
+			return;
+
 		var scriptsString = [];
 		var deletedScripts = [];
 		var updatedScripts = [];
