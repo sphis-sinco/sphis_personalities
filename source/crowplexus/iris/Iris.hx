@@ -185,6 +185,14 @@ class Iris
 	}
 
 	/**
+	 * Custom print function for scripts specifically.
+	**/
+	public dynamic static function scriptPrint(x, ?pos:haxe.PosInfos):Void
+	{
+		logLevel(SCRIPT, x, pos);
+	}
+
+	/**
 	 * Custom error function for script wrappers.
 	**/
 	public dynamic static function error(x, ?pos:haxe.PosInfos):Void
@@ -346,7 +354,7 @@ class Iris
 			var v = x.shift();
 			if (x.length > 0)
 				pos.customParams = x;
-			Iris.print(v, pos);
+			Iris.scriptPrint(v, pos);
 		}));
 		#end
 	}

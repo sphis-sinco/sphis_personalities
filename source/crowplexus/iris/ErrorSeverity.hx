@@ -12,6 +12,7 @@ enum ErrorSeverity
 	WARN;
 	ERROR;
 	FATAL;
+	SCRIPT;
 }
 
 class ErrorSeverityTools #if !html5 implements crowplexus.iris.IrisUsingClass #end
@@ -37,6 +38,7 @@ class ErrorSeverityTools #if !html5 implements crowplexus.iris.IrisUsingClass #e
 			case WARN: AnsiColor.YELLOW;
 			case ERROR: AnsiColor.RED;
 			case FATAL: AnsiColor.RED;
+			case SCRIPT: AnsiColor.GREEN;
 			case _: AnsiColor.DEFAULT;
 		}
 	}
