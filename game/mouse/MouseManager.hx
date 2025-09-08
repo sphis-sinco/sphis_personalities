@@ -17,7 +17,7 @@ function onUpdate(event:UpdateEvent)
 		if (Mouse.overlaps(DesktopMain.instance.option_options))
 			Mouse.setMouseState(MouseStates.CANT_SELECT);
 	}
-	if (event.state == 'desktop-play')
+	if (event.state == 'desktop-play' || event.state == 'level1' || event.state == 'level2')
 	{
 		Mouse.setMouseState(MouseStates.BLANK);
 	}
