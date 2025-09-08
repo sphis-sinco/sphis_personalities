@@ -91,19 +91,6 @@ class InitState extends FlxState
 		Sys.exit(0);
 		#end
 		#else
-		for (image in Paths.getTypeArray('image', 'game', ['.png'], ['game/']))
-		{
-			try
-			{
-				trace('Adding bitmap(' + image + ') data to bitmapLog');
-				FlxG.bitmap.add(FlxGraphic.fromAssetKey(image), image);
-			}
-			catch (e)
-			{
-				trace('Error adding bitmap(' + image + ') data to bitmapLog:' + e.message);
-			}
-		}
-
 		FlxSprite.defaultAntialiasing = true;
 
 		Controls.save = new ControlsSave(Paths.getGamePath('preferences/controls.json'));
