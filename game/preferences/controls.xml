@@ -12,6 +12,9 @@
                 <control id="jump">
                         <key value="SPACE" />
                 </control>
+                <control id="pause">
+                        <key value="ENTER" />
+                </control>
         </control-group>
 
         <control-group id="ui">
