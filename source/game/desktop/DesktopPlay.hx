@@ -145,7 +145,12 @@ class DesktopPlay extends State
 		for (level in FileSystem.readDirectory(dir))
 		{
 			if (StringTools.endsWith(level, '.json') || StringTools.endsWith(level, '.xml'))
-				levels.push(StringTools.replace(StringTools.replace(level, '.xml', ''), '.json', ''));
+			{
+				var trimmed = StringTools.replace(StringTools.replace(level, '.xml', ''), '.json', '');
+
+				if (!levels.contains(trimmed))
+					levels.push(trimmed);
+			}
 		}
 		return true;
 		#else
