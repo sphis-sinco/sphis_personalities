@@ -288,34 +288,35 @@ class ScriptManager
 
 	public static function initalizeScriptVariables(script:Iris)
 	{
-		script.set('ScriptManager', ScriptManager, false);
-
 		script.set('DesktopPlay', DesktopPlay, false);
 		script.set('DesktopMain', DesktopMain, false);
+
 		script.set('InitState', InitState, false);
 		script.set('BlankState', BlankState, false);
-
-		script.set('Paths', Paths, false);
 
 		script.set('Mouse', Mouse, false);
 		script.set('MouseStates', MouseStates, false);
 
 		script.set('BaseEvent', BaseEvent, false);
 		script.set('BaseStateEvent', BaseStateEvent, false);
-
 		script.set('AddedEvent', AddedEvent, false);
 		script.set('CreateEvent', CreateEvent, false);
 		script.set('UpdateEvent', UpdateEvent, false);
 
+		script.set('LevelModule', LevelModule, false);
 		script.set('LevelSpriteGroup', LevelSpriteGroup, false);
 
+		script.set('ScriptManager', ScriptManager, false);
+		script.set('Paths', Paths, false);
 		script.set('Controls', Controls, false);
-
 		script.set('Ansi', Ansi, false);
-
-		script.set('LevelModule', LevelModule, false);
-
 		script.set('Defines', Defines, false);
+
+		#if polymod
+		script.set('PolymodHandler', game.modding.PolymodHandler, false);
+		script.set('ModMenu', game.modding.ModMenu, false);
+		script.set('ModList', game.modding.ModList, false);
+		#end
 
 		scriptImports(script);
 	}
