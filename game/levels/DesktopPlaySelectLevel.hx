@@ -21,18 +21,21 @@ function onUpdate(event:UpdateEvent)
 	{
 		if (Controls.getControlJustReleased('ui_accept'))
 		{
-			savedSelection = DesktopPlay.instance.curSel;
-
-			var id = '';
-			if (DesktopPlay.instance.levelMetas[savedSelection].id != null)
-				id = DesktopPlay.instance.levelMetas[savedSelection].id;
-			else
-				id = DesktopPlay.instance.levels[savedSelection];
-
-			FlxG.camera.fade(FlxScriptedColor.BLACK, 1, false, () ->
+			if (DesktopPlay.instance.levelMetas[DesktopPlay.instance.curSel].unlocked)
 			{
-				FlxG.switchState(() -> new BlankState(id));
-			});
+				savedSelection = DesktopPlay.instance.curSel;
+
+				var id = '';
+				if (DesktopPlay.instance.levelMetas[savedSelection].id != null)
+					id = DesktopPlay.instance.levelMetas[savedSelection].id;
+				else
+					id = DesktopPlay.instance.levels[savedSelection];
+
+				FlxG.camera.fade(FlxScriptedColor.BLACK, 1, false, () ->
+				{
+					FlxG.switchState(() -> new BlankState(id));
+				});
+			}
 		}
 	}
 }
