@@ -161,7 +161,7 @@ class ControlsSave
 					if (key.name == 'key' && key.has.value)
 					{
 						if (Defines.get('controls_loadExtraTraces'))
-							trace('control(' + control.att.grp + '_' + control.att.id + ') : ' + key.att.value);
+							trace('control(' + Ansi.fg('', WHITE) + control.att.grp + Ansi.reset('') + '_' + control.att.id + ') : ' + key.att.value);
 						current_controls.push(FlxKey.fromString(key.att.value.toUpperCase()));
 					}
 
