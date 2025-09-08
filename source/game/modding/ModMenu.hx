@@ -97,8 +97,6 @@ class ModMenu extends State
 
 		if (Controls.getControlJustReleased('ui_leave'))
 		{
-			PolymodHandler.loadMods();
-			savedSelection = 0;
 			FlxG.switchState(() -> new DesktopMain());
 		}
 
