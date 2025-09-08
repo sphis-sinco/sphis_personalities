@@ -29,6 +29,11 @@ function onCreate(event:CreateEvent)
 		levelTimer.start(1, tmr ->
 		{
 			levelTime += 1;
+
+			if (FlxG.save.data.levelTimes != null)
+			{
+				FlxG.save.data.levelTimes.set('level1', levelTime);
+			}
 		}, 0);
 
 		FlxG.state.add(levelTimerText);

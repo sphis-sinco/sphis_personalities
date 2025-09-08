@@ -7,6 +7,7 @@ function onAdded(event:AddedEvent)
 
 	if (FlxG.save.data.levelTimes == null)
 	{
+		FlxG.save.data.levelTimes = ['I am a map' => 0];
 		FlxG.save.data.levelTimes = [];
 	}
 }
