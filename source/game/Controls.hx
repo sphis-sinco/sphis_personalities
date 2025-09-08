@@ -97,11 +97,24 @@ class ControlsSave
 					if (control.name == 'control' && control.has.id)
 						controls.push(control);
 
+		var controls_map:Map<String, Array<FlxKey>> = [];
+		var current_controls:Array<FlxKey> = [];
+
 		for (control in controls)
+		{
+			current_controls = [];
+
 			for (key in control.elements)
 				if (key.name == 'key' && key.has.value)
 				{
 					trace('control(' + control.att.id + ') : ' + key.att.value);
+					current_controls.push(FlxKey.fromString(key.att.value.toUpperCase()));
 				}
+
+			controls_map.set(control.att.id, current_controls);
+		}
+
+		Controls.controls = controls_map;
+		trace('Updated Controls!');
 	}
 }
