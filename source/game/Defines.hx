@@ -38,6 +38,10 @@ class Defines
 			set('scripts_ignoreMissingMethods', Compiler.getDefine('scripts_ignoreMissingMethods') == '1');
 			set('scripts_ignoreMethodErrors', Compiler.getDefine('scripts_ignoreMethodsErrors') == '1');
 			set('scripts_disableScripts', Compiler.getDefine('scripts_disableScripts') == '1');
+
+			set('controls_loadExtraTraces', Compiler.getDefine('controls_loadExtraTraces') == '1');
+
+			set('typeArray_foundfilesfunc', Compiler.getDefine('typeArray_foundfilesfunc') == '1');
 		}
 		catch (_) {}
 

@@ -91,16 +91,19 @@ class Paths
 			readDir(path);
 		}
 
-		if (foundFilesFunction != null)
+		if (Defines.get('typeArray_foundfilesfunc'))
 		{
-			foundFilesFunction(arr, type);
-		}
-		else
-		{
-			trace('Found ' + arr.length + ' ' + type + ' files:');
-			for (file in arr)
+			if (foundFilesFunction != null)
 			{
-				trace(' * ' + file);
+				foundFilesFunction(arr, type);
+			}
+			else
+			{
+				trace('Found ' + arr.length + ' ' + type + ' files:');
+				for (file in arr)
+				{
+					trace(' * ' + file);
+				}
 			}
 		}
 		#end
