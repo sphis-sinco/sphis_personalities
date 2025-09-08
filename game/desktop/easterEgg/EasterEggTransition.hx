@@ -1,13 +1,11 @@
 import flixel.FlxG;
-import flixel.tweens.FlxTween;
-import flixel.util.FlxTimer;
-import game.scripts.ScriptManager;
+import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
 import game.scripts.imports.FlxScriptedColor;
 
 var transitioning = false;
 
-function onCreate(event:UpdateEvent)
+function onCreate(event:CreateEvent)
 {
 	transitioning = false;
 
