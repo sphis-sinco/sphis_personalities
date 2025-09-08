@@ -1,6 +1,7 @@
 package game.modding;
 
 import game.scripts.ScriptManager;
+import polymod.format.ParseRules;
 #if polymod
 import polymod.Polymod;
 
@@ -54,11 +55,43 @@ class PolymodHandler
 		trace('outdatedMods: ' + outdatedMods.toString());
 	}
 
+	static function buildParseRules():polymod.format.ParseRules
+	{
+		var output:polymod.format.ParseRules = polymod.format.ParseRules.getDefault();
+		// Ensure TXT files have merge support.
+		output.addType('txt', TextFileFormat.LINES);
+		// Ensure script files have merge support.
+		for (ext in ScriptManager.SCRIPT_EXTS)
+		{
+			output.addType(ext, TextFileFormat.PLAINTEXT);
+		}
+
+		// You can specify the format of a specific file, with file extension.
+		// output.addFile("data/introText.txt", TextFileFormat.LINES)
+		return output;
+	}
+
+	static function buildIgnoreList():Array<String>
+	{
+		var result = Polymod.getDefaultIgnoreList();
+
+		result.push('.haxelib');
+		result.push('hmm.json');
+		result.push('.git');
+		result.push('.gitignore');
+		result.push('.gitattributes');
+		result.push('README.md');
+
+		return result;
+	}
+
 	static function init()
 	{
 		Polymod.init({
 			modRoot: "mods/",
 			dirs: ModList.getActiveMods(metadataArrays),
+			parseRules: buildParseRules(),
+			ignoredFiles: buildIgnoreList(),
 			errorCallback: function(error:PolymodError)
 			{
 				#if debug
