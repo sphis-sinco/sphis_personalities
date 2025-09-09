@@ -1,3 +1,4 @@
+import flixel.FlxG;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import game.desktop.DesktopPlay;
@@ -15,6 +16,12 @@ function onCreate(event:CreateEvent)
 				FlxTween.tween(obj.levelIcon, {alpha: obj.targAlpha}, 1, {
 					ease: FlxEase.sineInOut
 				});
+				if (FlxG.save != null)
+					if (FlxG.save.data.newlevels.contains(obj.levelID))
+					{
+						// obj.lock.loadGraphic(Paths.getImagePath('levels/desktop-icons/unlock'));
+						obj.lock.visible = true;
+					}
 				obj.lock.alpha = 0;
 				FlxTween.tween(obj.lock, {alpha: 1}, 1, {
 					ease: FlxEase.sineInOut
