@@ -93,6 +93,7 @@ class ModMenu extends State
 		{
 			if (FlxG.save != null)
 				FlxG.save.flush();
+			PolymodHandler.loadMods();
 			FlxG.switchState(() -> new DesktopMain());
 		}
 
