@@ -19,24 +19,25 @@ class LevelModule
 
 	public function new(levelID:String)
 	{
+		id = levelID;
 		var loadOGlI = true;
 		for (module in loadedModules)
 		{
-			if (module.id == levelID)
+			if (module.id == id)
 			{
 				loadOGlI = false;
 				trace('Another Level(' + Ansi.fg('', ORANGE) + module.id + Ansi.reset('') + ') Module loaded, loading Module...');
 			}
 		}
 
-		if (!loadedModules.exists(levelID) && loadOGlI)
+		if (!loadedModules.exists(id) && loadOGlI)
 		{
-			loadModule(levelID);
+			loadModule(id);
 		}
 		else
 		{
-			trace('Level(' + Ansi.fg('', ORANGE) + levelID + Ansi.reset('') + ') Module already loaded');
-			var module = loadedModules.get(levelID);
+			trace('Level(' + Ansi.fg('', ORANGE) + id + Ansi.reset('') + ') Module already loaded');
+			var module = loadedModules.get(id);
 
 			try
 			{
@@ -48,28 +49,28 @@ class LevelModule
 			}
 			catch (_)
 			{
-				loadModule(levelID);
+				loadModule(id);
 			}
 		}
 	}
 
 	public function loadModule(levelID:String)
 	{
-		trace('Initalizing new Level(' + Ansi.fg('', ORANGE) + levelID + Ansi.reset('') + ') Module');
+		trace('Initalizing new Level(' + Ansi.fg('', ORANGE) + id + Ansi.reset('') + ') Module');
 
-		var JSONPath = Paths.getGamePath('levels/data/' + levelID + '.json');
-		var XMLPath = Paths.getGamePath('levels/data/' + levelID + '.xml');
+		var JSONPath = Paths.getGamePath('levels/data/' + id + '.json');
+		var XMLPath = Paths.getGamePath('levels/data/' + id + '.xml');
 
 		var jsonData:LevelData;
 		var xmlData:Access;
 
 		if (!Paths.pathExists(JSONPath))
 		{
-			#if !html5 Iris.warn #else trace #end ('Nonexistant level data file (JSON): ' + levelID);
+			#if !html5 Iris.warn #else trace #end ('Nonexistant level data file (JSON): ' + Ansi.fg('', ORANGE) + id + Ansi.reset(''));
 		}
 		if (!Paths.pathExists(XMLPath))
 		{
-			#if !html5 Iris.warn #else trace #end ('Nonexistant level data file (XML): ' + levelID);
+			#if !html5 Iris.warn #else trace #end ('Nonexistant level data file (XML): ' + Ansi.fg('', ORANGE) + id + Ansi.reset(''));
 		}
 
 		assetFolders = {
@@ -103,21 +104,23 @@ class LevelModule
 
 	public function parseJSON(data:LevelData, levelID:String)
 	{
-		trace('Level(' + Ansi.fg('', ORANGE) + levelID + Ansi.reset('') + ') JSON being parsed');
+		id = ((data.id == null) ? levelID : data.id);
+		trace('Level(' + Ansi.fg('', ORANGE) + id + Ansi.reset('') + ') JSON being parsed');
 		displayName = data.displayName;
 		authors = data.authors;
 		unlocked = data.unlocked;
-		id = (data.id ?? levelID);
 		assetFolders = data.assetFolders;
 	}
 
 	public function parseXML(data:Access, levelID:String)
 	{
+		id = ((data.att.id == null) ? levelID : data.att.id);
+
 		for (element in data.elements)
 		{
 			try
 			{
-				trace('Level(' + Ansi.fg('', ORANGE) + levelID + Ansi.reset('') + ') XML Element(' + Ansi.fg('', ORANGE) + element.name + Ansi.reset('')
+				trace('Level(' + Ansi.fg('', ORANGE) + id + Ansi.reset('') + ') XML Element(' + Ansi.fg('', ORANGE) + element.name + Ansi.reset('')
 					+ ') being parsed');
 
 				if (element.name.toLowerCase() == 'displayname')
