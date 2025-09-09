@@ -9,7 +9,7 @@ import game.desktop.DesktopMain;
 import game.desktop.DesktopPlay;
 import game.levels.LevelModule;
 import game.levels.LevelSpriteGroup;
-import game.modding.PolymodHandler;
+import game.modding.ModList;
 import game.scripts.ScriptManager;
 import game.scripts.WebScripts;
 import game.scripts.events.AddedEvent;
@@ -104,7 +104,7 @@ class InitState extends FlxState
 		#if html5
 		ScriptManager.checkForUpdatedScripts();
 		#end
-		PolymodHandler.loadMods();
+		ModList.loadMods();
 
 		FlxSprite.defaultAntialiasing = true;
 

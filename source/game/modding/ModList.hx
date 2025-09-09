@@ -1,19 +1,21 @@
 package game.modding;
 
 import flixel.FlxG;
-#if polymod
-import polymod.Polymod.ModMetadata;
-#end
+import game.modding.ModMetaData.ModMetadata;
+import game.utils.MapUtil;
+import haxe.Json;
+import sys.FileSystem;
 
 class ModList
 {
+	public static var MAXIMUM_MOD_VERSION:String = '1.0.0';
+	public static var MINIMUM_MOD_VERSION:String = '0.0.0';
+
+	public static var outdatedMods:Array<String> = [];
+
 	public static var modList:Map<String, Bool> = [];
 
-	#if polymod
 	public static var modMetadatas:Map<String, ModMetadata> = [];
-	#else
-	public static var modMetadatas:Map<String, Dynamic> = [];
-	#end
 
 	public static function setModEnabled(mod:String, enabled:Bool):Void
 	{
@@ -48,7 +50,41 @@ class ModList
 		return activeMods;
 	}
 
-	public static function load():Void
+	public static function loadMods():Void
+	{
+		#if sys
+		modList.clear();
+		modMetadatas.clear();
+
+		for (mod in FileSystem.readDirectory('mods/'))
+		{
+			if (FileSystem.exists('mods/' + mod + '/' + ModMetadata.modMetadataFile))
+			{
+				var nullError = false;
+				var modMeta:ModMetadata;
+				try
+				{
+					modMeta = ModMetadata.fromJsonStr(Json.parse('mods/' + mod + '/' + ModMetadata.modMetadataFile));
+				}
+				catch (e)
+				{
+					nullError = true;
+					modMeta = null;
+				}
+				if (!nullError)
+				{
+					trace('Valid mod(' + Ansi.fg('', ORANGE) + mod + Ansi.reset('') + ')');
+					modList.set(mod, false);
+					modMetadatas.set(mod, modMeta);
+				}
+			}
+		}
+		#end
+
+		for (mod in MapUtil.keysArray(modList)) {}
+	}
+
+	public static function loadModList():Void
 	{
 		try
 		{
