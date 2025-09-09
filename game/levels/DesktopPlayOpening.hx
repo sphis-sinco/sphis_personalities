@@ -45,10 +45,9 @@ function onCreate(event:CreateEvent)
 						return levelGrp.levelID == level;
 					});
 
-					DesktopPlay.instance.camFollow.x = levelGrp.levelIcon.x;
-
-					FlxTimer.wait(1, () ->
+					FlxTimer.wait(1 * (levelGrp.ID + 1), () ->
 					{
+						DesktopPlay.instance.camFollow.x = levelGrp.levelIcon.x;
 						levelGrp.lock.loadGraphic(Paths.getImagePath('levels/desktop-icons/unlock'));
 						FlxTimer.wait(.25, () ->
 						{
