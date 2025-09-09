@@ -26,7 +26,6 @@ class LevelModule
 		}
 		else
 		{
-			trace('Level(' + Ansi.fg('', ORANGE) + id + Ansi.reset('') + ') Module already loaded');
 			var module = loadedModules.get(id);
 
 			try
@@ -41,6 +40,8 @@ class LevelModule
 			{
 				loadModule(id);
 			}
+
+			trace('Level(' + Ansi.fg('', ORANGE) + id + Ansi.reset('') + ') Module already loaded');
 		}
 	}
 
