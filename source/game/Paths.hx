@@ -1,5 +1,8 @@
 package game;
 
+import game.modding.ModList;
+import game.utils.MapUtil;
+
 using StringTools;
 
 #if sys
@@ -11,17 +14,34 @@ import lime.utils.Assets;
 
 class Paths
 {
-	public static function getModPath(mod:String, path:String)
+	public static function getModPath(path:String, ?mod:String)
 	{
-		return 'mods/' + mod + '/' + path;
+		var retPath:String = 'mods/' + mod + '/' + path;
+
+		if (mod == null)
+		{
+			var keepChecking = true;
+			for (modID in MapUtil.keysArray(ModList.modList))
+			{
+				if (keepChecking)
+				{
+					retPath = 'mods/' + modID + '/' + path;
+
+					if (pathExists(retPath))
+						keepChecking = false;
+				}
+			}
+		}
+
+		return retPath;
 	}
 
-	public static function getModGamePath(mod:String, path:String)
+	public static function getModGamePath(path:String, ?mod:String)
 	{
 		return getModPath(mod, getGamePath(path));
 	}
 
-	public static function getModImagePath(mod:String, path:String)
+	public static function getModImagePath(path:String, ?mod:String)
 	{
 		return getModGamePath(mod, path + '.png');
 	}
