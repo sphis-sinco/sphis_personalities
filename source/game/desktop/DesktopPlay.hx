@@ -75,16 +75,17 @@ class DesktopPlay extends State
 
 		for (level in levels)
 		{
+			levelMetas.push(new LevelModule(level));
+
 			var levelGrp = new LevelSpriteGroup();
 			levelGrp.ID = i;
 			levelsGrp.add(levelGrp);
 
 			levelGrp.scale = .5;
-			levelGrp.levelID = level;
+			levelGrp.levelID = levelMetas[i].id;
 
 			levelGrp.loadLevelAsset();
 
-			levelMetas.push(new LevelModule(level));
 			levelGrp.locked = !(levelMetas[i].unlocked ?? true);
 
 			var textField = new FlxText();
