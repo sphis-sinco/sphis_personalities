@@ -1,3 +1,4 @@
+import flixel.FlxG;
 import game.desktop.DesktopPlay;
 import game.scripts.events.UpdateEvent;
 import game.scripts.imports.FlxScriptedAxes;
@@ -17,7 +18,11 @@ function onUpdate(event:UpdateEvent)
 			if (DesktopPlay.instance.curSel == levelGrp.ID)
 			{
 				DesktopPlay.instance.camFollow.x = levelGrp.levelIcon.getGraphicMidpoint().x;
+
 				levelGrp.levelIcon.color = 0xFFFF00;
+				if (FlxG.save != null && FlxG.save.data.newlevels != null)
+					if (FlxG.save.data.newlevels.contains(levelGrp.levelID))
+						levelGrp.levelIcon.color = 0x00FF00;
 			}
 
 			DesktopPlay.instance.levelsTextGrp.members[levelGrp.ID].color = levelGrp.levelIcon.color;
