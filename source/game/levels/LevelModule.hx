@@ -15,6 +15,7 @@ class LevelModule
 	public var unlocked:Bool;
 
 	public var id:String;
+	public var levelID:String;
 
 	public var assetFolders:AssetFolders;
 
@@ -22,6 +23,7 @@ class LevelModule
 	{
 		var exists = false;
 		id = levelID;
+		this.levelID = levelID;
 
 		for (id in MapUtil.keysArray(loadedModules))
 			if (!exists)
@@ -29,11 +31,11 @@ class LevelModule
 
 		if (!exists)
 		{
-			id = levelID;
-			loadModule(id);
+			loadModule(levelID);
 		}
 		else
 		{
+			trace('Level(' + Ansi.fg('', ORANGE) + levelID + Ansi.reset('') + ') Module already loaded');
 			var module = loadedModules.get(id);
 
 			try
@@ -46,10 +48,8 @@ class LevelModule
 			}
 			catch (_)
 			{
-				loadModule(id);
+				loadModule(levelID);
 			}
-
-			trace('Level(' + Ansi.fg('', ORANGE) + id + Ansi.reset('') + ') Module already loaded');
 		}
 	}
 
