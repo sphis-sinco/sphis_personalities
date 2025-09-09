@@ -20,17 +20,7 @@ class LevelModule
 	public function new(levelID:String)
 	{
 		id = levelID;
-		var loadOGlI = true;
-		for (module in loadedModules)
-		{
-			if (module.id == id)
-			{
-				loadOGlI = false;
-				trace('Another Level(' + Ansi.fg('', ORANGE) + module.id + Ansi.reset('') + ') Module loaded, loading Module...');
-			}
-		}
-
-		if (!loadedModules.exists(id) && loadOGlI)
+		if (!loadedModules.exists(id))
 		{
 			loadModule(id);
 		}
