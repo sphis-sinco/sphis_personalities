@@ -58,12 +58,12 @@
 	<haxelib name="lime" />
 	<haxelib name="openfl" />
 
-	<haxelib name="hxcpp-debug-server" if="windows debug" />
+	<haxelib name="hxcpp-debug-server" if="windows debug"/>
 
-	<section unless="disable_modSupport">
-		<haxelib name="thx.semver" />
+	<section unless="disable_polymodSupport">
+		<haxelib name="polymod" />
 		<assets path="mods" />
-		<assets path="mods-debug" rename="mods" if="debug" />
+		<assets path="mods-debug" rename="mods" if="debug"/>
 	</section>
 
 	<haxelib name="hscript" unless="scripts_disableScripts" />

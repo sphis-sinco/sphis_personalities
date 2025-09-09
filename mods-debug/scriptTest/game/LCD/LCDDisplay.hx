@@ -14,12 +14,12 @@ var scanlineAngle = FlxG.random.float(0, 360);
 function onCreate(event:CreateEvent)
 {
 	scanlineLayerOne = new FlxSprite();
-	scanlineLayerOne.loadGraphic(Paths.getModImagePath('LCD/scanlines'));
+	scanlineLayerOne.loadGraphic(Paths.getImagePath('LCD/scanlines'));
 	scanlineLayerOne.screenCenter();
 	scanlineLayerOne.scrollFactor.set(0, 0);
 
 	scanlineLayerTwo = new FlxSprite();
-	scanlineLayerTwo.loadGraphic(Paths.getModImagePath('LCD/scanlines'));
+	scanlineLayerTwo.loadGraphic(Paths.getImagePath('LCD/scanlines'));
 	scanlineLayerTwo.screenCenter();
 	scanlineLayerTwo.scrollFactor.set(0, 0);
 

@@ -1,6 +1,7 @@
 {
 	"title":"Image Replacement test",
 	"description":"This mod is for testing image replacement via polymod",
+	"homepage": "about:blank",
 	"contributors": [
 		{
 			"name": "Sphis_Sinco",
@@ -8,5 +9,6 @@
 		}
 	],
 	"api_version":"0.0.0",
-	"mod_version":"1.0.0"
+	"mod_version":"1.0.0",
+	"license":"CC BY 4.0,MIT"
 }
