@@ -2,6 +2,7 @@ package game.levels;
 
 import crowplexus.iris.Iris;
 import game.levels.LevelData.AssetFolders;
+import game.utils.MapUtil;
 import haxe.Json;
 import haxe.xml.Access;
 
@@ -19,9 +20,16 @@ class LevelModule
 
 	public function new(levelID:String)
 	{
+		var exists = false;
 		id = levelID;
-		if (!loadedModules.exists(id))
+
+		for (id in MapUtil.keysArray(loadedModules))
+			if (!exists)
+				exists = levelID == id;
+
+		if (!exists)
 		{
+			id = levelID;
 			loadModule(id);
 		}
 		else
