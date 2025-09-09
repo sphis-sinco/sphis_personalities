@@ -66,19 +66,14 @@ class Paths
 
 						if (Defines.get('typeArray_dupeFilePrevention'))
 						{
-							if ((!arr_rawFileNames.contains(file)) && !arr.contains(getGamePath(path)))
+							if ((!arr_rawFileNames.contains(folder + endsplitter + file)) && !arr.contains(getGamePath(path)))
 							{
-								arr_rawFileNames.push(file);
+								arr_rawFileNames.push(folder + endsplitter + file);
 								arr.push(getGamePath(path));
 							}
 						}
-						else
-						{
-							if (!arr.contains(getGamePath(path)))
-							{
-								arr.push(getGamePath(path));
-							}
-						}
+						else if (!arr.contains(getGamePath(path)))
+							arr.push(getGamePath(path));
 					}
 
 				if (!file.contains('.'))
