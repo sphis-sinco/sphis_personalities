@@ -1,6 +1,8 @@
 import flixel.FlxG;
+import flixel.effects.FlxFlicker;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import flixel.util.FlxTimer;
 import game.desktop.DesktopPlay;
 import game.scripts.events.CreateEvent;
 
@@ -16,12 +18,9 @@ function onCreate(event:CreateEvent)
 				FlxTween.tween(obj.levelIcon, {alpha: obj.targAlpha}, 1, {
 					ease: FlxEase.sineInOut
 				});
-				if (FlxG.save != null)
+				if (FlxG.save != null && FlxG.save.data.newlevels != null)
 					if (FlxG.save.data.newlevels.contains(obj.levelID))
-					{
-						// obj.lock.loadGraphic(Paths.getImagePath('levels/desktop-icons/unlock'));
 						obj.lock.visible = true;
-					}
 				obj.lock.alpha = 0;
 				FlxTween.tween(obj.lock, {alpha: 1}, 1, {
 					ease: FlxEase.sineInOut
@@ -33,6 +32,30 @@ function onCreate(event:CreateEvent)
 				FlxTween.tween(obj, {alpha: 1}, 1, {
 					ease: FlxEase.sineInOut
 				});
+			}
+
+			if (FlxG.save != null && FlxG.save.data.newlevels != null)
+			{
+				var newlevels:Array<String> = FlxG.save.data.newlevels;
+
+				for (level in newlevels)
+				{
+					var levelGrp = DesktopPlay.instance.levelsGrp.getFirst(function(levelGrp:LevelSpriteGroup)
+					{
+						return levelGrp.levelID == level;
+					});
+
+					DesktopPlay.instance.camFollow.x = levelGrp.levelIcon.x;
+
+					FlxTimer.wait(1, () ->
+					{
+						levelGrp.lock.loadGraphic(Paths.getImagePath('levels/desktop-icons/unlock'));
+						FlxTimer.wait(.25, () ->
+						{
+							FlxFlicker.flicker(levelGrp.lock, 1, 0.04, false);
+						});
+					});
+				}
 			}
 		});
 	}

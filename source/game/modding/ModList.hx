@@ -18,7 +18,7 @@ class ModList
 	public static function setModEnabled(mod:String, enabled:Bool):Void
 	{
 		modList.set(mod, enabled);
-		if (FlxG.save != null)
+		if (FlxG.save != null && FlxG.save.data.modlist != null)
 			FlxG.save.data.modList = modList;
 	}
 
@@ -50,7 +50,7 @@ class ModList
 	{
 		try
 		{
-			if (FlxG.save != null)
+			if (FlxG.save != null && FlxG.save.data.modlist != null)
 			{
 				modList = FlxG.save.data.modList;
 

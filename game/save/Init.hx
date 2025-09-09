@@ -1,4 +1,5 @@
 import flixel.FlxG;
+import game.Defines;
 import game.modding.ModList;
 import game.scripts.events.AddedEvent;
 import lime.app.Application;
@@ -7,7 +8,10 @@ var levels = ['level1'];
 
 function onAdded(event:AddedEvent)
 {
-	FlxG.save.bind('PersonalitiesHAXEN', Application.current.meta.get('company'));
+	if (!Defines.get('blankSave'))
+		FlxG.save.bind('PersonalitiesHAXEN', Application.current.meta.get('company'));
+	else
+		FlxG.save.bind('PersonalitiesHAXEN-blankSave', Application.current.meta.get('company'));
 
 	if (FlxG.save.data.version == null)
 	{

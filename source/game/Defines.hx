@@ -44,6 +44,8 @@ class Defines
 
 			set('typeArray_foundfilesfunc_traces', Compiler.getDefine('typeArray_foundfilesfunc_traces') == '1');
 			set('typeArray_dupeFilePrevention', Compiler.getDefine('typeArray_dupeFilePrevention') == '1');
+
+			set('blankSave', Compiler.getDefine('blankSave') == '1');
 		}
 		catch (_) {}
 
