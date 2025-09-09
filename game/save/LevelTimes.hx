@@ -20,7 +20,8 @@ function onCreate(event:CreateEvent)
 
 	levelTimerText = new FlxText();
 	levelTimerText.size = 16;
-	levelTimerText.y = 32;
+	levelTimerText.x = 32;
+	levelTimerText.y = levelTimerText.x;
 	levelTimerText.color = FlxScriptedColor.WHITE;
 	levelTimerText.setBorderStyle(FlxTextScriptedBorderStyle.OUTLINE, FlxScriptedColor.BLACK, 2);
 	levelTimerText.alpha = 0.75;
@@ -44,8 +45,7 @@ function onCreate(event:CreateEvent)
 
 function onUpdate(event:UpdateEvent)
 {
-	levelTimerText.text = '' + levelTime;
-	levelTimerText.screenCenter(FlxScriptedAxes.X);
+	levelTimerText.text = 'Time survived: ' + levelTime;
 
 	if (levelTimer.active)
 	{
