@@ -28,7 +28,10 @@ class Paths
 					retPath = 'mods/' + modID + '/' + path;
 
 					if (pathExists(retPath))
+					{
+						trace('Found mod path(mod:' + mod + ', path:' + path + '): ' + retPath);
 						keepChecking = false;
+					}
 				}
 			}
 		}
