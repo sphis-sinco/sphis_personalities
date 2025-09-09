@@ -4,7 +4,7 @@ import game.modding.ModList;
 import game.scripts.events.AddedEvent;
 import lime.app.Application;
 
-var levels = ['level1', 'l1c'];
+var levels = ['level1'];
 
 function onAdded(event:AddedEvent)
 {
