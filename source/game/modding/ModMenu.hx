@@ -6,7 +6,7 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import game.desktop.DesktopMain;
 import game.modding.ModList;
-import game.utils.MapUtil;
+import game.modding.PolymodHandler;
 import openfl.display.BitmapData;
 import thx.semver.Version;
 
@@ -56,7 +56,7 @@ class ModMenu extends State
 		modText.scrollFactor.set();
 		add(modText);
 
-		if (MapUtil.keysArray(ModList.modMetadatas).length < 1)
+		if (PolymodHandler.metadataArrays.length < 1)
 		{
 			modText.text = 'No mods';
 			modText.alignment = CENTER;
@@ -93,13 +93,13 @@ class ModMenu extends State
 		{
 			if (FlxG.save != null)
 				FlxG.save.flush();
-			ModList.loadMods();
+			PolymodHandler.loadMods();
 			FlxG.switchState(() -> new DesktopMain());
 		}
 
 		if (Controls.getControlJustReleased('general_reload'))
 		{
-			ModList.loadMods();
+			PolymodHandler.loadMods();
 		}
 
 		if (Controls.getControlJustReleased('ui_accept'))
@@ -118,25 +118,25 @@ class ModMenu extends State
 			updateSel();
 		}
 
-		if (curSelected >= MapUtil.keysArray(ModList.modMetadatas).length - 1)
+		if (curSelected >= PolymodHandler.metadataArrays.length - 1)
 		{
-			curSelected = MapUtil.keysArray(ModList.modMetadatas).length - 1;
+			curSelected = PolymodHandler.metadataArrays.length - 1;
 			rightTxt = ' |';
 			updateSel();
 		}
 
-		if (MapUtil.keysArray(ModList.modMetadatas).length >= 1)
+		if (PolymodHandler.metadataArrays.length >= 1)
 		{
 			modText.alpha = ModList.getModEnabled(curModId) ? 1.0 : 0.6;
 
 			var outdatedText:String = '';
 			modText.color = FlxColor.WHITE;
 
-			if (ModList.outdatedMods.contains(curModId))
+			if (PolymodHandler.outdatedMods.contains(curModId))
 			{
 				// Commented out code is from Dreamland
 
-				var higherVersion = ModList.modMetadatas.get(curModId).apiVersion.greaterThan(ModList.MAXIMUM_MOD_VERSION);
+				var higherVersion = ModList.modMetadatas.get(curModId).apiVersion.greaterThan(PolymodHandler.MAXIMUM_MOD_VERSION);
 
 				outdatedText = ' \n%Outdated ';
 
@@ -171,10 +171,10 @@ class ModMenu extends State
 	function updateSel()
 	{
 		modIcon.loadGraphic(Paths.getImagePath('default-mod-icon'));
-		if (MapUtil.keysArray(ModList.modMetadatas).length < 1)
+		if (PolymodHandler.metadataArrays.length < 1)
 			return;
 
-		curModId = MapUtil.keysArray(ModList.modMetadatas)[curSelected];
+		curModId = PolymodHandler.metadataArrays[curSelected];
 		var modMeta = ModList.modMetadatas.get(curModId);
 
 		try

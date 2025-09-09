@@ -31,7 +31,7 @@ function onAdded(event:AddedEvent)
 	{
 		FlxG.save.data.modList = [];
 	}
-	ModList.loadMods();
+	ModList.load();
 	if (FlxG.save.data.levels == null)
 	{
 		FlxG.save.data.levels = [];
