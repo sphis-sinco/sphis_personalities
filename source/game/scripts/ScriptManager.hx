@@ -10,7 +10,6 @@ import game.levels.LevelModule;
 import game.levels.LevelSpriteGroup;
 import game.modding.ModList;
 import game.modding.ModMenu;
-import game.modding.PolymodHandler;
 import game.scripts.events.BaseEvent;
 import game.scripts.events.BaseStateEvent;
 import game.scripts.events.CreateEvent;
@@ -31,7 +30,7 @@ class ScriptManager
 	public static var SCRIPT_EXTS:Array<String> = ['hx'];
 
 	public static var SCRIPT_FOLDERS:Array<String> = [
-		#if !disable_polymodSupport
+		#if !disable_modSupport
 		'mods/',
 		#end
 		Paths.getGamePath('game/'),
@@ -317,7 +316,6 @@ class ScriptManager
 		script.set('Defines', Defines, false);
 		script.set('GameVersion', GameVersion, false);
 
-		script.set('PolymodHandler', PolymodHandler, false);
 		script.set('ModMenu', ModMenu, false);
 		script.set('ModList', ModList, false);
 
