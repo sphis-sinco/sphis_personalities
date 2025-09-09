@@ -19,13 +19,10 @@ function onUpdate(event:UpdateEvent)
 			{
 				DesktopPlay.instance.camFollow.x = levelGrp.levelIcon.getGraphicMidpoint().x;
 
+				levelGrp.levelIcon.color = 0xFFFF00;
 				if (FlxG.save != null && FlxG.save.data.newlevels != null)
 					if (FlxG.save.data.newlevels.contains(levelGrp.levelID))
 						levelGrp.levelIcon.color = 0x00FF00;
-					else
-						levelGrp.levelIcon.color = 0xFFFF00;
-				else
-					levelGrp.levelIcon.color = 0xFFFF00;
 			}
 
 			DesktopPlay.instance.levelsTextGrp.members[levelGrp.ID].color = levelGrp.levelIcon.color;
