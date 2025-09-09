@@ -11,7 +11,10 @@ function onAdded(event:AddedEvent)
 	if (!Defines.get('blankSave'))
 		FlxG.save.bind('PersonalitiesHAXEN', Application.current.meta.get('company'));
 	else
+	{
 		FlxG.save.bind('PersonalitiesHAXEN-blankSave', Application.current.meta.get('company'));
+		FlxG.save.erase();
+	}
 
 	if (FlxG.save.data.version == null)
 	{
