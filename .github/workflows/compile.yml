@@ -38,6 +38,7 @@ jobs:
           haxelib install hscript
           haxelib install hscript-iris
           haxelib install hxcpp-debug-server
+          haxelib install polymod
           haxelib list
       - name: Compile
         run: haxelib run lime build Project.xml linux
@@ -69,6 +70,7 @@ jobs:
           haxelib install hscript
           haxelib install hscript-iris
           haxelib install hxcpp-debug-server
+          haxelib install polymod
           haxelib list
         shell: cmd
       - name: Compile
@@ -101,6 +103,7 @@ jobs:
           haxelib install hscript
           haxelib install hscript-iris
           haxelib install hxcpp-debug-server
+          haxelib install polymod
           haxelib list
       - name: Compile
         run: haxelib run lime build mac
@@ -132,6 +135,7 @@ jobs:
           haxelib install hscript
           haxelib install hscript-iris
           haxelib install hxcpp-debug-server
+          haxelib install polymod
           haxelib list
       - name: Compile
         run: haxelib run lime build hl
