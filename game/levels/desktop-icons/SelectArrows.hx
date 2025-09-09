@@ -63,11 +63,11 @@ function onUpdate(event:UpdateEvent)
 
 			if (arrowsnotLeaving)
 			{
-				if (DesktopPlay.instance.curSel >= 0)
+				if (DesktopPlay.instance.curSel - 1 > 0)
 					leftArrow.alpha = .5;
 				else
 					leftArrow.alpha = 1;
-				if (DesktopPlay.instance.curSel <= DesktopPlay.instance.levels.length - 1)
+				if (DesktopPlay.instance.curSel + 1 >= DesktopPlay.instance.levels.length)
 					rightArrow.alpha = .5;
 				else
 					rightArrow.alpha = 1;
