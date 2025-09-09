@@ -81,11 +81,14 @@ class ModList
 		}
 		#end
 
-		for (mod in MapUtil.keysArray(modList)) {}
+		loadModList();
 	}
 
 	public static function loadModList():Void
 	{
+		if (modList == null)
+			modList = [];
+
 		try
 		{
 			if (FlxG.save != null && FlxG.save.data.modList != null)
@@ -97,18 +100,21 @@ class ModList
 
 				if (modList != null)
 					for (key => value in modList)
-					{
 						trace('Mod(' + Ansi.fg('', ORANGE) + key + Ansi.reset('') + ') enabled: ' + value);
-					}
 			}
 			else
-			{
-				modList = [];
-			}
+				modList.clear();
 		}
 		catch (e)
 		{
-			modList = [];
+			modList.clear();
 		}
+
+		for (mod in MapUtil.keysArray(modMetadatas))
+			if (!modList.exists(mod))
+			{
+				trace('Re-added mod(' + Ansi.fg('', ORANGE) + mod + Ansi.reset('') + ')');
+				modList.set(mod, false);
+			}
 	}
 }
