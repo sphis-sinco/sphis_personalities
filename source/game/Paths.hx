@@ -11,6 +11,21 @@ import lime.utils.Assets;
 
 class Paths
 {
+	public static function getModPath(mod:String, path:String)
+	{
+		return 'mods/' + mod + '/' + path;
+	}
+
+	public static function getModGamePath(mod:String, path:String)
+	{
+		return getModPath(mod, getGamePath(path));
+	}
+
+	public static function getModImagePath(mod:String, path:String)
+	{
+		return getModGamePath(mod, path + '.png');
+	}
+
 	public static function getGamePath(path:String)
 	{
 		var startsWithDir = false;
