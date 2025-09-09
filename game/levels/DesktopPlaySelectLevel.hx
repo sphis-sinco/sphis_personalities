@@ -33,6 +33,9 @@ function onUpdate(event:UpdateEvent)
 
 				FlxG.camera.fade(FlxScriptedColor.BLACK, 1, false, () ->
 				{
+					if (FlxG.save != null && FlxG.save.data.newlevels != null)
+						if (FlxG.save.data.newlevels.contains(id))
+							FlxG.save.data.newlevels.remove(id);
 					FlxG.switchState(() -> new BlankState(id));
 				});
 			}
