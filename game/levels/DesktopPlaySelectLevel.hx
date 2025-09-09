@@ -28,14 +28,13 @@ function onUpdate(event:UpdateEvent)
 				var id = '';
 				if (DesktopPlay.instance.levelMetas[savedSelection].id != null)
 					id = DesktopPlay.instance.levelMetas[savedSelection].id;
-				else
-					id = DesktopPlay.instance.levels[savedSelection];
+
+				if (FlxG.save != null && FlxG.save.data.newlevels != null)
+					if (FlxG.save.data.newlevels.contains(id))
+						FlxG.save.data.newlevels.remove(id);
 
 				FlxG.camera.fade(FlxScriptedColor.BLACK, 1, false, () ->
 				{
-					if (FlxG.save != null && FlxG.save.data.newlevels != null)
-						if (FlxG.save.data.newlevels.contains(id))
-							FlxG.save.data.newlevels.remove(id);
 					FlxG.switchState(() -> new BlankState(id));
 				});
 			}

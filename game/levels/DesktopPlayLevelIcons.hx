@@ -25,6 +25,12 @@ function onUpdate(event:UpdateEvent)
 						levelGrp.levelIcon.color = 0x00FF00;
 			}
 
+			if (FlxG.save != null && FlxG.save.data.newlevels != null)
+				if (FlxG.save.data.newlevels.contains(levelGrp.levelID))
+				{
+					DesktopPlay.instance.levelsTextGrp.members[levelGrp.ID].text = DesktopPlay.instance.levelMetas[levelGrp.ID].displayName;
+					DesktopPlay.instance.levelsTextGrp.members[levelGrp.ID].text += ' (new)';
+				}
 			DesktopPlay.instance.levelsTextGrp.members[levelGrp.ID].color = levelGrp.levelIcon.color;
 		}
 	}
