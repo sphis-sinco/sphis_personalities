@@ -28,7 +28,7 @@ class ModList
 			return false;
 
 		if (!modList.exists(mod))
-			setModEnabled(mod, true);
+			setModEnabled(mod, false);
 
 		return modList.get(mod);
 	}
