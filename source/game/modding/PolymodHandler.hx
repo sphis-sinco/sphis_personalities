@@ -13,7 +13,7 @@ import polymod.format.ParseRules;
 class PolymodHandler
 {
 	public static var MINIMUM_MOD_VERSION:String = "0.0.0";
-	public static var MAXIMUM_MOD_VERSION:String = GameVersion.get.nextMajor.toString();
+	public static var MAXIMUM_MOD_VERSION:String = GameVersion.get.nextMajor().toString();
 
 	public static var metadataArrays:Array<String> = [];
 	public static var outdatedMods:Array<String> = [];
