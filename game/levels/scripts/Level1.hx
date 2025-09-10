@@ -1,6 +1,7 @@
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
@@ -20,6 +21,7 @@ var op:FlxSprite;
 var op_attacking:Bool;
 var hands:FlxTypedGroup<FlxSprite>;
 var pauseBG:FlxSprite;
+var pauseText:FlxText;
 var tick = 0;
 
 function onCreate(event:CreateEvent)
@@ -60,6 +62,17 @@ function onCreate(event:CreateEvent)
 		pauseBG.makeGraphic(FlxG.width, FlxG.height, FlxScriptedColor.BLACK);
 		pauseBG.screenCenter();
 
+		pauseText = new FlxText();
+		pauseText.size = 16;
+
+		pauseText.text = 'Paused\n\n';
+		pauseText.text += 'Level 1\n';
+		pauseText.text += ' | Art: Sphis\n';
+		pauseText.text += ' | Programming: Sphis\n';
+
+		pauseText.alignment = 'right';
+		pauseText.x = FlxG.width - pauseText.width;
+
 		BlankState.instance.add(lvl1_bg_sky);
 
 		BlankState.instance.add(op);
@@ -70,6 +83,7 @@ function onCreate(event:CreateEvent)
 		BlankState.instance.add(hands);
 
 		BlankState.instance.add(pauseBG);
+		BlankState.instance.add(pauseText);
 
 		op_attacking = false;
 		FlxTween.tween(op, {y: op_resting_YPos}, 2, {
@@ -200,6 +214,8 @@ function onUpdate(event:UpdateEvent)
 		}
 		if (Controls.getControlJustReleased('game_pause'))
 		{
+			pauseText.visible = level_paused;
+
 			level_paused = !level_paused;
 
 			FlxTimer.globalManager.active = !level_paused;
