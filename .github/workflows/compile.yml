@@ -1,146 +1,206 @@
+name: Auto-compiled builds (Dekstop)
+
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+        push:
+                branches-ignore: [randomBranchName]
+        pull_request:
+                branches-ignore: [randomBranchName]
+        workflow_dispatch:
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  buildLinux:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+        buildLinux:
+                runs-on: ubuntu-22.04
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v5
+                steps:
+                        - uses: actions/checkout@main
 
-      - uses: krdlab/setup-haxe@master
-        with:
-          haxe-version: 4.3.7
-      # Runs a set of commands using the runners shell
-      - name: Install Haxelib
-        run: |
-          sudo apt-get install libvlc-dev
-          sudo apt-get install libvlccore-dev
-          haxelib setup ~/haxelib
-          haxelib install hxcpp > /dev/null
-          haxelib install lime
-          haxelib install openfl
-          haxelib --never install flixel
-          haxelib run lime setup flixel
-          haxelib run lime setup
-          haxelib install hscript
-          haxelib install hscript-iris
-          haxelib install hxcpp-debug-server
-          haxelib install polymod
-          haxelib list
-      - name: Compile
-        run: haxelib run lime build Project.xml linux
-      - name: Publish Artifact
-        uses: actions/upload-artifact@v4.6.2
-        with:
-          name: linuxBuild
-          path: 'export/release/linux/bin'
-  buildWindows:
-    runs-on: windows-latest
+                        - uses: krdlab/setup-haxe@master
+                          with:
+                                  haxe-version: 4.3.7
 
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v5
+                        - name: Restore Previous Cache
+                          id: cache-build-restore
+                          uses: actions/cache/restore@main
+                          with:
+                                  path: |
+                                          .haxelib/
+                                          export/release/linux/haxe/
+                                          export/release/linux/obj/
+                                  key: cache-build-linux
 
-      - uses: krdlab/setup-haxe@master
-        with:
-          haxe-version: 4.3.7
-      # Runs a set of commands using the runners shell
-      - name: Install Haxelib
-        run: |
-          haxelib setup C:/haxelib
-          haxelib install hxcpp > nul
-          haxelib install lime
-          haxelib install openfl
-          haxelib --never install flixel
-          haxelib run lime setup flixel
-          haxelib run lime setup
-          haxelib install hscript
-          haxelib install hscript-iris
-          haxelib install hxcpp-debug-server
-          haxelib install polymod
-          haxelib list
-        shell: cmd
-      - name: Compile
-        run: haxelib run lime build windows
-      - name: Publish Artifact
-        uses: actions/upload-artifact@v4.6.2
-        with:
-          name: windowsBuild
-          path: export/release/windows/bin
-  buildMac:
-    runs-on: macos-latest
+                        - name: Installing Libraries
+                          run: haxe --interp -cp ./actions/libs-installer -D analyzer-optimize -main Main
+                        - name: Create Version Tag
+                          run: echo "${{github.run_id}}" > VERSION
 
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v5
+                        - name: Compile
+                          run: haxelib run lime build linux
 
-      - uses: krdlab/setup-haxe@master
-        with:
-          haxe-version: 4.3.7
-      # Runs a set of commands using the runners shell
-      - name: Install Haxelib
-        run: |
-          haxelib setup ~/haxelib
-          haxelib install hxcpp > /dev/null
-          haxelib install lime
-          haxelib install openfl
-          haxelib --never install flixel
-          haxelib run lime setup flixel
-          haxelib run lime setup
-          haxelib install hscript
-          haxelib install hscript-iris
-          haxelib install hxcpp-debug-server
-          haxelib install polymod
-          haxelib list
-      - name: Compile
-        run: haxelib run lime build mac
-      - name: Publish Artifact
-        uses: actions/upload-artifact@v4.6.2
-        with:
-          name: macBuild
-          path: export/release/macos/bin
-  buildHashlink:
-    runs-on: windows-latest
+                        - name: Clear Previous Cache
+                          uses: actions/github-script@main
+                          with:
+                                  script: await require('./actions/cache/clear-cache.js')({github, context}, 'cache-build-linux');
 
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v5
+                        - name: Save Current Cache
+                          uses: actions/cache@main
+                          with:
+                                  key: cache-build-linux
+                                  path: |
+                                          .haxelib/
+                                          export/release/linux/haxe/
+                                          export/release/linux/obj/
+                                  restore-keys: |
+                                          cache-build-linux
 
-      - uses: krdlab/setup-haxe@master
-        with:
-          haxe-version: 4.3.7
-      # Runs a set of commands using the runners shell
-      - name: Install Haxelib
-        run: |
-          haxelib setup C:/haxelib
-          haxelib install hxcpp > nul
-          haxelib install lime
-          haxelib install openfl
-          haxelib --never install flixel
-          haxelib run lime setup flixel
-          haxelib run lime setup
-          haxelib install hscript
-          haxelib install hscript-iris
-          haxelib install hxcpp-debug-server
-          haxelib install polymod
-          haxelib list
-      - name: Compile
-        run: haxelib run lime build hl
-      - name: Publish Artifact
-        uses: actions/upload-artifact@v4.6.2
-        with:
-          name: hashlinkBuild
-          path: export/release/hl/bin
+                        - name: Publish Artifact
+                          uses: actions/upload-artifact@main
+                          with:
+                                  name: linuxBuild
+                                  path: export/release/linux/bin
+        buildWindows:
+                runs-on: windows-latest
+
+                steps:
+                        - uses: actions/checkout@main
+
+                        - uses: krdlab/setup-haxe@master
+                          with:
+                                  haxe-version: 4.3.7
+
+                        - name: Restore Previous Cache
+                          id: cache-build-restore
+                          uses: actions/cache/restore@main
+                          with:
+                                  path: |
+                                          .haxelib/
+                                          export/release/windows/haxe/
+                                          export/release/windows/obj/
+                                  key: cache-build-windows
+
+                        - name: Installing Libraries
+                          run: haxe --interp -cp ./actions/libs-installer -D analyzer-optimize -main Main
+                        - name: Create Version Tag
+                          run: echo "${{github.run_id}}" > VERSION
+
+                        - name: Compile
+                          run: haxelib run lime build windows
+
+                        - name: Clear Previous Cache
+                          uses: actions/github-script@main
+                          with:
+                                  script: await require('./actions/cache/clear-cache.js')({github, context}, 'cache-build-windows');
+
+                        - name: Save Current Cache
+                          uses: actions/cache@main
+                          with:
+                                  key: cache-build-windows
+                                  path: |
+                                          .haxelib/
+                                          export/release/windows/haxe/
+                                          export/release/windows/obj/
+                                  restore-keys: |
+                                          cache-build-windows
+
+                        - name: Upload Artifact
+                          uses: actions/upload-artifact@main
+                          with:
+                                  name: windowsBuild
+                                  path: export/release/windows/bin
+        buildMac:
+                runs-on: macos-13
+
+                steps:
+                        - uses: actions/checkout@main
+
+                        - uses: krdlab/setup-haxe@master
+                          with:
+                                  haxe-version: 4.3.7
+
+                        - name: Restore Previous Cache
+                          id: cache-build-restore
+                          uses: actions/cache/restore@main
+                          with:
+                                  path: |
+                                          .haxelib/
+                                          export/release/macos/haxe/
+                                          export/release/macos/obj/
+                                  key: cache-build-mac
+
+                        - name: Installing Libraries
+                          run: haxe --interp -cp ./actions/libs-installer -D analyzer-optimize -main Main
+                        - name: Create Version Tag
+                          run: echo "${{github.run_id}}" > VERSION
+
+                        - name: Compile
+                          run: haxelib run lime build mac
+
+                        - name: Clear Previous Cache
+                          uses: actions/github-script@main
+                          with:
+                                  script: await require('./actions/cache/clear-cache.js')({github, context}, 'cache-build-mac');
+
+                        - name: Save Current Cache
+                          uses: actions/cache@main
+                          with:
+                                  key: cache-build-mac
+                                  path: |
+                                          .haxelib/
+                                          export/release/macos/haxe/
+                                          export/release/macos/obj/
+                                  restore-keys: |
+                                          cache-build-mac
+
+                        - name: Publish Artifact
+                          uses: actions/upload-artifact@main
+                          with:
+                                  name: macBuild
+                                  path: export/release/macos/bin
+        buildHashlink:
+                runs-on: windows-latest
+
+                steps:
+                        - uses: actions/checkout@main
+
+                        - uses: krdlab/setup-haxe@master
+                          with:
+                                  haxe-version: 4.3.7
+
+                        - name: Restore Previous Cache
+                          id: cache-build-restore
+                          uses: actions/cache/restore@main
+                          with:
+                                  path: |
+                                          .haxelib/
+                                          export/release/hl/haxe/
+                                          export/release/hl/obj/
+                                  key: cache-build-hl
+
+                        - name: Installing Libraries
+                          run: haxe --interp -cp ./actions/libs-installer -D analyzer-optimize -main Main
+                        - name: Create Version Tag
+                          run: echo "${{github.run_id}}" > VERSION
+
+                        - name: Compile
+                          run: haxelib run lime build hl
+
+                        - name: Clear Previous Cache
+                          uses: actions/github-script@main
+                          with:
+                                  script: await require('./actions/cache/clear-cache.js')({github, context}, 'cache-build-hl');
+
+                        - name: Save Current Cache
+                          uses: actions/cache@main
+                          with:
+                                  key: cache-build-hl
+                                  path: |
+                                          .haxelib/
+                                          export/release/hl/haxe/
+                                          export/release/hl/obj/
+                                  restore-keys: |
+                                          cache-build-hl
+
+                        - name: Publish Artifact
+                          uses: actions/upload-artifact@main
+                          with:
+                                  name: hashlinkBuild
+                                  path: export/release/hl/bin
