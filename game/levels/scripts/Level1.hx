@@ -66,12 +66,14 @@ function onCreate(event:CreateEvent)
 		pauseText.size = 16;
 
 		pauseText.text = 'Paused\n\n';
+		pauseText.text += '----------------\n\n';
 		pauseText.text += 'Level 1\n';
 		pauseText.text += ' | Art: Sphis\n';
 		pauseText.text += ' | Programming: Sphis\n';
 
-		pauseText.alignment = 'right';
-		pauseText.x = FlxG.width - pauseText.width;
+		pauseText.alignment = 'left';
+
+		pauseText.setPosition(16, 16);
 
 		BlankState.instance.add(lvl1_bg_sky);
 
@@ -149,6 +151,7 @@ function onUpdate(event:UpdateEvent)
 		}
 
 		pauseBG.alpha = (level_paused) ? 0.5 : 0.0;
+		pauseText.visible = level_paused;
 
 		if (op_attacking && !level_paused)
 		{
@@ -214,8 +217,6 @@ function onUpdate(event:UpdateEvent)
 		}
 		if (Controls.getControlJustReleased('game_pause'))
 		{
-			pauseText.visible = level_paused;
-
 			level_paused = !level_paused;
 
 			FlxTimer.globalManager.active = !level_paused;
