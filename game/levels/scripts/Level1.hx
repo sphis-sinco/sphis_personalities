@@ -65,11 +65,11 @@ function onCreate(event:CreateEvent)
 		pauseText = new FlxText();
 		pauseText.size = 16;
 
-		pauseText.text = 'Paused\n\n';
-		pauseText.text += '----------------\n\n';
-		pauseText.text += 'Level 1\n';
-		pauseText.text += ' | Art: Sphis\n';
-		pauseText.text += ' | Programming: Sphis\n';
+		pauseText.text = 'Level 1\n';
+		pauseText.text += 'Paused';
+		pauseText.text += '\n\n----------------\n\n';
+		pauseText.text += 'Art: Sphis\n';
+		pauseText.text += 'Programming: Sphis\n';
 
 		pauseText.alignment = 'left';
 
