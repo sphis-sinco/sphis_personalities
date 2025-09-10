@@ -29,6 +29,7 @@ function onUpdate(event:UpdateEvent)
 			});
 		}
 
+		FlxG.sound.play(Paths.getSoundPath('desktop-play-transition', 'desktop'));
 		new FlxTimer().start(1, tmr ->
 		{
 			savedSelection = null;

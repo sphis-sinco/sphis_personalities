@@ -170,6 +170,7 @@ function onUpdate(event:UpdateEvent)
 								ease: FlxEase.sineIn,
 								onComplete: twn ->
 								{
+									FlxG.sound.play(Paths.getSoundPath('damage_enemy', 'levels/assets'));
 									new FlxTimer().start(.25, tmr ->
 									{
 										FlxTween.tween(hand, {alpha: 0}, .25, {
@@ -186,6 +187,7 @@ function onUpdate(event:UpdateEvent)
 								{
 									if (hand.overlaps(haxen))
 									{
+										FlxG.sound.play(Paths.getSoundPath('damage_player', 'levels/assets'));
 										FlxG.switchState(() -> new DesktopPlay());
 									}
 								}

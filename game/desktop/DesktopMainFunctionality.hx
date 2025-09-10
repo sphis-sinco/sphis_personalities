@@ -8,12 +8,14 @@ import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
 
 var moving:Bool = false;
+var dm_selection:String = '';
 
 function onCreate(event:CreateEvent)
 {
 	moving = true;
 	if (event.state == 'desktop-main')
 	{
+		dm_selection = '';
 		var startingYPositions = [
 			DesktopMain.instance.haxenStartingYPosition,
 			DesktopMain.instance.option_play.getPosition().y,
@@ -53,6 +55,7 @@ function onUpdate(event:UpdateEvent)
 	{
 		if (!moving)
 		{
+			dm_selection = '';
 			DesktopMain.instance.option_play.alpha = 0.5;
 			DesktopMain.instance.option_options.alpha = 0.5;
 		}
@@ -60,7 +63,15 @@ function onUpdate(event:UpdateEvent)
 		if (Mouse.overlaps(DesktopMain.instance.option_play))
 		{
 			if (!moving)
+			{
+				if (dm_selection != 'play')
+				{
+					FlxG.sound.play(Paths.getSoundPath('ui_select_' + FlxG.random.int(1, 2), 'desktop'));
+					dm_selection = 'play';
+				}
+
 				DesktopMain.instance.option_play.alpha = 1;
+			}
 
 			if (Mouse.justReleased && !moving)
 			{
@@ -70,6 +81,7 @@ function onUpdate(event:UpdateEvent)
 				DesktopMain.instance.haxen.x -= (DesktopMain.instance.haxen.width / 10);
 				DesktopMain.instance.haxen.y -= (DesktopMain.instance.haxen.height / 20);
 
+				FlxG.sound.play(Paths.getSoundPath('desktop-play-transition', 'desktop'));
 				FlxTween.tween(DesktopMain.instance.haxen, {alpha: 1, y: FlxG.height + DesktopMain.instance.haxen.height}, 1, {
 					ease: FlxEase.sineInOut,
 					startDelay: 0.5,
@@ -92,6 +104,12 @@ function onUpdate(event:UpdateEvent)
 		{
 			if (!moving)
 			{
+				if (dm_selection != 'options')
+				{
+					FlxG.sound.play(Paths.getSoundPath('ui_select_' + FlxG.random.int(1, 2), 'desktop'));
+					dm_selection = 'options';
+				}
+
 				DesktopMain.instance.option_options.alpha = 0.25;
 
 				if (Mouse.pressed)

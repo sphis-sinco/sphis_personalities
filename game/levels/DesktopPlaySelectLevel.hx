@@ -23,6 +23,7 @@ function onUpdate(event:UpdateEvent)
 		{
 			if (DesktopPlay.instance.levelMetas[DesktopPlay.instance.curSel].unlocked)
 			{
+				FlxG.sound.play(Paths.getSoundPath('level_select', 'levels'));
 				savedSelection = DesktopPlay.instance.curSel;
 
 				var id = '';
@@ -37,6 +38,10 @@ function onUpdate(event:UpdateEvent)
 				{
 					FlxG.switchState(() -> new BlankState(id));
 				});
+			}
+			else
+			{
+				FlxG.sound.play(Paths.getSoundPath('locked_level', 'levels'));
 			}
 		}
 	}
