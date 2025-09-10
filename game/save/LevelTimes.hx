@@ -20,8 +20,9 @@ function onCreate(event:CreateEvent)
 
 	levelTimerText = new FlxText();
 	levelTimerText.size = 16;
-	levelTimerText.x = 32;
-	levelTimerText.y = levelTimerText.x;
+	levelTimerText.x = 0;
+	levelTimerText.text = '1234567890123456789012345678901234567890';
+	levelTimerText.y = FlxG.width - levelTimerText.height;
 	levelTimerText.color = FlxScriptedColor.WHITE;
 	levelTimerText.setBorderStyle(FlxTextScriptedBorderStyle.OUTLINE, FlxScriptedColor.BLACK, 2);
 	levelTimerText.alpha = 0.75;
