@@ -1,6 +1,7 @@
 import flixel.FlxG;
 import flixel.text.FlxText;
 import flixel.util.FlxTimer;
+import game.levels.LevelStateBase;
 import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
 import game.scripts.imports.FlxScriptedAxes;
@@ -26,16 +27,27 @@ function onCreate(event:CreateEvent)
 	levelTimerText.setBorderStyle(FlxTextScriptedBorderStyle.OUTLINE, FlxScriptedColor.BLACK, 2);
 	levelTimerText.alpha = 0.75;
 
-	if (event.state == 'level1')
+	if (LevelStateBase.instance != null)
 	{
 		levelTimer.start(1, tmr ->
 		{
 			levelTime += 1;
 
-			if (FlxG.save.data.levelTimes.level1 != null)
+			if (event.state == 'level1')
 			{
-				if (levelTime > FlxG.save.data.levelTimes.level1)
-					FlxG.save.data.levelTimes.level1 = levelTime;
+				if (FlxG.save.data.levelTimes.level1 != null)
+				{
+					if (levelTime > FlxG.save.data.levelTimes.level1)
+						FlxG.save.data.levelTimes.level1 = levelTime;
+				}
+			}
+			else if (event.state == 'level2')
+			{
+				if (FlxG.save.data.levelTimes.level2 != null)
+				{
+					if (levelTime > FlxG.save.data.levelTimes.level2)
+						FlxG.save.data.levelTimes.level2 = levelTime;
+				}
 			}
 		}, 0);
 
@@ -53,6 +65,8 @@ function onUpdate(event:UpdateEvent)
 		levelTimerText.text += ' (best: ';
 		if (event.state == 'level1' && FlxG.save.data.levelTimes.level1 != null)
 			levelTimerText.text += '' + FlxG.save.data.levelTimes.level1;
+		if (event.state == 'level2' && FlxG.save.data.levelTimes.level2 != null)
+			levelTimerText.text += '' + FlxG.save.data.levelTimes.level2;
 		levelTimerText.text += 's)';
 
 		if (Controls.getControlJustReleased('ui_leave') && level_paused)

@@ -1,6 +1,7 @@
 import game.Mouse;
 import game.MouseStates;
 import game.desktop.DesktopMain;
+import game.levels.LevelStateBase;
 import game.scripts.events.UpdateEvent;
 
 function onUpdate(event:UpdateEvent)
@@ -17,7 +18,7 @@ function onUpdate(event:UpdateEvent)
 		if (Mouse.overlaps(DesktopMain.instance.option_options))
 			Mouse.setMouseState(MouseStates.CANT_SELECT);
 	}
-	if (event.state == 'desktop-play' || event.state == 'level1' || event.state == 'level2' || event.state == 'modmenu')
+	if (event.state == 'desktop-play' || LevelStateBase.instance != null || event.state == 'modmenu')
 	{
 		Mouse.setMouseState(MouseStates.BLANK);
 	}

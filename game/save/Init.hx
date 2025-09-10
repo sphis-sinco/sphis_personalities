@@ -4,7 +4,7 @@ import game.modding.ModList;
 import game.scripts.events.AddedEvent;
 import lime.app.Application;
 
-var levels = ['level1'];
+var levels = ['level1', 'level2'];
 
 function onAdded(event:AddedEvent)
 {
@@ -23,10 +23,12 @@ function onAdded(event:AddedEvent)
 
 	if (FlxG.save.data.levelTimes == null)
 	{
-		FlxG.save.data.levelTimes = {
-			level1: 0
-		}
+		FlxG.save.data.levelTimes = {}
 	}
+	if (FlxG.save.data.levelTimes.level1 == null)
+		FlxG.save.data.levelTimes.level1 = 0;
+	if (FlxG.save.data.levelTimes.level2 == null)
+		FlxG.save.data.levelTimes.level2 = 0;
 	if (FlxG.save.data.modList == null)
 	{
 		FlxG.save.data.modList = [];
