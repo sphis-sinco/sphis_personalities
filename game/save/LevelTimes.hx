@@ -46,7 +46,7 @@ function onCreate(event:CreateEvent)
 function onUpdate(event:UpdateEvent)
 {
 	levelTimerText.text = 'Time survived: ' + levelTime + 's';
-	levelTimerText.y = FlxG.width - levelTimerText.height;
+	levelTimerText.y = FlxG.height - levelTimerText.height;
 
 	if (levelTimer.active)
 	{
