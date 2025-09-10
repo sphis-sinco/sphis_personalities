@@ -55,7 +55,6 @@ function onUpdate(event:UpdateEvent)
 	{
 		if (!moving)
 		{
-			dm_selection = '';
 			DesktopMain.instance.option_play.alpha = 0.5;
 			DesktopMain.instance.option_options.alpha = 0.5;
 		}
@@ -117,6 +116,10 @@ function onUpdate(event:UpdateEvent)
 					DesktopMain.instance.option_options.alpha = 0.125;
 				}
 			}
+		}
+		else
+		{
+			dm_selection = '';
 		}
 	}
 }
