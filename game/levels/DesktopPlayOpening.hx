@@ -1,8 +1,5 @@
-import flixel.FlxG;
-import flixel.effects.FlxFlicker;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
-import flixel.util.FlxTimer;
 import game.desktop.DesktopPlay;
 import game.scripts.events.CreateEvent;
 
@@ -10,6 +7,8 @@ function onCreate(event:CreateEvent)
 {
 	if (event.state == 'desktop-play')
 	{
+		LevelStateBase.instance = null;
+
 		DesktopPlay.instance.reloadLevels((levelsGrp, levelsTextGrp) ->
 		{
 			for (obj in levelsGrp.members)
