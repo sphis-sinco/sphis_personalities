@@ -16,7 +16,7 @@ import polymod.format.ParseRules;
 class PolymodHandler
 {
 	#if semver
-	public static var MINIMUM_MOD_VERSION:String = new Version(GameVersion.get.major, 0, 0);
+	public static var MINIMUM_MOD_VERSION:String = Version.arrayToVersion([GameVersion.get.major, 0, 0]);
 	public static var MAXIMUM_MOD_VERSION:String = GameVersion.get.nextMajor().toString();
 	#else
 	public static var MINIMUM_MOD_VERSION:String = "0.0.0";

@@ -16,9 +16,9 @@ class GameVersion
 		return Version.stringToVersion(version);
 	}
 	#else
-	public static var get(get, never):Version;
+	public static var get(get, never):String;
 
-	static function get_get():Version
+	static function get_get():String
 	{
 		return version;
 	}

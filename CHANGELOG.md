@@ -11,6 +11,7 @@
 - Maximum mod API version is now 1 major version ahead of the current (so currently `2.0.0`)
 - [SOURCE] `mods-debug` folder moved to `dev/`
 ## General
+- Added `GameVersionScriptVersion` so scripts won't have to worry about the `semver` flag
 - [SOURCE] Added `semver` flag for coding
 - [SOURCE] Added `thx.semver` haxelib library (its listed now is what I mean)
 - [GITHUB] `-final` flagadded to auto-compiled builds

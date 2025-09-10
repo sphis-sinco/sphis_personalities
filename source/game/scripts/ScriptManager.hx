@@ -18,6 +18,7 @@ import game.scripts.events.UpdateEvent;
 import game.scripts.imports.FlxScriptedAxes;
 import game.scripts.imports.FlxScriptedColor;
 import game.scripts.imports.FlxTextScriptedBorderStyle;
+import game.scripts.imports.GameVersionScriptVersion;
 import game.scripts.imports.ScriptedThxSemverVersion;
 import lime.app.Application;
 import lime.system.Clipboard;
@@ -323,6 +324,7 @@ class ScriptManager
 		script.set('Ansi', Ansi, false);
 		script.set('Defines', Defines, false);
 		script.set('GameVersion', GameVersion, false);
+		script.set('GameVersionScriptVersion', GameVersionScriptVersion, false);
 
 		script.set('PolymodHandler', PolymodHandler, false);
 		script.set('ModMenu', ModMenu, false);
