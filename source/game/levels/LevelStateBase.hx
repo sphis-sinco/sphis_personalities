@@ -1,5 +1,12 @@
 package game.levels;
 
+import flixel.FlxG;
+import flixel.FlxSprite;
+import flixel.text.FlxText;
+import flixel.tweens.FlxTween;
+import flixel.util.FlxTimer;
+import game.scripts.imports.FlxScriptedColor;
+
 class LevelStateBase extends BlankState
 {
 	public var LevelName:String = 'Level 0';
