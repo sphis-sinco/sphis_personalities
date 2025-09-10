@@ -36,8 +36,9 @@
 	<!-- _____________________________ Path Settings ____________________________ -->
 
 	<set name="BUILD_DIR" value="export/release" unless="debug || final" />
-	<set name="BUILD_DIR" value="export/debug" if="debug" />
-	<set name="BUILD_DIR" value="export/final" if="final" />
+	<set name="BUILD_DIR" value="export/debug" if="debug" unless="final"/>
+	<set name="BUILD_DIR" value="export/final" if="final" unless="debug" />
+	<set name="BUILD_DIR" value="export/debug-final" if="debug final"/>
 
 	<define name="ansiStuff" />
 

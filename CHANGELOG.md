@@ -1,10 +1,11 @@
-# 2.0 - 9/10/2025
+# 2.0.0 - 9/10/2025
 ## Modding
 - [SOURCE CODE] `mods-debug` folder moved to `dev/`
 ## General
+- [SOURCE CODE] Added `debug-final` build directory
 - Added Changelog Markdown File
 
-# 1.0 - 9/10/2025
+# 1.0.0 - 9/10/2025
 ## Menus
 - Desktop (Main)
   - Easter Egg
