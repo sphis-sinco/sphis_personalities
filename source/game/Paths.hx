@@ -40,6 +40,11 @@ class Paths
 		return (game ? getGamePath(path + '.png') : path + '.png');
 	}
 
+	public static function getSoundPath(filename:String, folder:String, ?game:Bool = true)
+	{
+		return (game ? getGamePath(folder + '/' + filename + '.wav') : folder + '/' + filename + '.wav');
+	}
+
 	public static function getTypeArray(type:String, type_folder:String, ext:Array<String>, paths:Array<String>,
 			?foundFilesFunction:(Array<Dynamic>, String) -> Void = null):Array<String>
 	{
