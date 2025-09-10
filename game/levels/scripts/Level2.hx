@@ -40,12 +40,14 @@ function onCreate(event:CreateEvent)
 
 		lvl2_bg_ground = new FlxSprite();
 		lvl2_bg_ground.loadGraphic(lvl.getGeneralAsset('ground'));
+		lvl2_bg_ground.scale.set(.75, .75);
+		lvl2_bg_ground.updateHitbox();
 		lvl2_bg_ground.screenCenter();
+		lvl2_bg_ground.y += (lvl2_bg_ground.height / 4);
 
 		haxen = new FlxSprite();
 		haxen.loadGraphic(lvl.getHaxenAsset('idle'));
-		haxen.screenCenter();
-		haxen.y += (haxen.height / 4);
+		haxen.scale.set(lvl2_bg_ground.scale.x - .25, lvl2_bg_ground.scale.y - .25);
 
 		var op:FlxSprite;
 		op = new FlxSprite();
@@ -53,7 +55,7 @@ function onCreate(event:CreateEvent)
 		op.scale.set(.75, .75);
 		op.updateHitbox();
 		op.screenCenter();
-		op.y -= op.height / 10;
+		op.y -= op.height / 5;
 		var op_resting_YPos = op.getPosition().y;
 		op.y = FlxG.height * 2;
 
@@ -97,14 +99,15 @@ function onUpdate(event:UpdateEvent)
 
 	if (event.state == 'level2')
 	{
+		haxen.updateHitbox();
 		haxen.screenCenter();
-		haxen.y += (haxen.height / 2);
+		haxen.y += (haxen.height * 2.5);
 		switch (haxen_pos)
 		{
 			case 1:
-				haxen.x += haxen.width;
+				haxen.x += (haxen.width * 2);
 			case -1:
-				haxen.x -= haxen.width;
+				haxen.x -= (haxen.width * 2);
 		}
 
 		if (Controls.getControlPressed('game_left') && !LevelStateBase.instance.level_paused)
@@ -147,6 +150,9 @@ function onUpdate(event:UpdateEvent)
 
 				var hand = new FlxSprite();
 				hand.loadGraphic(lvl.getHandAsset('clench'));
+				hand.scale.set(haxen.scale.x, haxen.scale.y);
+				hand.updateHitbox();
+				hand.update(0);
 				hand.setPosition(haxen.x, haxen.y);
 				hand.alpha = 0;
 
