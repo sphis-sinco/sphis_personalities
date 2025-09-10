@@ -14,7 +14,7 @@ function onUpdate(event:UpdateEvent)
 		if (DesktopPlay.instance.curSel < 0)
 		{
 			DesktopPlay.instance.curSel = 0;
-			FlxG.sound.play(Paths.getSoundPath('ui_select_2', 'levels'));
+			FlxG.sound.play(Paths.getSoundPath('ui_select_2', 'desktop'));
 		}
 		else
 		{
@@ -25,7 +25,7 @@ function onUpdate(event:UpdateEvent)
 		if (DesktopPlay.instance.curSel >= DesktopPlay.instance.levels.length)
 		{
 			DesktopPlay.instance.curSel = DesktopPlay.instance.levels.length - 1;
-			FlxG.sound.play(Paths.getSoundPath('ui_select_2', 'levels'));
+			FlxG.sound.play(Paths.getSoundPath('ui_select_2', 'desktop'));
 		}
 		else
 		{
