@@ -9,6 +9,7 @@ function onCreate(event:CreateEvent)
 	{
 		var gameVerTxt = new FlxText(0, 0, 0, GameVersionScriptVersion.get, 16);
 		gameVerTxt.y = FlxG.height - gameVerTxt.height;
+		gameVerTxt.scrollFactor.set();
 		FlxG.state.add(gameVerTxt);
 	}
 }
