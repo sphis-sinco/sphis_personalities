@@ -3,6 +3,7 @@
 - Added new `GameVersionText` script
   - Displays game version text in `desktop-main` and `desktop-play`
 ## Modding
+- Mod Menu Outdated text is black now
 - `0.0.0` is currently considered a `Debug mod` in the mod menu
 - Minimum mod API version is now just the major version of the cuttent (so currently `1.0.0`)
 - [TERMINAL] type array found files function traces added (via `-final` flag)

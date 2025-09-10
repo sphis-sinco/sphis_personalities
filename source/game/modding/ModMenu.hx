@@ -137,14 +137,12 @@ class ModMenu extends State
 				var debugMod = ModList.modMetadatas.get(curModId).apiVersion.major == 0;
 				var higherVersion = ModList.modMetadatas.get(curModId).apiVersion.greaterThan(PolymodHandler.MAXIMUM_MOD_VERSION);
 
-				outdatedText = ' \n%Outdated ';
+				outdatedText = ' \n@Outdated@';
 
 				if (debugMod)
 					outdatedText += '\n^* Debug Mod (0.x.x)^';
 				if (higherVersion)
 					outdatedText += '\n@* Troll@';
-
-				outdatedText += '%';
 			}
 
 			// #region mod text stuff
