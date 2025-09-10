@@ -1,3 +1,4 @@
+import flixel.FlxG;
 import game.desktop.DesktopPlay;
 import game.scripts.events.UpdateEvent;
 
@@ -11,8 +12,25 @@ function onUpdate(event:UpdateEvent)
 			DesktopPlay.instance.curSel++;
 
 		if (DesktopPlay.instance.curSel < 0)
+		{
 			DesktopPlay.instance.curSel = 0;
+			FlxG.sound.play(Paths.getSoundPath('locked_level', 'levels'));
+		}
+		else
+		{
+			if (Controls.getControlJustReleased('ui_left'))
+				FlxG.sound.play(Paths.getSoundPath('ui_select_' + FlxG.random.int(1, 2), 'desktop'));
+		}
+
 		if (DesktopPlay.instance.curSel >= DesktopPlay.instance.levels.length)
+		{
 			DesktopPlay.instance.curSel = DesktopPlay.instance.levels.length - 1;
+			FlxG.sound.play(Paths.getSoundPath('locked_level', 'levels'));
+		}
+		else
+		{
+			if (Controls.getControlJustReleased('ui_right'))
+				FlxG.sound.play(Paths.getSoundPath('ui_select_' + FlxG.random.int(1, 2), 'desktop'));
+		}
 	}
 }
