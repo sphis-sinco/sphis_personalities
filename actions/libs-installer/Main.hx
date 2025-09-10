@@ -20,6 +20,7 @@ class Main
 			FileSystem.createDirectory('.haxelib');
 
 		final json:Array<Library> = Json.parse(File.getContent('./hmm.json')).dependencies;
+		Sys.command('haxelib setup');
 
 		for (lib in json)
 		{
