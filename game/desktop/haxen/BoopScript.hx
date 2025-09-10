@@ -42,7 +42,7 @@ function onUpdate(event:UpdateEvent)
 		}
 		else
 		{
-			haxenSelected = true;
+			haxenSelected = false;
 		}
 	}
 }
