@@ -43,6 +43,7 @@
 
 	<source path="source" />
 	<assets path="game" />
+	<assets path="CHANGELOG.md" />
 
 	<define name="typeArray_dupeFilePrevention" unless="typeArray_disable_dupeFilePrevention" />
 	<define name="typeArray_foundfilesfunc_traces" if="final" />
@@ -63,7 +64,7 @@
 	<section unless="disable_polymodSupport">
 		<haxelib name="polymod" />
 		<assets path="mods" />
-		<assets path="mods-debug" rename="mods" if="debug"/>
+		<assets path="dev/mods-debug" rename="mods" if="debug"/>
 	</section>
 
 	<haxelib name="hscript" unless="scripts_disableScripts" />
