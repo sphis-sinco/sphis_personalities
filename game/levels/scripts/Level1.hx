@@ -15,7 +15,6 @@ var lvl1_bg_sky:FlxSprite;
 var lvl1_bg_ground:FlxSprite;
 var haxen:FlxSprite;
 var haxen_pos:Int;
-var op:FlxSprite;
 var op_attacking:Bool;
 var hands:FlxTypedGroup<FlxSprite>;
 var tick = 0;
@@ -41,6 +40,8 @@ function onCreate(event:CreateEvent)
 		haxen.loadGraphic(lvl.getHaxenAsset('idle'));
 		haxen.screenCenter();
 		haxen.y += (haxen.height / 4);
+
+		var op:FlxSprite;
 
 		op = new FlxSprite();
 		op.loadGraphic(lvl.getGeneralAsset('op'));

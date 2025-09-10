@@ -11,11 +11,8 @@ import game.scripts.events.UpdateEvent;
 import game.scripts.imports.FlxScriptedColor;
 
 var lvl:LevelModule;
-var lvl1_bg_sky:FlxSprite;
-var lvl1_bg_ground:FlxSprite;
 var haxen:FlxSprite;
 var haxen_pos:Int;
-var op:FlxSprite;
 var op_attacking:Bool;
 var hands:FlxTypedGroup<FlxSprite>;
 var tick = 0;
@@ -29,21 +26,32 @@ function onCreate(event:CreateEvent)
 		lvl = new LevelModule('level2');
 		FlxG.camera.fade(FlxScriptedColor.BLACK, 1, true, () -> {});
 
-		lvl1_bg_sky = new FlxSprite();
-		lvl1_bg_sky.loadGraphic(lvl.getGeneralAsset('sky'));
-		lvl1_bg_sky.screenCenter();
+		var lvl2_bg_sky:FlxSprite;
+		var lvl2_bg_skyGrad:FlxSprite;
+		var lvl2_bg_ground:FlxSprite;
 
-		lvl1_bg_ground = new FlxSprite();
-		lvl1_bg_ground.loadGraphic(lvl.getGeneralAsset('ground'));
-		lvl1_bg_ground.screenCenter();
+		lvl2_bg_sky = new FlxSprite();
+		lvl2_bg_sky.loadGraphic(lvl.getGeneralAsset('sky'));
+		lvl2_bg_sky.screenCenter();
+
+		lvl2_bg_skyGrad = new FlxSprite();
+		lvl2_bg_skyGrad.loadGraphic(lvl.getGeneralAsset('sky-gradient'));
+		lvl2_bg_skyGrad.screenCenter();
+
+		lvl2_bg_ground = new FlxSprite();
+		lvl2_bg_ground.loadGraphic(lvl.getGeneralAsset('ground'));
+		lvl2_bg_ground.screenCenter();
 
 		haxen = new FlxSprite();
 		haxen.loadGraphic(lvl.getHaxenAsset('idle'));
 		haxen.screenCenter();
 		haxen.y += (haxen.height / 4);
 
+		var op:FlxSprite;
 		op = new FlxSprite();
 		op.loadGraphic(lvl.getGeneralAsset('op'));
+		op.scale.set(.75, .75);
+		op.updateHitbox();
 		op.screenCenter();
 		op.y -= op.height / 10;
 		var op_resting_YPos = op.getPosition().y;
@@ -54,11 +62,12 @@ function onCreate(event:CreateEvent)
 		LevelStateBase.instance.pauseText.text += 'Art: Sphis\n';
 		LevelStateBase.instance.pauseText.text += 'Programming: Sphis\n';
 
-		BlankState.instance.add(lvl1_bg_sky);
+		BlankState.instance.add(lvl2_bg_sky);
+		BlankState.instance.add(lvl2_bg_skyGrad);
 
 		BlankState.instance.add(op);
 
-		BlankState.instance.add(lvl1_bg_ground);
+		BlankState.instance.add(lvl2_bg_ground);
 
 		BlankState.instance.add(haxen);
 		BlankState.instance.add(hands);
