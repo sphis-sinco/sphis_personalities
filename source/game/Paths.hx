@@ -42,7 +42,7 @@ class Paths
 
 	public static function getSoundPath(filename:String, folder:String, ?game:Bool = true)
 	{
-		return (game ? getGamePath(folder + '/' + filename + '.wav') : folder + '/' + filename + '.wav');
+		return (game ? getGamePath(folder + '/sounds/' + filename + '.wav') : folder + '/sounds/' + filename + '.wav');
 	}
 
 	public static function getTypeArray(type:String, type_folder:String, ext:Array<String>, paths:Array<String>,
