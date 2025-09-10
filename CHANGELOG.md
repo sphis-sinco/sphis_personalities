@@ -1,9 +1,13 @@
 # 1.1.0 - 9/10/2025
 ## Modding
+- [TERMINAL] type array found files function traces added (via `-final` flag)
+- [TERMINAL] scripts loaded message added (via `-final` flag)
+- [TERMINAL] controls loading traces added (via `-final` flag)
 - Maximum mod API version is now 1 major version ahead of the current (so currently `2.0.0`)
-- [SOURCE CODE] `mods-debug` folder moved to `dev/`
+- [SOURCE] `mods-debug` folder moved to `dev/`
 ## General
-- [SOURCE CODE] Added `debug-final` build directory
+- [GITHUB] `-final` flagadded to auto-compiled builds
+- [SOURCE] Added `debug-final` build directory
 - Added Changelog Markdown File
 
 # 1.0.0 - 9/10/2025

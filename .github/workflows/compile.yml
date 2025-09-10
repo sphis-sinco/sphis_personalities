@@ -24,12 +24,12 @@ jobs:
                           run: echo "${{github.run_id}}" > VERSION
 
                         - name: Compile
-                          run: haxelib run lime build linux
+                          run: haxelib run lime build linux -final
                         - name: Publish Artifact
                           uses: actions/upload-artifact@main
                           with:
                                   name: linuxBuild
-                                  path: export/release/linux/bin
+                                  path: export/final/linux/bin
         buildWindows:
                 runs-on: windows-latest
 
@@ -45,12 +45,12 @@ jobs:
                           run: echo "${{github.run_id}}" > VERSION
 
                         - name: Compile
-                          run: haxelib run lime build windows
+                          run: haxelib run lime build windows -final
                         - name: Upload Artifact
                           uses: actions/upload-artifact@main
                           with:
                                   name: windowsBuild
-                                  path: export/release/windows/bin
+                                  path: export/final/windows/bin
         buildMac:
                 runs-on: macos-13
 
@@ -67,13 +67,13 @@ jobs:
                           run: echo "${{github.run_id}}" > VERSION
 
                         - name: Compile
-                          run: haxelib run lime build mac
+                          run: haxelib run lime build mac -final
 
                         - name: Publish Artifact
                           uses: actions/upload-artifact@main
                           with:
                                   name: macBuild
-                                  path: export/release/macos/bin
+                                  path: export/final/macos/bin
         buildHashlink:
                 runs-on: windows-latest
 
@@ -89,9 +89,9 @@ jobs:
                           run: echo "${{github.run_id}}" > VERSION
 
                         - name: Compile
-                          run: haxelib run lime build hl
+                          run: haxelib run lime build hl -final
                         - name: Publish Artifact
                           uses: actions/upload-artifact@main
                           with:
                                   name: hashlinkBuild
-                                  path: export/release/hl/bin
+                                  path: export/final/hl/bin
