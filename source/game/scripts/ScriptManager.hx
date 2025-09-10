@@ -1,5 +1,6 @@
 package game.scripts;
 
+import game.levels.LevelStateBase;
 import game.scripts.events.AddedEvent;
 #if !html5
 import crowplexus.iris.Iris;
