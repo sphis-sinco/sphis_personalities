@@ -65,7 +65,7 @@ function onUpdate(event:UpdateEvent)
 			{
 				if (dm_selection != 'play')
 				{
-					FlxG.sound.play(Paths.getSoundPath('ui_select_' + FlxG.random.int(1, 2), 'desktop'));
+					FlxG.sound.play(Paths.getSoundPath('ui_select_1', 'desktop'));
 					dm_selection = 'play';
 				}
 
@@ -105,7 +105,7 @@ function onUpdate(event:UpdateEvent)
 			{
 				if (dm_selection != 'options')
 				{
-					FlxG.sound.play(Paths.getSoundPath('ui_select_' + FlxG.random.int(1, 2), 'desktop'));
+					FlxG.sound.play(Paths.getSoundPath('ui_select_2', 'desktop'));
 					dm_selection = 'options';
 				}
 

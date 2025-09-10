@@ -26,7 +26,7 @@ function onUpdate(event:UpdateEvent)
 			if (!haxenSelected)
 			{
 				haxenSelected = true;
-				FlxG.sound.play(Paths.getSoundPath('ui_select_' + FlxG.random.int(1, 2), 'desktop'));
+				FlxG.sound.play(Paths.getSoundPath('ui_select_1', 'desktop'));
 			}
 			DesktopMain.instance.haxen.alpha = 1;
 
