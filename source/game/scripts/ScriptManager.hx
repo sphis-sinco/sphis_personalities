@@ -305,6 +305,7 @@ class ScriptManager
 
 		script.set('InitState', InitState, false);
 		script.set('BlankState', BlankState, false);
+		script.set('LevelStateBase', LevelStateBase, false);
 
 		script.set('Mouse', Mouse, false);
 		script.set('MouseStates', MouseStates, false);

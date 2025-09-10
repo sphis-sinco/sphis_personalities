@@ -12,7 +12,6 @@ import game.scripts.events.UpdateEvent;
 import game.scripts.imports.FlxScriptedColor;
 
 var lvl:LevelModule;
-var level_paused:Bool;
 var lvl1_bg_sky:FlxSprite;
 var lvl1_bg_ground:FlxSprite;
 var haxen:FlxSprite;
@@ -20,20 +19,15 @@ var haxen_pos:Int;
 var op:FlxSprite;
 var op_attacking:Bool;
 var hands:FlxTypedGroup<FlxSprite>;
-var pauseBG:FlxSprite;
-var pauseText:FlxText;
 var tick = 0;
 
 function onCreate(event:CreateEvent)
 {
-	level_paused = false;
-
-	FlxTimer.globalManager.active = !level_paused;
-	FlxTween.globalManager.active = !level_paused;
+	lvl = null;
 
 	if (event.state == 'level1')
 	{
-		lvl = new LevelModule(event.state);
+		lvl = new LevelModule('level1');
 		FlxG.camera.fade(FlxScriptedColor.BLACK, 1, true, () -> {});
 
 		lvl1_bg_sky = new FlxSprite();
@@ -58,22 +52,8 @@ function onCreate(event:CreateEvent)
 
 		hands = new FlxTypedGroup();
 
-		pauseBG = new FlxSprite();
-		pauseBG.makeGraphic(FlxG.width, FlxG.height, FlxScriptedColor.BLACK);
-		pauseBG.screenCenter();
-
-		pauseText = new FlxText();
-		pauseText.size = 16;
-
-		pauseText.text = 'Level 1\n';
-		pauseText.text += 'Paused';
-		pauseText.text += '\n\n----------------\n\n';
-		pauseText.text += 'Art: Sphis\n';
-		pauseText.text += 'Programming: Sphis\n';
-
-		pauseText.alignment = 'left';
-
-		pauseText.setPosition(16, 16);
+		LevelStateBase.instance.pauseText.text += 'Art: Sphis\n';
+		LevelStateBase.instance.pauseText.text += 'Programming: Sphis\n';
 
 		BlankState.instance.add(lvl1_bg_sky);
 
@@ -83,9 +63,6 @@ function onCreate(event:CreateEvent)
 
 		BlankState.instance.add(haxen);
 		BlankState.instance.add(hands);
-
-		BlankState.instance.add(pauseBG);
-		BlankState.instance.add(pauseText);
 
 		op_attacking = false;
 		FlxTween.tween(op, {y: op_resting_YPos}, 2, {
@@ -122,17 +99,17 @@ function onUpdate(event:UpdateEvent)
 				haxen.x -= haxen.width;
 		}
 
-		if (Controls.getControlPressed('game_left') && !level_paused)
+		if (Controls.getControlPressed('game_left') && !LevelStateBase.instance.level_paused)
 		{
 			haxen.loadGraphic(lvl.getHaxenAsset('left'));
 		}
 
-		if (Controls.getControlPressed('game_right') && !level_paused)
+		if (Controls.getControlPressed('game_right') && !LevelStateBase.instance.level_paused)
 		{
 			haxen.loadGraphic(lvl.getHaxenAsset('right'));
 		}
 
-		if (Controls.getControlJustReleased('game_left') && !level_paused)
+		if (Controls.getControlJustReleased('game_left') && !LevelStateBase.instance.level_paused)
 		{
 			haxen_pos -= 1;
 			haxen_pos = (haxen_pos < -1) ? -1 : haxen_pos;
@@ -141,7 +118,7 @@ function onUpdate(event:UpdateEvent)
 			FlxG.sound.play(Paths.getSoundPath('player_move', 'levels/assets'));
 		}
 
-		if (Controls.getControlJustReleased('game_right') && !level_paused)
+		if (Controls.getControlJustReleased('game_right') && !LevelStateBase.instance.level_paused)
 		{
 			haxen_pos += 1;
 			haxen_pos = (haxen_pos > 1) ? 1 : haxen_pos;
@@ -150,10 +127,7 @@ function onUpdate(event:UpdateEvent)
 			FlxG.sound.play(Paths.getSoundPath('player_move', 'levels/assets'));
 		}
 
-		pauseBG.alpha = (level_paused) ? 0.5 : 0.0;
-		pauseText.visible = level_paused;
-
-		if (op_attacking && !level_paused)
+		if (op_attacking && !LevelStateBase.instance.level_paused)
 		{
 			if ((tick >= 200 && !FlxG.random.bool(FlxG.random.float(0, 10))) && hands.members.length < 3)
 			{
@@ -208,19 +182,12 @@ function onUpdate(event:UpdateEvent)
 			}
 		}
 
-		if (Controls.getControlJustReleased('ui_leave') && level_paused)
+		if (Controls.getControlJustReleased('ui_leave') && LevelStateBase.instance.level_paused)
 		{
 			FlxG.camera.fade(FlxScriptedColor.BLACK, 1, false, () ->
 			{
 				FlxG.switchState(() -> new DesktopPlay());
 			});
-		}
-		if (Controls.getControlJustReleased('game_pause'))
-		{
-			level_paused = !level_paused;
-
-			FlxTimer.globalManager.active = !level_paused;
-			FlxTween.globalManager.active = !level_paused;
 		}
 	}
 }

@@ -27,8 +27,11 @@ function onUpdate(event:UpdateEvent)
 				savedSelection = DesktopPlay.instance.curSel;
 
 				var id = '';
+				var levelID = '';
 				if (DesktopPlay.instance.levelMetas[savedSelection].id != null)
 					id = DesktopPlay.instance.levelMetas[savedSelection].id;
+				if (DesktopPlay.instance.levelMetas[savedSelection].displayName != null)
+					levelID = DesktopPlay.instance.levelMetas[savedSelection].displayName;
 
 				if (FlxG.save != null && FlxG.save.data.newlevels != null)
 					if (FlxG.save.data.newlevels.contains(id))
@@ -36,7 +39,7 @@ function onUpdate(event:UpdateEvent)
 
 				FlxG.camera.fade(FlxScriptedColor.BLACK, 1, false, () ->
 				{
-					FlxG.switchState(() -> new BlankState(id));
+					FlxG.switchState(() -> new LevelStateBase(id, levelID));
 				});
 			}
 			else

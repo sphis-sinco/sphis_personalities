@@ -1,3 +1,8 @@
+# 1.2.0 - 9/10/2025
+## General
+- Level Pause menus can be soft-coded now (via `LevelStateBase`)
+- Added `LevelStateBase`
+
 # 1.1.0 - 9/10/2025
 ## Menus
 - Added new `GameVersionText` script
