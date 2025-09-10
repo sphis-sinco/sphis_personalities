@@ -6,6 +6,7 @@ import flixel.graphics.FlxGraphic;
 
 class Mouse
 {
+	// #region mouse graphic
 	public static var state:String = MouseStates.IDLE;
 
 	public static function setMouseState(value:String)
@@ -35,6 +36,8 @@ class Mouse
 		FlxG.mouse.load(graphic.key, 1, -32, -32);
 	}
 
+	// #endregion
+	// #region mouse controls
 	public static var pressed(get, default):Bool;
 	public static var justPressed(get, default):Bool;
 
@@ -55,4 +58,6 @@ class Mouse
 
 	public static function overlaps(obj:FlxBasic):Bool
 		return FlxG.mouse.overlaps(obj);
+
+	// #endregion
 }

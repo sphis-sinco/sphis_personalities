@@ -56,6 +56,7 @@ class InitState extends FlxState
 
 		Defines.getDefines();
 
+		// #region console util stuff
 		#if hscript
 		#if debug
 		try
@@ -94,12 +95,15 @@ class InitState extends FlxState
 		}
 		#end
 		#end
+		// #endregion
 
+		// #region web script
 		#if generateWebScript
 		ScriptManager.generateWebScript();
 		#if sys
 		Sys.exit(0);
 		#end
+		// #endregion
 		#else
 		#if html5
 		ScriptManager.checkForUpdatedScripts();
@@ -117,6 +121,7 @@ class InitState extends FlxState
 		ScriptManager.checkForUpdatedScripts();
 		#end
 
+		// #region starting state
 		if (Defines.get('StartingState') != null)
 		{
 			if (Defines.get('StartingState').length >= 1)
@@ -130,6 +135,7 @@ class InitState extends FlxState
 				}
 			}
 		}
+		// #endregion
 		else
 			FlxG.switchState(() -> new DesktopMain());
 		#end

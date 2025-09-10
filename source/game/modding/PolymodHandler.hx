@@ -13,7 +13,7 @@ import polymod.format.ParseRules;
 class PolymodHandler
 {
 	public static var MINIMUM_MOD_VERSION:String = "0.0.0";
-	public static var MAXIMUM_MOD_VERSION:String = "1.0.0";
+	public static var MAXIMUM_MOD_VERSION:String = GameVersion.get.toString();
 
 	public static var metadataArrays:Array<String> = [];
 	public static var outdatedMods:Array<String> = [];
@@ -28,6 +28,7 @@ class PolymodHandler
 		ScriptManager.checkForUpdatedScripts();
 	}
 
+	// #region mod metadata
 	public static function loadModMetadata()
 	{
 		metadataArrays = [];
@@ -60,6 +61,8 @@ class PolymodHandler
 		trace('outdatedMods: ' + outdatedMods.toString());
 	}
 
+	// #endregion
+	// #region sum init stuffs
 	#if polymod
 	static function buildParseRules():polymod.format.ParseRules
 	#else
@@ -101,6 +104,8 @@ class PolymodHandler
 		return result;
 	}
 
+	// #endregion
+	// #region polymod init
 	static function init()
 	{
 		#if polymod
@@ -150,4 +155,6 @@ class PolymodHandler
 			trace('Mod loaded: ' + key);
 		}
 	}
+
+	// #endregion
 }

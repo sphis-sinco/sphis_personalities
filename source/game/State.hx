@@ -1,7 +1,6 @@
 package game;
 
 import flixel.FlxState;
-import flixel.input.keyboard.FlxKey;
 import game.scripts.ScriptManager;
 import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;

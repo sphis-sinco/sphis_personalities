@@ -42,6 +42,7 @@ class ScriptManager
 	public static var SCRIPTS_ERRS:Map<String, Dynamic> = [];
 	public static var GIANT_SCRIPT_FILE:String = '';
 
+	// #region functions4scripts
 	public static function setVariableContains(needToContain:String, variable:Dynamic, newValue:Dynamic)
 	{
 		for (script in SCRIPTS)
@@ -147,6 +148,8 @@ class ScriptManager
 		}
 	}
 
+	// #endregion
+	// #region web script
 	public static function generateWebScript()
 	{
 		checkForUpdatedScripts();
@@ -244,6 +247,8 @@ class ScriptManager
 		}
 	}
 
+	// #endregion
+	// #region load script
 	public static function loadScriptByPath(path:String):Bool
 	{
 		var newScript:Iris;
@@ -290,6 +295,8 @@ class ScriptManager
 		return false;
 	}
 
+	// #endregion
+	// #region script imports
 	public static function initalizeScriptVariables(script:Iris)
 	{
 		script.set('DesktopPlay', DesktopPlay, false);
@@ -332,6 +339,8 @@ class ScriptManager
 		script.set('FlxTextScriptedBorderStyle', FlxTextScriptedBorderStyle, false);
 	}
 
+	// #endregion
+
 	public static function loadScriptsByPaths(paths:Array<String>)
 	{
 		for (path in paths)
@@ -361,6 +370,14 @@ class ScriptManager
 			var path = script.name;
 
 			@:privateAccess {
+				// #region removed/updated
+
+				/**
+				 * 
+				 */
+
+				// #region script(s)
+				// #endregion
 				if (!Paths.pathExists(script.name))
 				{
 					trace('script(' + script.name + ') has been removed');
@@ -388,6 +405,7 @@ class ScriptManager
 						}
 					}
 				}
+				// #endregion
 			}
 		}
 
@@ -397,6 +415,7 @@ class ScriptManager
 		var addition = '';
 		var newCount = 0;
 
+		// #region scriptfiles parsing
 		getAllScriptPaths(function(arr, type)
 		{
 			for (script in deletedScripts)
@@ -460,11 +479,13 @@ class ScriptManager
 			for (script in deletedScripts)
 				arr.remove(script);
 		});
+		// #endregion
 	}
 }
 #else
 class ScriptManager
 {
+	// #region web stuff only
 	public static var isWeb(default, null):Bool = true;
 
 	public static var SCRIPT_EXTS:Array<String> = ['hx'];
@@ -486,5 +507,7 @@ class ScriptManager
 	{
 		call('onAdded', [new AddedEvent('WebScript')]);
 	}
+
+	// #endregion
 }
 #end

@@ -146,6 +146,7 @@ class ModMenu extends State
 				outdatedText += '%';
 			}
 
+			// #region mod text stuff
 			modText.text = '@' + leftTxt + '@' + ModList.modMetadatas.get(curModId).title + '@' + rightTxt + '@' + '\nid (folder): '
 				+ ModList.modMetadatas.get(curModId).id + '\n\n' + ModList.modMetadatas.get(curModId).description + '\n\nContributors:\n';
 
@@ -160,6 +161,7 @@ class ModMenu extends State
 				new FlxTextFormatMarkerPair(new FlxTextFormat(FlxColor.YELLOW, true, true), '%'),
 				new FlxTextFormatMarkerPair(new FlxTextFormat(FlxColor.ORANGE, true, true), '$')
 			]);
+			// #endregion
 		}
 		else
 		{

@@ -45,6 +45,7 @@ class Paths
 		return (game ? getGamePath(folder + '/sounds/' + filename + '.wav') : folder + '/sounds/' + filename + '.wav');
 	}
 
+	// #region getTypeArray
 	public static function getTypeArray(type:String, type_folder:String, ext:Array<String>, paths:Array<String>,
 			?foundFilesFunction:(Array<Dynamic>, String) -> Void = null):Array<String>
 	{
@@ -126,6 +127,8 @@ class Paths
 		return arr;
 	}
 
+	// #endregion
+	// #region sys stuffs
 	public static function saveContent(path:String, content:String)
 	{
 		#if sys
@@ -150,4 +153,6 @@ class Paths
 		return Assets.getText(id);
 		#end
 	}
+
+	// #endregion
 }

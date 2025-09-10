@@ -1,31 +1,16 @@
 package game;
 
-import Xml.XmlType;
 import flixel.FlxG;
 import flixel.input.keyboard.FlxKey;
-import haxe.Json;
 import haxe.xml.Access;
-import lime.utils.Assets;
 
 class Controls
 {
-	public static var controls:Map<String, Array<FlxKey>> = [
-		// game_
-		'game_left' => [LEFT, A],
-		'game_right' => [RIGHT, D],
-		'game_jump' => [SPACE],
-		'game_pause' => [ENTER],
-		// ui_
-		'ui_up' => [UP, W],
-		'ui_left' => [LEFT, A],
-		'ui_down' => [DOWN, S],
-		'ui_right' => [RIGHT, D],
-		'ui_accept' => [ENTER],
-		'ui_leave' => [ESCAPE]
-	];
+	public static var controls:Map<String, Array<FlxKey>> = [];
 
 	public static var save:ControlsSave;
 
+	// #region control checks
 	public static function getControlPressed(controlKey:String):Bool
 	{
 		return FlxG.keys.anyPressed(controls.get(controlKey));
@@ -40,6 +25,8 @@ class Controls
 	{
 		return FlxG.keys.anyJustPressed(controls.get(controlKey));
 	}
+
+	// #endregion
 
 	public static function getControlKeys(controlKey:String):Array<String>
 	{
@@ -72,7 +59,8 @@ class ControlsSave
 
 		var xml = Xml.createElement('controls');
 
-		var groups:Array<String> = ['game_', 'ui_'];
+		// #region generate save xml
+		var groups:Array<String> = ['game_', 'ui_', 'general_'];
 		var keys:Array<String> = ['left', 'down', 'up', 'right', 'jump', 'accept', 'leave'];
 
 		for (grp in groups)
@@ -104,6 +92,7 @@ class ControlsSave
 			if (addGrp)
 				xml.addChild(controlGrp);
 		}
+		// #endregion
 		#if sys
 		trace('Saving controls to "' + path + '" preference file via Sys');
 
@@ -134,6 +123,7 @@ class ControlsSave
 			return;
 		}
 
+		// #region parse save xml
 		var controls = [];
 
 		for (grp in xml.elements)
@@ -176,6 +166,7 @@ class ControlsSave
 			}
 			i++;
 		}
+		// #endregion
 
 		Controls.controls = controls_map;
 		trace('Updated Controls!');

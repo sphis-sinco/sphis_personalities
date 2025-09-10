@@ -53,6 +53,7 @@ class LevelModule
 		}
 	}
 
+	// #region module loading
 	public function loadModule(levelID:String)
 	{
 		trace('Initalizing new Level(' + Ansi.fg('', ORANGE) + id + Ansi.reset('') + ') Module');
@@ -101,6 +102,8 @@ class LevelModule
 		loadedModules.set(levelID, this);
 	}
 
+	// #endregion
+	// #region parse json
 	public function parseJSON(data:LevelData, levelID:String)
 	{
 		id = ((data.id == null) ? levelID : data.id);
@@ -111,6 +114,8 @@ class LevelModule
 		assetFolders = data.assetFolders;
 	}
 
+	// #endregion
+	// #region parse XML
 	public function parseXML(data:Access, levelID:String)
 	{
 		id = ((data.att.id == null) ? levelID : data.att.id);
@@ -172,6 +177,8 @@ class LevelModule
 		}
 	}
 
+	// #endregion
+	// #region assets
 	public function getHaxenAsset(state:String)
 	{
 		return Paths.getImagePath('levels/assets/' + assetFolders.haxen + '/haxen/' + state);
@@ -186,4 +193,6 @@ class LevelModule
 	{
 		return Paths.getImagePath('levels/assets/' + assetFolders.general + '/' + asset);
 	}
+
+	// #endregion
 }
