@@ -141,18 +141,7 @@ function onUpdate(event:UpdateEvent)
 			if ((tick >= 200 && !FlxG.random.bool(FlxG.random.float(0, 10))) && hands.members.length < 3)
 			{
 				var newTickMin = 0;
-
-				switch (hands.members.length)
-				{
-					case 3:
-						newTickMin = 0;
-					case 2:
-						newTickMin = 50;
-					case 1:
-						newTickMin = 125;
-					case 0:
-						newTickMin = 175;
-				}
+				newTickMin = 150 - (50 * hands.members.length);
 
 				tick = FlxG.random.int(newTickMin, 300);
 				trace('spawn lvl 1 hand');
