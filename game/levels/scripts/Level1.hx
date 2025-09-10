@@ -122,6 +122,7 @@ function onUpdate(event:UpdateEvent)
 			haxen_pos = (haxen_pos < -1) ? -1 : haxen_pos;
 
 			haxen.loadGraphic(lvl.getHaxenAsset('idle'));
+			FlxG.sound.play(Paths.getSoundPath('player_move', 'levels/assets'));
 		}
 
 		if (Controls.getControlJustReleased('game_right') && !level_paused)
@@ -130,6 +131,7 @@ function onUpdate(event:UpdateEvent)
 			haxen_pos = (haxen_pos > 1) ? 1 : haxen_pos;
 
 			haxen.loadGraphic(lvl.getHaxenAsset('idle'));
+			FlxG.sound.play(Paths.getSoundPath('player_move', 'levels/assets'));
 		}
 
 		pauseBG.alpha = (level_paused) ? 0.5 : 0.0;
