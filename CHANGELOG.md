@@ -1,4 +1,6 @@
 # 1.2.0 - 9/10/2025
+## Gameplay
+- Added Level 2
 ## General
 - Level Pause menus can be soft-coded now (via `LevelStateBase`)
 - Added `LevelStateBase`
