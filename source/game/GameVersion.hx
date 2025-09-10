@@ -6,7 +6,7 @@ import thx.semver.Version;
 
 class GameVersion
 {
-	static var version = '1.1.0';
+	static var version = '1.2.0';
 
 	#if semver
 	public static var get(get, never):Version;
