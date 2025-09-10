@@ -1,4 +1,7 @@
 # 1.1.0 - 9/10/2025
+## Menus
+- Added new `GameVersionText` script
+  - Displays game version text in `desktop-main` and `desktop-play`
 ## Modding
 - `0.0.0` is currently considered a `Debug mod` in the mod menu
 - Minimum mod API version is now just the major version of the cuttent (so currently `1.0.0`)
