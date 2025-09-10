@@ -8,6 +8,6 @@ class GameVersion
 
 	static function get_get():Version
 	{
-		return Version.stringToVersion('1.0.0');
+		return Version.stringToVersion('1.1.0');
 	}
 }
