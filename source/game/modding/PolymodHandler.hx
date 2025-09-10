@@ -5,6 +5,9 @@ import game.scripts.ScriptManager;
 using StringTools;
 using game.utils.MapUtil;
 
+#if semver
+import thx.semver.Version;
+#end
 #if polymod
 import polymod.Polymod;
 import polymod.format.ParseRules;
@@ -12,8 +15,13 @@ import polymod.format.ParseRules;
 
 class PolymodHandler
 {
-	public static var MINIMUM_MOD_VERSION:String = "0.0.0";
+	#if semver
+	public static var MINIMUM_MOD_VERSION:String = new Version(GameVersion.get.major(), 0, 0);
 	public static var MAXIMUM_MOD_VERSION:String = GameVersion.get.nextMajor().toString();
+	#else
+	public static var MINIMUM_MOD_VERSION:String = "0.0.0";
+	public static var MAXIMUM_MOD_VERSION:String = GameVersion.get;
+	#end
 
 	public static var metadataArrays:Array<String> = [];
 	public static var outdatedMods:Array<String> = [];

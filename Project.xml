@@ -64,6 +64,10 @@
 
 	<section unless="disable_polymodSupport">
 		<haxelib name="polymod" />
+		<haxelib name="thx.semver" />
+		
+		<define name="semver" />
+
 		<assets path="mods" />
 		<assets path="dev/mods-debug" rename="mods" if="debug"/>
 	</section>

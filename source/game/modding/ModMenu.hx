@@ -134,12 +134,13 @@ class ModMenu extends State
 
 			if (PolymodHandler.outdatedMods.contains(curModId))
 			{
-				// Commented out code is from Dreamland
-
+				var debugMod = ModList.modMetadatas.get(curModId).apiVersion.major == 0;
 				var higherVersion = ModList.modMetadatas.get(curModId).apiVersion.greaterThan(PolymodHandler.MAXIMUM_MOD_VERSION);
 
 				outdatedText = ' \n%Outdated ';
 
+				if (debugMod)
+					outdatedText += '\n^* Debug Mod (0.x.x)^';
 				if (higherVersion)
 					outdatedText += '\n@* Troll@';
 
@@ -159,7 +160,8 @@ class ModMenu extends State
 			modText.applyMarkup(modText.text, [
 				new FlxTextFormatMarkerPair(new FlxTextFormat(FlxColor.BLACK, true, true), '@'),
 				new FlxTextFormatMarkerPair(new FlxTextFormat(FlxColor.YELLOW, true, true), '%'),
-				new FlxTextFormatMarkerPair(new FlxTextFormat(FlxColor.ORANGE, true, true), '$')
+				new FlxTextFormatMarkerPair(new FlxTextFormat(FlxColor.ORANGE, true, true), '$'),
+				new FlxTextFormatMarkerPair(new FlxTextFormat(FlxColor.RED, true, true), '^')
 			]);
 			// #endregion
 		}
