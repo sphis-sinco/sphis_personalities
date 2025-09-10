@@ -24,9 +24,9 @@ function onCreate(event:CreateEvent)
 {
 	lvl = null;
 
-	if (event.state == 'level1')
+	if (event.state == 'level2')
 	{
-		lvl = new LevelModule('level1');
+		lvl = new LevelModule('level2');
 		FlxG.camera.fade(FlxScriptedColor.BLACK, 1, true, () -> {});
 
 		lvl1_bg_sky = new FlxSprite();
@@ -86,7 +86,7 @@ function onUpdate(event:UpdateEvent)
 
 	FlxG.watch.addQuick('tick', tick);
 
-	if (event.state == 'level1')
+	if (event.state == 'level2')
 	{
 		haxen.screenCenter();
 		haxen.y += (haxen.height / 2);
@@ -134,7 +134,7 @@ function onUpdate(event:UpdateEvent)
 				newTickMin = 150 - (50 * hands.members.length);
 
 				tick = FlxG.random.int(newTickMin, 300);
-				trace('spawn lvl 1 hand');
+				trace('spawn lvl 2 hand');
 
 				var hand = new FlxSprite();
 				hand.loadGraphic(lvl.getHandAsset('clench'));

@@ -1,0 +1,14 @@
+{
+        "id": "level2",
+        "displayName": "Level 2",
+        "authors": [
+                "Sphis"
+        ],
+        "unlocked": true,
+
+        "assetFolders": {
+                "haxen": "general",
+                "hand": "general",
+                "general": "two"
+        }
+}

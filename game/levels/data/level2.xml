@@ -1,0 +1,13 @@
+<!DOCTYPE personalities-level-xml>
+<level id="level2">
+        <displayName value="Level 2"/>
+        <authors>
+                <author value="Sphis"/>
+        </authors>
+        <unlocked value="true"/>
+        <assetFolders>
+                <haxen value="general"/>
+                <hand value="general"/>
+                <general value="two"/>
+        </assetFolders>
+</level>
