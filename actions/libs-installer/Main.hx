@@ -28,9 +28,9 @@ class Main
 			switch (lib.type)
 			{
 				case "haxelib":
-					Sys.command('haxelib --quiet install ${lib.name} ${lib.version != null ? lib.version : ""}');
+					Sys.command('haxelib --skip-dependencies --always --quiet install ${lib.name} ${lib.version != null ? lib.version : ""}');
 				case "git":
-					Sys.command('haxelib --quiet git ${lib.name} ${lib.url}');
+					Sys.command('haxelib --skip-dependencies --always --quiet git ${lib.name} ${lib.url}');
 				default:
 					Sys.println('Cannot resolve library of type "${lib.type}"');
 			}
