@@ -45,17 +45,14 @@ function onCreate(event:CreateEvent)
 
 function onUpdate(event:UpdateEvent)
 {
-	levelTimerText.text = 'Time survived: ' + levelTime;
+	levelTimerText.text = 'Time survived: ' + levelTime + 's';
 
 	if (levelTimer.active)
 	{
-		if (event.state == 'level1')
-		{
-			if (FlxG.save.data.levelTimes.level1 != null)
-			{
-				levelTimerText.text += ' (best: ' + FlxG.save.data.levelTimes.level1 + ')';
-			}
-		}
+		levelTimerText.text += ' (best: ';
+		if (event.state == 'level1' && FlxG.save.data.levelTimes.level1 != null)
+			levelTimerText.text += '' + FlxG.save.data.levelTimes.level1;
+		levelTimerText.text += 's)';
 
 		if (Controls.getControlJustReleased('ui_leave') && level_paused)
 		{
