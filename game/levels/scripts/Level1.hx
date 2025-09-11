@@ -18,10 +18,12 @@ var haxen_pos:Int;
 var op_attacking:Bool;
 var hands:FlxTypedGroup<FlxSprite>;
 var tick = 0;
+var max_tick = 200;
 
 function onCreate(event:CreateEvent)
 {
 	lvl = null;
+	max_tick = 200;
 
 	if (event.state == 'level1')
 	{
@@ -129,18 +131,18 @@ function onUpdate(event:UpdateEvent)
 
 		if (op_attacking && !LevelStateBase.instance.level_paused)
 		{
-			if ((tick >= 200 && !FlxG.random.bool(FlxG.random.float(0, 10))) && hands.members.length < 3)
+			if ((tick >= max_tick && !FlxG.random.bool(FlxG.random.float(0, 10))) && hands.members.length < 3)
 			{
 				var newTickMin = 0;
 				newTickMin = 150 - (50 * hands.members.length);
 
-				tick = FlxG.random.int(newTickMin, 300);
+				tick = FlxG.random.int(newTickMin, max_tick);
 				trace('spawn lvl 1 hand');
 
 				var hand = new FlxSprite();
 				hand.loadGraphic(lvl.getHandAsset('hand'), true, 160, 160);
 				hand.animation.add('closed', [0], 12);
-				hand.animation.add('open', [0, 0, 1, 1, 2, 2, 3, 4, 4], 12);
+				hand.animation.add('open', [0, 0, 1, 1, 2, 2, 3, 4, 4], 12, false);
 				hand.animation.play('closed');
 				hand.setPosition(haxen.x, haxen.y);
 				hand.alpha = 0;
