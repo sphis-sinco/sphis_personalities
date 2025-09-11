@@ -211,7 +211,7 @@ function onUpdate(event:UpdateEvent)
 			});
 		}
 
-		for (hand in hands)
+		for (hand in hands.members)
 			hand.animation.paused = LevelStateBase.instance.level_paused;
 	}
 }
