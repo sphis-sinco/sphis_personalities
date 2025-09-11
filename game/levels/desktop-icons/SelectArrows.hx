@@ -63,11 +63,11 @@ function onUpdate(event:UpdateEvent)
 
 			if (arrowsnotLeaving)
 			{
-				if (DesktopPlay.instance.curSel - 1 < 0)
+				if (DesktopPlay.instance.curSel - 1 < 0 || DesktopPlay.instance.savedSelection != null)
 					leftArrow.alpha = .5;
 				else
 					leftArrow.alpha = 1;
-				if (DesktopPlay.instance.curSel + 1 >= DesktopPlay.instance.levels.length)
+				if (DesktopPlay.instance.curSel + 1 >= DesktopPlay.instance.levels.length || DesktopPlay.instance.savedSelection != null)
 					rightArrow.alpha = .5;
 				else
 					rightArrow.alpha = 1;
@@ -75,14 +75,14 @@ function onUpdate(event:UpdateEvent)
 
 			if (Controls.getControlPressed('ui_left') && arrowsnotLeaving)
 			{
-				if (DesktopPlay.instance.curSel > 0)
+				if (DesktopPlay.instance.curSel > 0 && DesktopPlay.instance.savedSelection == null)
 					leftArrow.scale.set(.3, .15);
 				else
 					leftArrow.scale.set(.15, .3);
 			}
 			if (Controls.getControlPressed('ui_right') && arrowsnotLeaving)
 			{
-				if (DesktopPlay.instance.curSel < DesktopPlay.instance.levels.length - 1)
+				if (DesktopPlay.instance.curSel < DesktopPlay.instance.levels.length - 1 && DesktopPlay.instance.savedSelection == null)
 					rightArrow.scale.set(.3, .15);
 				else
 					rightArrow.scale.set(.15, .3);
