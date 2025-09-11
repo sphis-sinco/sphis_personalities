@@ -2,6 +2,8 @@
 ## Gameplay
 - Added Level 2
 ## General
+- Added `savedSelection` to DesktopPlay
+  - this means all scripts can use it
 - Level Pause menus can be soft-coded now (via `LevelStateBase`)
 - Added `LevelStateBase`
 

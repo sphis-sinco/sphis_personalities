@@ -4,7 +4,7 @@ import game.scripts.events.UpdateEvent;
 
 function onUpdate(event:UpdateEvent)
 {
-	if (event.state == 'desktop-play')
+	if (event.state == 'desktop-play' && DesktopPlay.instance.savedSelection == null)
 	{
 		if (Controls.getControlJustReleased('ui_left'))
 			DesktopPlay.instance.curSel--;

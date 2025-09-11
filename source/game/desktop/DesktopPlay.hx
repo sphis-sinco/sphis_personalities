@@ -27,12 +27,14 @@ class DesktopPlay extends State
 		instance = this;
 	}
 
+	public var saved_levels:Array<String> = [];
 	public var levels:Array<String> = [];
 	public var levelMetas:Array<LevelModule> = [];
 	public var levelsGrp:FlxTypedGroup<LevelSpriteGroup>;
 	public var levelsTextGrp:FlxTypedGroup<FlxText>;
 
 	public var curSel:Int = 0;
+	public var savedSelection:Null<Int> = null;
 
 	public var camFollow:FlxObject;
 
@@ -56,6 +58,14 @@ class DesktopPlay extends State
 		add(scanlineLayer);
 	}
 
+	override function update(elapsed:Float)
+	{
+		super.update(elapsed);
+
+		if (savedSelection != null && curSel != savedSelection)
+			curSel = savedSelection;
+	}
+
 	public function reloadLevels(onComplete:(levelsGrp:FlxTypedGroup<LevelSpriteGroup>, levelsTextGrp:FlxTypedGroup<FlxText>) -> Void = null)
 	{
 		for (level in levelsGrp.members)
@@ -69,6 +79,7 @@ class DesktopPlay extends State
 			levelsTextGrp.members.remove(level);
 		}
 
+		levels = saved_levels;
 		levelMetas = [];
 
 		var i = 0;
@@ -132,9 +143,8 @@ class DesktopPlay extends State
 
 	public function sysLoadLevels(dir:String):Bool
 	{
-		levels = [];
-
 		#if sys
+		levels = [];
 		for (level in FileSystem.readDirectory(dir))
 		{
 			if (StringTools.endsWith(level, '.json') || StringTools.endsWith(level, '.xml'))
@@ -145,6 +155,7 @@ class DesktopPlay extends State
 					levels.push(trimmed);
 			}
 		}
+		saved_levels = levels;
 		return true;
 		#else
 		return false;
