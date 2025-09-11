@@ -138,7 +138,10 @@ function onUpdate(event:UpdateEvent)
 				trace('spawn lvl 1 hand');
 
 				var hand = new FlxSprite();
-				hand.loadGraphic(lvl.getHandAsset('clench'));
+				hand.loadGraphic(lvl.getHandAsset('hand'), true, 160, 160);
+				hand.animation.add('closed', [0], 12);
+				hand.animation.add('open', [0, 0, 1, 1, 2, 2, 3, 4, 4], 12);
+				hand.animation.play('closed');
 				hand.setPosition(haxen.x, haxen.y);
 				hand.alpha = 0;
 
@@ -146,6 +149,7 @@ function onUpdate(event:UpdateEvent)
 					ease: FlxEase.sineOut,
 					onComplete: twn ->
 					{
+						hand.animation.play('open');
 						new FlxTimer().start(.25, tmr ->
 						{
 							FlxTween.tween(hand, {y: haxen.y}, .25, {

@@ -1,5 +1,6 @@
 # 1.2.0 - 9/10/2025
 ## Gameplay
+- Hands are animated now
 - Added Level 2
 ## General
 - Added `savedSelection` to DesktopPlay
