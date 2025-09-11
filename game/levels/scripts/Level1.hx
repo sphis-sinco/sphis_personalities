@@ -195,5 +195,8 @@ function onUpdate(event:UpdateEvent)
 				FlxG.switchState(() -> new DesktopPlay());
 			});
 		}
+
+		for (hand in hands)
+			hand.animation.paused = LevelStateBase.instance.level_paused;
 	}
 }
