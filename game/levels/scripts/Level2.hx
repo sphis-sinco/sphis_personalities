@@ -55,7 +55,7 @@ function onCreate(event:CreateEvent)
 		op.scale.set(.75, .75);
 		op.updateHitbox();
 		op.screenCenter();
-		op.y -= op.height / 5;
+		op.y += op.height / 10;
 		var op_resting_YPos = op.getPosition().y;
 		op.y = FlxG.height * 2;
 
