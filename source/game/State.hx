@@ -1,6 +1,9 @@
 package game;
 
 import flixel.FlxState;
+import flixel.tweens.FlxTween;
+import flixel.util.FlxTimer;
+import game.levels.LevelStateBase;
 import game.scripts.ScriptManager;
 import game.scripts.events.CreateEvent;
 import game.scripts.events.UpdateEvent;
@@ -32,5 +35,11 @@ class State extends FlxState
 		super.update(elapsed);
 
 		ScriptManager.call('onUpdate', [new UpdateEvent(state, elapsed)]);
+
+		if (!FlxTimer.globalManager.active && LevelStateBase.instance == null)
+		{
+			FlxTimer.globalManager.active = true;
+			FlxTween.globalManager.active = true;
+		}
 	}
 }
